@@ -1,0 +1,9 @@
+\select@language {english}
+\contentsline {section}{\numberline {1}Design of Experiment}{2}
+\contentsline {subsection}{\numberline {1.1}Consider how to best record the end poses of the three times 20 runs of the robot.}{2}
+\contentsline {subsubsection}{\numberline {1.1.1}Experimental Terms}{2}
+\contentsline {subsection}{\numberline {1.2}Describe in writing the robots design, the measurement process and the expected problems.}{3}
+\contentsline {subsubsection}{\numberline {1.2.1}The Robot's Design}{3}
+\contentsline {subsubsection}{\numberline {1.2.2}The Measurement Process}{3}
+\contentsline {subsubsection}{\numberline {1.2.3}Expected Problems}{3}
+\contentsline {subsection}{\numberline {1.3}Give a rough (but justified by some arguments) estimation of the expected accuracy and precision of your measurement process.}{4}
