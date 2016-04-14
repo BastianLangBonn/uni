@@ -19,6 +19,7 @@ xlabel('Genes');
 ylabel('Individuals');
 title('Children');
 
+%% Evolution Loop
 for generation=1:maximum_generations
     %% Evaluate Population
     % Simply count the number of ones in every gene
@@ -52,7 +53,15 @@ for generation=1:maximum_generations
     next_generation(1,:) = best_individuum;
 
     % Mutate
+    % For each gene check if mutation shall appear
     mutate = (rand(population_size, number_of_genes) < mutation_probability);
+    % XOR exactly changes 1s to 0s and vice versa if mutate equals 1 and 
+    % leaves genes as are if mutate equals 0
+    % gene  mutate  result
+    %  0      0       0
+    %  0      1       1
+    %  1      0       1
+    %  1      1       0
     next_generation = xor(next_generation, mutate);
     
     population = next_generation;
