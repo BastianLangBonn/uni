@@ -1,0 +1,16 @@
+CREATE TABLE IF NOT EXISTS Power ( id TEXT, timestamp FLOAT, watts REAL );
+CREATE TABLE IF NOT EXISTS Torque ( id TEXT, timestamp FLOAT, Nm REAL );
+CREATE TABLE IF NOT EXISTS Cadence ( id TEXT, timestamp FLOAT, RPM REAL );
+CREATE TABLE IF NOT EXISTS Speed ( id TEXT, timestamp FLOAT, RPM REAL );
+CREATE TABLE IF NOT EXISTS RawTorque ( id TEXT, timestamp FLOAT, Nm REAL );
+CREATE TABLE IF NOT EXISTS OffsetTorque ( id TEXT, timestamp FLOAT, Nm REAL );
+CREATE TABLE IF NOT EXISTS SensorConfiguration ( id TEXT, timestamp FLOAT, config INTEGER );
+CREATE TABLE IF NOT EXISTS CalibrationPass ( id TEXT, timestamp FLOAT, data INTEGER );
+CREATE TABLE IF NOT EXISTS CalibrationFail ( id TEXT, timestamp FLOAT, data INTEGER );
+CREATE TABLE IF NOT EXISTS HeartRate ( id TEXT, timestamp FLOAT, BPM REAL );
+CREATE TABLE IF NOT EXISTS HardwareRevision ( id TEXT, timestamp FLOAT, version INTEGER );
+CREATE TABLE IF NOT EXISTS Manufacturer ( id TEXT, timestamp FLOAT, mfg_id INTEGER );
+CREATE TABLE IF NOT EXISTS ModelNumber ( id TEXT, timestamp FLOAT, model_id INTEGER );
+CREATE TABLE IF NOT EXISTS SoftwareRevision ( id TEXT, timestamp FLOAT, version INTEGER );
+CREATE TABLE IF NOT EXISTS SerialNumber ( id TEXT, timestamp FLOAT, number INTEGER );
+CREATE TABLE IF NOT EXISTS BatteryVoltage ( id TEXT, timestamp FLOAT, voltage REAL );
