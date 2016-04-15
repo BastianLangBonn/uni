@@ -14,14 +14,13 @@ port=8168
 
 s.connect(( host, port ))
 
-#s.send('X-set-channel: 0p\n')
 s.send('X-set-channel: 0s\n')
 
 while True:
+    # Receive data from ant+
     data=s.recv(1000000)
-    proc = sp.Popen("./dataread", stdin=sp.PIPE)
+    # 
+    proc = sp.Popen("./steuerung", stdin=sp.PIPE)
     out, err = proc.communicate(data);
-    #if not data:
-    #    break
 
 s.close()

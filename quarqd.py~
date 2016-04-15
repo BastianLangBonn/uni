@@ -1,5 +1,8 @@
 #!/usr/bin/python
 
+# Script to receive data from the garmin ant+ stick and 
+# pipe it to stdin, where it can be read by "./dataread".
+
 import subprocess as sp
 import socket
 import sys
