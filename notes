@@ -1,0 +1,29 @@
+- Aktueller controller liest speed-daten von GPIO_SPEED aus. Diese sollten zur berechnung der aktuellen Position nutzbar sein.
+-- Aus welchem Device werden diese Daten ausgelesen? Ist das der Hall-Sensor?
+
+- Motorcontroller reagiert erst nach 4 Sekunden wenn der Bremssensor aktiv wird. Evtl. Signal langsam absenken?
+
+- Ant+-Code konnte nicht ausgeführt werden. Wozu ist der gut?
+
+- "...bis auf Geschwindigkeitssensor[...] erfolgreich..." - was bedeutet das?
+
+- Wenn ich den an/aus-Schalter verändere, dann muss der Not-aus-Schalter angebracht werden
+
+- ant+ - code ist für den hall-sensor und die Odometrie. 
+
+- Falls längere Zeit keine Daten kommen, sollte geschwindigkeit auf 0 gesetzt werden
+
+- raspi per "ssh <username>@<IP>", user:pi, pw:raspberry
+
+- zum compilieren der datei steuerung.c: "gcc -o steuerung steuerung.c -pthread -lwiringPiDev -lwiringPi"
+
+- die datei steuerung wird per cronjob ausgeführt
+
+- "sudo crontab -l" zeigt die aktuell eingestellten cronjobs an. Dort steht auch, welche datei bei einem reboot gestartet wird.
+
+- Wenn steuerung.c nur noch aufgerufen wird, wenn ant+ ein Signal bekommt, dann würden im Stehen keine Updates passieren.
+-- Gibt es wichtige Dinge im Stillstand?
+
+- Geschwindigkeit berechnen über übermittelten Wert oder über "ein Durchlauf = eine Umdrehung"?
+
+- In die nachträgliche Berechnung des Streckenverlaufs müssen längere Pausen berücksichtigt werden. Dies würde bedeuten, dass die Geschwindigkeit in diesem Abschnitt unter einer Umdrehung pro minute und wahrscheinlich zwischenzeitlich 0 war.

@@ -4,6 +4,7 @@
 #include <lcd.h> 
 #include <pthread.h>
 #include <unistd.h>
+#include <string.h>
 
 
 #define DEBUG       //Wenn definiert gibt das Programm in der Konsole Debug-Informationen aus
@@ -46,7 +47,7 @@
 
 
 /*  Fahrzeug  */
-#define WHEEL_LENGTH        1.445
+#define WHEEL_LENGTH        1.445   // in m
 #define MAX_TEMPO           25      //Legt die maximale Geschwindigkeit in km/h fest
 
 /*  Delay  */
@@ -69,9 +70,12 @@ int motor_limited = 0;			// Legt das max Tempo für die Motorunterstuetzung fest
 
 float current_value = 0.2;		// Legt den HIGH Anteil vom PWM-Signal fest
 					// 0 <= current_value <= 1
-int actual_speed = 0;
+float actual_speed = 0;
 int lcd_handler;
-bool setup_done = 0;
+char setup_done = 0;
+
+unsigned int now;
+unsigned int lastpeak;
 
 /****************************************************************************************************/
 /*  Sensor Thread										    */
@@ -168,6 +172,8 @@ void *display_thread(void *arg){
 int setup(){
 	pthread_t sensor_thr, display_thr;
 	
+        lastpeak  = micros();
+
 	int res = 0;
 	wiringPiSetup();
 	res = softPwmCreate(GPIO_PWM, 0, PWM_RANGE);
@@ -218,8 +224,7 @@ int main(){
 		}
 	}
 	
-	unsigned int now;
-	unsigned int lastpeak = micros();
+	
 	
 	//while(1){
 		/*  Ermittlung der Geschwindigkeit  */
@@ -241,15 +246,36 @@ int main(){
 
 		/****************************************************************************/
 		/*  Ermittlung der Geschwindigkeit  */
-		char buffer[BUFMAX + 1];
-    		char *bp = buffer;
-    		int c;
-    		FILE *in;
-    		while (EOF != (c = fgetc(stdin)) && (bp - buffer) < BUFMAX) {
-        		*bp++ = c;
-    		}
-    		*bp = 0;    // Null-terminate the string
-    		printf("%s", buffer);
+		char buffer[BUFMAX + 1], tmp[256];
+    		char *bp = buffer, *ptr;
+    		int t=0, c, rpm;
+
+                now = micros();
+                /*if(now - lastpeak > 200000){
+                        // No signal for the last two seconds
+                        actual_speed = 0;
+                }else{*/
+            		FILE *in;
+            		while (EOF != (c = fgetc(stdin)) && (bp - buffer) < BUFMAX) {
+                		*bp++ = c;
+            		}
+            		*bp = 0;    // Null-terminate the string
+            		printf("%s", buffer);
+
+                        /*  Verarbeitung der Daten  */
+                        ptr = strstr(buffer, "RPM=");   //Sucht in der Ausgabe nach 'RPM='
+                        ptr=ptr+sizeof(*ptr)*5; // remove leading "RPM='"
+                        t = strcspn(ptr, "'");
+                    
+                        strncpy(tmp, ptr, t); // remove trailing "'"
+                    
+                        rpm = atoi(tmp); // Char to Integer
+                        actual_speed = rpm * WHEEL_LENGTH * 0.06;
+                    
+                        printf("rpm: %d\n", rpm);
+                        printf("velocity: %f\n", actual_speed);
+                //}
+                lastpeak = now;
 		/****************************************************************************/
 
 
