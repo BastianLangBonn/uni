@@ -71,7 +71,7 @@ float current_value = 0.2;		// Legt den HIGH Anteil vom PWM-Signal fest
 					// 0 <= current_value <= 1
 int actual_speed = 0;
 int lcd_handler;
-bool setup_done = 0;
+char setup_done = 0;
 
 /****************************************************************************************************/
 /*  Sensor Thread										    */
