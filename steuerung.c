@@ -224,80 +224,58 @@ int main(){
 		}
 	}
 	
+
+
+	/****************************************************************************/
+	/*  Ermittlung der Geschwindigkeit  */
+	char buffer[BUFMAX + 1], tmp[256];
+	char *bp = buffer, *ptr;
+	int t=0, c, rpm;
+
+        now = micros();
+	FILE *in;
+	while (EOF != (c = fgetc(stdin)) && (bp - buffer) < BUFMAX) {
+		*bp++ = c;
+	}
+	*bp = 0;    // Null-terminate the string
+        #ifdef DEBUG        
+	        printf("%s", buffer);
+        #endif
+        /*  Verarbeitung der Daten  */
+        ptr = strstr(buffer, "RPM=");   //Sucht in der Ausgabe nach 'RPM='
+        ptr=ptr+sizeof(*ptr)*5; // remove leading "RPM='"
+        t = strcspn(ptr, "'");
+    
+        strncpy(tmp, ptr, t); // remove trailing "'"
+    
+        rpm = atoi(tmp); // Char to Integer
+        actual_speed = rpm * WHEEL_LENGTH * 0.06;
+    
+        #ifdef DEBUG
+                printf("rpm: %d\n", rpm);
+                printf("velocity: %.2f\n", actual_speed);
+        #endif
+        lastpeak = now;
+	/****************************************************************************/
+
+
+	/*  Reaktion auf Geschwindigkeit */
+	if(actual_speed >= MAX_TEMPO && motor_limited == 0){
+		motor_limited = 1;
+	}else if(actual_speed < MAX_TEMPO && motor_limited){
+		motor_limited = 0;
+	}
 	
-	
-	//while(1){
-		/*  Ermittlung der Geschwindigkeit  */
-		if(digitalRead(GPIO_SPEED)){
-			now = micros();
-			//actual_speed =(int) (WHEEL_LENGTH * 3600000000)/((now - lastpeak) * 1000);
-			lastpeak = now;
-			#ifdef DEBUG
-			printf("Geschwindigkeitssensor ausgelöst, aktuelle Geschwindigkeit: %d\n", actual_speed);
-			printf("lastpeak = %d\n", lastpeak);
-			printf("now = %d\n", now);
-			#endif
-			lastpeak = now;
-		}else if(micros() - lastpeak > 2000000){
-			//Seit 2 Sekunden kein Signal mehr eingegangen, Geschwindigkeit wird auf 0 gesetzt
-			actual_speed = 0;
-		}
-
-
-		/****************************************************************************/
-		/*  Ermittlung der Geschwindigkeit  */
-		char buffer[BUFMAX + 1], tmp[256];
-    		char *bp = buffer, *ptr;
-    		int t=0, c, rpm;
-
-                now = micros();
-                /*if(now - lastpeak > 200000){
-                        // No signal for the last two seconds
-                        actual_speed = 0;
-                }else{*/
-            		FILE *in;
-            		while (EOF != (c = fgetc(stdin)) && (bp - buffer) < BUFMAX) {
-                		*bp++ = c;
-            		}
-            		*bp = 0;    // Null-terminate the string
-            		printf("%s", buffer);
-
-                        /*  Verarbeitung der Daten  */
-                        ptr = strstr(buffer, "RPM=");   //Sucht in der Ausgabe nach 'RPM='
-                        ptr=ptr+sizeof(*ptr)*5; // remove leading "RPM='"
-                        t = strcspn(ptr, "'");
-                    
-                        strncpy(tmp, ptr, t); // remove trailing "'"
-                    
-                        rpm = atoi(tmp); // Char to Integer
-                        actual_speed = rpm * WHEEL_LENGTH * 0.06;
-                    
-                        printf("rpm: %d\n", rpm);
-                        printf("velocity: %.2f\n", actual_speed);
-                //}
-                lastpeak = now;
-		/****************************************************************************/
-
-
-		/*  Reaktion auf Geschwindigkeit */
-		if(actual_speed >= MAX_TEMPO && motor_limited == 0){
-			motor_limited = 1;
-		}else if(actual_speed < MAX_TEMPO && motor_limited){
-			motor_limited = 0;
-		}
-		
-		/*  Ein- und Ausschalten des PWM-Signals  */
-                if(brake_on == 0 && motor_on == 1 && motor_limited == 0){
-                        //Einschalten des PWM-Signals
-                        softPwmWrite(GPIO_PWM, (int)(PWM_RANGE * current_value / 2));
-                        sleep(1);
-                        softPwmWrite(GPIO_PWM, (int)(PWM_RANGE * current_value));
-                }else{
-                        //Ausschalten des PWM-Signals
-                        softPwmWrite(GPIO_PWM, 0);
-                }
-                
-		delay(SPEED_UPDATE);
-	//}
-	//return 0;
+	/*  Ein- und Ausschalten des PWM-Signals  */
+        if(brake_on == 0 && motor_on == 1 && motor_limited == 0){
+                //Einschalten des PWM-Signals
+                softPwmWrite(GPIO_PWM, (int)(PWM_RANGE * current_value / 2));
+                sleep(1);
+                softPwmWrite(GPIO_PWM, (int)(PWM_RANGE * current_value));
+        }else{
+                //Ausschalten des PWM-Signals
+                softPwmWrite(GPIO_PWM, 0);
+        }
+        
+	delay(SPEED_UPDATE);
 }
