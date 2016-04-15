@@ -210,6 +210,24 @@ int setup(){
 	return res;
 }
 
+int write_to_file(char* text){
+        /* Open file to append, create if not existent*/
+        FILE *f = fopen("/home/pi/AMT/log.txt", "a");
+        if (f == NULL){
+                    FILE *f = fopen("/home/pi/AMT/log.txt", "w");
+                    if(f == NULL){
+                    printf("Error opening file!\n");
+                    return -1;
+                }
+        }
+
+        /* print text */
+        fprintf(f, "%s\n", text);
+
+        fclose(f);
+        return 0;
+}
+
 /****************************************************************************************************/
 /*  Main / Geschwindigkeitsmessung								    */
 /****************************************************************************************************/
@@ -228,7 +246,7 @@ int main(){
 
 	/****************************************************************************/
 	/*  Ermittlung der Geschwindigkeit  */
-	char buffer[BUFMAX + 1], tmp[256];
+	char buffer[BUFMAX + 1], tmp[256], printout[256];
 	char *bp = buffer, *ptr;
 	int t=0, c, rpm;
 
@@ -238,8 +256,9 @@ int main(){
 		*bp++ = c;
 	}
 	*bp = 0;    // Null-terminate the string
-	printf("%s", buffer);
-
+        #ifdef DEBUG        
+	        printf("%s", buffer);
+        #endif
         /*  Verarbeitung der Daten  */
         ptr = strstr(buffer, "RPM=");   //Sucht in der Ausgabe nach 'RPM='
         ptr=ptr+sizeof(*ptr)*5; // remove leading "RPM='"
@@ -254,6 +273,10 @@ int main(){
                 printf("rpm: %d\n", rpm);
                 printf("velocity: %.2f\n", actual_speed);
         #endif
+        sprintf(printout, "timestamp: %d, velocity: %.2fkm/h", now, actual_speed);
+        printf("%s", printout);
+        write_to_file(printout);
+        memset(printout, 0, sizeof(printout));
         lastpeak = now;
 	/****************************************************************************/
 

@@ -1,0 +1,3 @@
+f = open('/home/pi/AMT/temp', 'w')
+f.write('foobar')
+f.close()
