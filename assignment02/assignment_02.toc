@@ -1,0 +1,8 @@
+\select@language {english}
+\contentsline {section}{\numberline {1}The Robot's Design}{2}
+\contentsline {section}{\numberline {2}The Measurement Process}{2}
+\contentsline {section}{\numberline {3}The Experiment}{2}
+\contentsline {subsection}{\numberline {3.1}Driving forward}{2}
+\contentsline {subsection}{\numberline {3.2}Right Arc}{2}
+\contentsline {subsection}{\numberline {3.3}Left Arc}{2}
+\contentsline {section}{\numberline {4}Results}{2}
