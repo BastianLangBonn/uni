@@ -1,0 +1,19 @@
+\select@language {english}
+\contentsline {section}{\numberline {1}Part I - Questions about the project}{3}
+\contentsline {subsection}{\numberline {1.1}What did they do?}{3}
+\contentsline {subsection}{\numberline {1.2}Which Machine Learning approaches did they apply?}{3}
+\contentsline {subsection}{\numberline {1.3}What data set and which features did they use?}{3}
+\contentsline {subsection}{\numberline {1.4}Were they successful at what they were attempting?}{3}
+\contentsline {section}{\numberline {2}Part II - Questions regarding your thoughts on the project}{3}
+\contentsline {subsection}{\numberline {2.1}Why did you choose to read this project report?}{3}
+\contentsline {subsection}{\numberline {2.2}Did you learn anything by reading this project report? If yes: What?}{3}
+\contentsline {subsection}{\numberline {2.3}What was the most useful graphic displayed in the project report?}{4}
+\contentsline {subsection}{\numberline {2.4}What was the most eye catching graphic displayed in the project report?}{4}
+\contentsline {subsection}{\numberline {2.5}Did you find it interesting? Why or why not?}{5}
+\contentsline {section}{\numberline {3}Part III - What would you do differently}{5}
+\contentsline {subsection}{\numberline {3.1}Would you accept the task (of improving the work done)?}{5}
+\contentsline {subsection}{\numberline {3.2}What would you do differently?}{5}
+\contentsline {subsection}{\numberline {3.3}Why do you expect better results?}{5}
+\contentsline {subsection}{\numberline {3.4}How long would you estimate it would take you to improve upon the previous results?}{6}
+\contentsline {subsection}{\numberline {3.5}How much of an improvement would you estimate you'd be able to achieve?}{6}
+\contentsline {subsection}{\numberline {3.6}Visualization of data set}{6}
