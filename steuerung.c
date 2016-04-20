@@ -64,18 +64,18 @@
 /****************************************************************************************************/
 
 
-int motor_on = 0;			// Legt fest ob der Motor eingeschaltet ist
-int brake_on = 0;			// Legt fest ob die Bremse betaetigt wird
-int motor_limited = 0;			// Legt das max Tempo für die Motorunterstuetzung fest
+int _motor_on = 0;			// Legt fest ob der Motor eingeschaltet ist
+int _brake_on = 0;			// Legt fest ob die Bremse betaetigt wird
+int _motor_limited = 0;			// Legt das max Tempo für die Motorunterstuetzung fest
 
-float current_activation = 0.2;		// Legt den HIGH Anteil vom PWM-Signal fest
+float _current_activation = 0.2;		// Legt den HIGH Anteil vom PWM-Signal fest
 					// 0 <= current_activation <= 1
-float current_speed = 0;
-int lcd_handler;
-char setup_done = 0;
+float _current_speed = 0;
+int _lcd_handler;
+char _setup_done = 0;
 
-unsigned int now;
-unsigned int lastpeak;
+unsigned int _now;
+unsigned int _lastpeak;
 
 /****************************************************************************************************/
 /*  Sensor Thread										    */
@@ -86,15 +86,15 @@ void *sensor_thread(void *arg){
 
 		/*  Motor an- und ausschalten  */
 		if(digitalRead(GPIO_MOTOR_SWITCH)){
-			if(motor_on == 0){
+			if(_motor_on == 0){
 				//Motor ist aus und wird angeschaltet
-				motor_on = 1;
+				_motor_on = 1;
 				#ifdef DEBUG
 				printf("Motor angeschaltet\n");
 				#endif
 			}else{
 				//Motor ist an und wird ausgeschaltet
-				motor_on = 0;
+				_motor_on = 0;
 				#ifdef DEBUG
 				printf("Motor ausgeschaltet\n");
 				#endif
@@ -104,9 +104,9 @@ void *sensor_thread(void *arg){
 		
 		/*  Bremsen  */
                 #ifndef BRAKE2   								
-		if(digitalRead(GPIO_BRAKE1) == 0 && brake_on == 0){
+		if(digitalRead(GPIO_BRAKE1) == 0 && _brake_on == 0){
 			//Bremse neu betaetigt
-			brake_on = 1;
+			_brake_on = 1;
 			#ifdef DEBUG
 			printf("Bremse gezogen\n");
 			#endif
@@ -114,8 +114,8 @@ void *sensor_thread(void *arg){
                 #endif
                 
                 #ifdef BRAKE2									
-                if((digitalRead(GPIO_BRAKE1) == 0 || GPIO_BRAKE2 == 0 ) && brake_on == 0){					//old: &&
-                        brake_on = 1;
+                if((digitalRead(GPIO_BRAKE1) == 0 || GPIO_BRAKE2 == 0 ) && _brake_on == 0){					//old: &&
+                        _brake_on = 1;
 			#ifdef DEBUG
 			printf("Bremse gezogen\n");
 			#endif
@@ -124,9 +124,9 @@ void *sensor_thread(void *arg){
 		
 		
 		#ifndef BRAKE2
-		if(digitalRead(GPIO_BRAKE1) == 1 && brake_on == 1){
+		if(digitalRead(GPIO_BRAKE1) == 1 && _brake_on == 1){
 			//Bremse wieder losgelassen
-			brake_on = 0;
+			_brake_on = 0;
 			#ifdef DEBUG
 			printf("Bremse losgelassen\n");
 			#endif
@@ -134,9 +134,9 @@ void *sensor_thread(void *arg){
                 #endif
                 
                 #ifdef BRAKE2
-		if((digitalRead(GPIO_BRAKE1) == 1 || digitalRead(GPIO_BRAKE2)) == 1 brake_on == 1){	// old:&&
+		if((digitalRead(GPIO_BRAKE1) == 1 || digitalRead(GPIO_BRAKE2)) == 1 _brake_on == 1){	// old:&&
 			//Bremse wieder losgelassen
-			brake_on = 0;
+			_brake_on = 0;
 			#ifdef DEBUG
 			printf("Bremse losgelassen\n");
 			#endif
@@ -153,13 +153,13 @@ void *sensor_thread(void *arg){
 
 void *display_thread(void *arg){
 	while(1){
-		lcdClear(lcd_handler);
-		lcdPrintf(lcd_handler, "%d km/h", current_speed);
-		lcdPosition(lcd_handler, 0, 1);
-		if(motor_on){
-			lcdPrintf(lcd_handler, "Motor an");
+		lcdClear(_lcd_handler);
+		lcdPrintf(_lcd_handler, "%d km/h", _current_speed);
+		lcdPosition(_lcd_handler, 0, 1);
+		if(_motor_on){
+			lcdPrintf(_lcd_handler, "Motor an");
 		}else{
-			lcdPrintf(lcd_handler, "Motor aus");
+			lcdPrintf(_lcd_handler, "Motor aus");
 		}
 		delay(DISPLAY_UPDATE);
 	}
@@ -172,7 +172,7 @@ void *display_thread(void *arg){
 int setup(){
 	pthread_t sensor_thr, display_thr;
 	
-        lastpeak  = micros();
+        _lastpeak  = micros();
 
 	int res = 0;
 	wiringPiSetup();
@@ -189,7 +189,7 @@ int setup(){
 	pinMode(GPIO_BRAKE2, INPUT);
         #endif
 	pinMode(GPIO_SPEED, INPUT);
-	lcd_handler = lcdInit(LCD_ROWS, LCD_COLUMNS, LCD_BITS, LCD_RS, LCD_STRB, LCD_D0, LCD_D1, LCD_D2, LCD_D3, LCD_D4, LCD_D5, LCD_D6, LCD_D7);
+	_lcd_handler = lcdInit(LCD_ROWS, LCD_COLUMNS, LCD_BITS, LCD_RS, LCD_STRB, LCD_D0, LCD_D1, LCD_D2, LCD_D3, LCD_D4, LCD_D5, LCD_D6, LCD_D7);
 	
 	res = pthread_create(&display_thr, NULL, display_thread, NULL);
 	if(res != 0){
@@ -263,40 +263,43 @@ float read_velocity(){
         #endif
         return result;
 }
+
+void crop_velocity(){
+	if(_current_speed >= MAX_TEMPO && _motor_limited == 0){
+		_motor_limited = 1;
+	}else if(_current_speed < MAX_TEMPO && _motor_limited){
+		_motor_limited = 0;
+	}
+}
 /****************************************************************************************************/
 /*  Main / Geschwindigkeitsmessung								    */
 /****************************************************************************************************/
 
 int main(){
 
-	if (setup_done == 0) {
+	if (_setup_done == 0) {
 		if(setup() != 0){
 			return -1;
 		} else {
-			setup_done = 1;
+			_setup_done = 1;
 		}
 	}
 	
 
-        now = micros();
-        current_speed = read_velocity();
-        lastpeak = now;
+        _now = micros();
+        _current_speed = read_velocity();
+        _lastpeak = _now;
 
 
 
-	/*  Reaktion auf Geschwindigkeit */
-	if(current_speed >= MAX_TEMPO && motor_limited == 0){
-		motor_limited = 1;
-	}else if(current_speed < MAX_TEMPO && motor_limited){
-		motor_limited = 0;
-	}
+	
 	
 	/*  Ein- und Ausschalten des PWM-Signals  */
-        if(brake_on == 0 && motor_on == 1 && motor_limited == 0){
+        if(_brake_on == 0 && _motor_on == 1 && _motor_limited == 0){
                 //Einschalten des PWM-Signals
-                softPwmWrite(GPIO_PWM, (int)(PWM_RANGE * current_activation / 2));
+                softPwmWrite(GPIO_PWM, (int)(PWM_RANGE * _current_activation / 2));
                 sleep(1);
-                softPwmWrite(GPIO_PWM, (int)(PWM_RANGE * current_activation));
+                softPwmWrite(GPIO_PWM, (int)(PWM_RANGE * _current_activation));
         }else{
                 //Ausschalten des PWM-Signals
                 softPwmWrite(GPIO_PWM, 0);
@@ -304,9 +307,9 @@ int main(){
         
         /* Log data to file*/
         char printout[256];
-        sprintf(printout, "timestamp: %d, velocity: %.2fkm/h", now, current_speed);
+        sprintf(printout, "timestamp: %d, velocity: %.2fkm/h", _now, _current_speed);
         write_to_file(printout);
-        sprintf(printout, "timestamp: %d, pwm-signal: %d", now, (int)(PWM_RANGE * current_activation));
+        sprintf(printout, "timestamp: %d, pwm-signal: %d", _now, (int)(PWM_RANGE * _current_activation));
         write_to_file(printout);
 
 	delay(SPEED_UPDATE);
