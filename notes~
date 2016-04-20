@@ -31,5 +31,3 @@
 - PWM signal und Geschwindigkeit werden mit Zeitstempeln geloggt
 
 - Dateiname sollte dynamisch generiert werden (zeitstempel includieren)
-
-- Erzeuge Steuerdatei, die abhängig vom button den aktuellen PWM-Wert in 5er Schritten durchschaltet

@@ -297,6 +297,7 @@ int main(){
                 softPwmWrite(GPIO_PWM, 0);
         }
         
+        /* Log data to file */
         sprintf(printout, "timestamp: %d, velocity: %.2fkm/h", now, actual_speed);
         write_to_file(printout);
         sprintf(printout, "timestamp: %d, pwm-signal: %d", now, (int)(PWM_RANGE * current_value));
