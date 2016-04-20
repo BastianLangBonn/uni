@@ -273,9 +273,7 @@ int main(){
                 printf("rpm: %d\n", rpm);
                 printf("velocity: %.2f\n", actual_speed);
         #endif
-        sprintf(printout, "timestamp: %d, velocity: %.2fkm/h", now, actual_speed);
-        //printf("%s", printout);
-        write_to_file(printout);
+        
         //memset(printout, 0, sizeof(printout));
         lastpeak = now;
 	/****************************************************************************/
@@ -299,5 +297,10 @@ int main(){
                 softPwmWrite(GPIO_PWM, 0);
         }
         
+        sprintf(printout, "timestamp: %d, velocity: %.2fkm/h", now, actual_speed);
+        write_to_file(printout);
+        sprintf(printout, "timestamp: %d, pwm-signal: %d", now, (int)(PWM_RANGE * current_value));
+        write_to_file(printout);
+
 	delay(SPEED_UPDATE);
 }
