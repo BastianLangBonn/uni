@@ -217,7 +217,7 @@ void write_to_file(char* text){
                     FILE *f = fopen("/home/pi/AMT/log.txt", "w");
                     if(f == NULL){
                     printf("Error opening file!\n");
-                    return -1;
+                    return;
                 }
         }
 
@@ -261,7 +261,7 @@ float read_velocity(){
                 printf("rpm: %d\n", rpm);
                 printf("velocity: %.2f\n", result);
         #endif
-        return result
+        return result;
 }
 /****************************************************************************************************/
 /*  Main / Geschwindigkeitsmessung								    */

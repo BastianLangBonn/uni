@@ -69,7 +69,7 @@ int brake_on = 0;			// Legt fest ob die Bremse betaetigt wird
 int motor_limited = 0;			// Legt das max Tempo für die Motorunterstuetzung fest
 
 float current_activation = 0.2;		// Legt den HIGH Anteil vom PWM-Signal fest
-					// 0 <= current_value <= 1
+					// 0 <= current_activation <= 1
 float current_speed = 0;
 int lcd_handler;
 char setup_done = 0;
@@ -261,7 +261,7 @@ float read_velocity(){
                 printf("rpm: %d\n", rpm);
                 printf("velocity: %.2f\n", result);
         #endif
-        return result
+        return result;
 }
 /****************************************************************************************************/
 /*  Main / Geschwindigkeitsmessung								    */
