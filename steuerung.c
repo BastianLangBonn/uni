@@ -175,8 +175,11 @@ int setup(){
         if(_setup_done == 1){
                 return 0;
         }
+        #ifdef DEBUG
+	printf("Setup started, _setup_done = %d\n", _setup_done);
+	#endif
         _lastpeak  = micros();
-        sprintf(_filename, "/home/pi/AMT/log/log_%d", _lastpeak);
+        sprintf(_filename, "/home/pi/AMT/log/log_.txt");
 
 	int res = 0;
 	wiringPiSetup();
@@ -211,6 +214,9 @@ int setup(){
 		return res;
 	}
         _setup_done = 1;
+        #ifdef DEBUG
+	printf("Setup done, _setup_done = %d\n", _setup_done);
+	#endif
 	
 	return res;
 }
@@ -222,11 +228,11 @@ int setup(){
 /****************************************************************************************************/
 void write_to_file(char* text){
         /* Open file to append, create if not existent*/
-        FILE *f = fopen("/home/pi/AMT/log.txt", "a");
+        FILE *f = fopen(_filename, "a");
         if (f == NULL){
-                    FILE *f = fopen("/home/pi/AMT/log.txt", "w");
+                    FILE *f = fopen(_filename, "w");
                     if(f == NULL){
-                    printf("Error opening file!\n");
+                    printf("Error opening file: %s!\n", _filename);
                     return;
                 }
         }
