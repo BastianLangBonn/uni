@@ -243,9 +243,10 @@ void write_to_file(char* text){
         fclose(f);
 }
 
-/**
-* Reads ant+ information written to stdin
-*/
+/****************************************************************************************************/
+/*  read_velocity								    */
+/****************************************************************************************************/
+// Reads ant+ information written to stdin
 float read_velocity(){
         char buffer[BUFMAX + 1], tmp[256];
 	char *bp = buffer, *ptr;
@@ -283,6 +284,9 @@ float read_velocity(){
         return result;
 }
 
+/****************************************************************************************************/
+/*  check_vehicle_speed								    */
+/****************************************************************************************************/
 /* Check if motor needs to be switched off due to speed limit */
 int check_vehicle_speed(){
 	if(_current_speed >= MAX_TEMPO && _motor_limited == 0){
@@ -292,6 +296,9 @@ int check_vehicle_speed(){
 	}
 }
 
+/****************************************************************************************************/
+/*  send_motor_signal								    */
+/****************************************************************************************************/
 /* Sends the Pwm signal to the motor depending on some values */
 void send_motor_signal(){
         /*  Ein- und Ausschalten des PWM-Signals  */
@@ -307,9 +314,10 @@ void send_motor_signal(){
 }
 
 
-/**
-* Log important data into file
-*/
+/****************************************************************************************************/
+/*  log_data								    */
+/****************************************************************************************************/
+// Log important data into file
 void log_data(){        
 /* Log data to file*/
         char printout[256];

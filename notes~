@@ -31,3 +31,11 @@
 - PWM signal und Geschwindigkeit werden mit Zeitstempeln geloggt
 
 - Dateiname sollte dynamisch generiert werden (zeitstempel includieren)
+
+- Erzeuge Steuerdatei, die abhängig vom button den aktuellen PWM-Wert in 5er Schritten durchschaltet
+
+- Python script ruft steuerung.c jedesmal auf. Das heißt, dass alle Variablen wieder auf defaults gesetzt werden
+-- Setup wird jedes Mal neu gestartet, dynamische log-datei ist nicht möglich. 
+--- Geringes Problem, da durch append und timestamps einzelne Fahrten unterscheidbar sind
+-- Was ist mit Zuständen wie motor_limit, bremse_gezogen etc?
+
