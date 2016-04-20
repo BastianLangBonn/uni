@@ -38,4 +38,5 @@
 -- Setup wird jedes Mal neu gestartet, dynamische log-datei ist nicht möglich. 
 --- Geringes Problem, da durch append und timestamps einzelne Fahrten unterscheidbar sind
 -- Was ist mit Zuständen wie motor_limit, bremse_gezogen etc?
+-- Evtl muss steuerung.c und quarqd.py so umgebaut werden, dass steuerung.c nicht von quarqd aufgerufen wird und eine endlosschleife besitzt, die stdin überprüft.
 

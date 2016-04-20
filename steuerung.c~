@@ -68,7 +68,7 @@ int _motor_on = 0;			// Legt fest ob der Motor eingeschaltet ist
 int _brake_on = 0;			// Legt fest ob die Bremse betaetigt wird
 int _motor_limited = 0;			// Legt das max Tempo für die Motorunterstuetzung fest
 
-float _current_activation = 0.2;		// Legt den HIGH Anteil vom PWM-Signal fest
+float _current_activation = 0;		// Legt den HIGH Anteil vom PWM-Signal fest
 					// 0 <= current_activation <= 1
 float _current_speed = 0;
 int _lcd_handler;
@@ -86,19 +86,17 @@ void *sensor_thread(void *arg){
 
 		/*  Motor an- und ausschalten  */
 		if(digitalRead(GPIO_MOTOR_SWITCH)){
-			if(_motor_on == 0){
-				//Motor ist aus und wird angeschaltet
-				_motor_on = 1;
-				#ifdef DEBUG
-				printf("Motor angeschaltet\n");
+                        _motor_on++;
+                        if(_motor_on > 10){
+                                _motor_on = 0;
+                                #ifdef DEBUG
+				printf("Motor turned off\n");
 				#endif
-			}else{
-				//Motor ist an und wird ausgeschaltet
-				_motor_on = 0;
-				#ifdef DEBUG
-				printf("Motor ausgeschaltet\n");
-				#endif
-			}
+                        }
+                        _current_activation = _motor_on * 0.1;
+                        #ifdef DEBUG
+			printf("Motor activation set to %.2f.\n", _current_activaton);
+			#endif
 			delay(200); //Notwendig wegen springen des Schalters 
 		}
 		
@@ -222,7 +220,7 @@ int setup(){
 }
 
 /****************************************************************************************************/
-/*  Write_to_file                                                                                  */
+/*  Write_to_file                                                                                   */
 /*                                                                                                  */
 /*  Writes some text to a file									    */
 /****************************************************************************************************/
@@ -244,7 +242,7 @@ void write_to_file(char* text){
 }
 
 /****************************************************************************************************/
-/*  read_velocity								    */
+/*  read_velocity		                						    */
 /****************************************************************************************************/
 // Reads ant+ information written to stdin
 float read_velocity(){
@@ -285,7 +283,7 @@ float read_velocity(){
 }
 
 /****************************************************************************************************/
-/*  check_vehicle_speed								    */
+/*  check_vehicle_speed		                						    */
 /****************************************************************************************************/
 /* Check if motor needs to be switched off due to speed limit */
 int check_vehicle_speed(){
@@ -297,12 +295,12 @@ int check_vehicle_speed(){
 }
 
 /****************************************************************************************************/
-/*  send_motor_signal								    */
+/*  send_motor_signal			                					    */
 /****************************************************************************************************/
 /* Sends the Pwm signal to the motor depending on some values */
 void send_motor_signal(){
         /*  Ein- und Ausschalten des PWM-Signals  */
-        if(_brake_on == 0 && _motor_on == 1 && _motor_limited == 0){
+        if(_brake_on == 0 && _motor_on > 0 && _motor_limited == 0){
                 //Einschalten des PWM-Signals
                 softPwmWrite(GPIO_PWM, (int)(PWM_RANGE * _current_activation / 2));
                 sleep(1);
@@ -315,7 +313,7 @@ void send_motor_signal(){
 
 
 /****************************************************************************************************/
-/*  log_data								    */
+/*  log_data			                        					    */
 /****************************************************************************************************/
 // Log important data into file
 void log_data(){        
@@ -329,7 +327,7 @@ void log_data(){
 }
 
 /****************************************************************************************************/
-/*  Main / Geschwindigkeitsmessung								    */
+/*  Main                                							    */
 /****************************************************************************************************/
 
 int main(){
