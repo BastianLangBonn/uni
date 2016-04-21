@@ -7,7 +7,8 @@ popSize = 10;
 nGenes  = 80;
 rateMut = 1/nGenes;
 rateXov = 0.9;
-maxGens = 200;
+maxGens = 20;
+
 
 %% Initialize Population
 % Initialize population randomly between zero and one
@@ -77,7 +78,11 @@ fitness = sum(newPop,2);
 subplot(1,3,1);imagesc(pop(parentAindx,:));xlabel('Genes');ylabel('Individuals');title('ParentsA')
 subplot(1,3,2);imagesc(pop(parentBindx,:));xlabel('Genes');ylabel('Individuals');title('ParentsB')
 subplot(1,3,3);imagesc(pop);xlabel('Genes');ylabel('Individuals');title('Children')
+<<<<<<< HEAD
 pause(0.1)
+=======
+%pause(0.1)
+>>>>>>> 3322d26b11dc22dee77de733d94a292ba1140c24
 
 %% Early Termination
 if bestFitness(gen) == nGenes; 
@@ -92,13 +97,17 @@ end
 
 %pop(bestIndividual,:)
 %% Plot Result
+<<<<<<< HEAD
 bestFitness
 medianFitness
 
+=======
+>>>>>>> 3322d26b11dc22dee77de733d94a292ba1140c24
 figure(2);clf;
 plot(bestFitness);hold on;
 plot(medianFitness);
 xlabel('Generations');ylabel('Fitness');
+<<<<<<< HEAD
 legend('Max Fitness', 'Median Fitness','Location','SouthEast')
     
 
@@ -109,3 +118,6 @@ legend('Max Fitness', 'Median Fitness','Location','SouthEast')
 
 
 
+=======
+legend('Max Fitness', 'Median Fitness','Location','SouthEast')
+>>>>>>> 3322d26b11dc22dee77de733d94a292ba1140c24
