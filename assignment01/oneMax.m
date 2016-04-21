@@ -4,15 +4,15 @@ clear
 %%
 % Set Parameters
 popSize = 10;
-nGenes  = 8;
+nGenes  = 80;
 rateMut = 1/nGenes;
 rateXov = 0.9;
-maxGens = 2;
+maxGens = 200;
 
 %% Initialize Population
 % Initialize population randomly between zero and one
 pop = randi([0 1],popSize,nGenes);
-%figure(1);imagesc(pop);xlabel('Genes');ylabel('Individuals');title('Children')
+figure(1);imagesc(pop);xlabel('Genes');ylabel('Individuals');title('Children')
 
 %% Evolution Loop
 % Loop through evaluation, selection, and recombination for 'maxGens'
@@ -74,23 +74,33 @@ pop = newPop;
 fitness = sum(newPop,2);
 
 % View Parents and Children
-% subplot(1,3,1);imagesc(pop(parentAindx,:));xlabel('Genes');ylabel('Individuals');title('ParentsA')
-% subplot(1,3,2);imagesc(pop(parentBindx,:));xlabel('Genes');ylabel('Individuals');title('ParentsB')
-% subplot(1,3,3);imagesc(pop);xlabel('Genes');ylabel('Individuals');title('Children')
-% pause(0.1)
+subplot(1,3,1);imagesc(pop(parentAindx,:));xlabel('Genes');ylabel('Individuals');title('ParentsA')
+subplot(1,3,2);imagesc(pop(parentBindx,:));xlabel('Genes');ylabel('Individuals');title('ParentsB')
+subplot(1,3,3);imagesc(pop);xlabel('Genes');ylabel('Individuals');title('Children')
+pause(0.1)
 
 %% Early Termination
-if bestFitness(gen) == nGenes; break; end
+if bestFitness(gen) == nGenes; 
+    break;
+end
+
 
 end
 
+
+%% Best individual
+
+%pop(bestIndividual,:)
 %% Plot Result
-% figure(2);clf;
-% plot(bestFitness);hold on;
-% plot(medianFitness);
-% xlabel('Generations');ylabel('Fitness');
-% legend('Max Fitness', 'Median Fitness','Location','SouthEast')
-%    
+bestFitness
+medianFitness
+
+figure(2);clf;
+plot(bestFitness);hold on;
+plot(medianFitness);
+xlabel('Generations');ylabel('Fitness');
+legend('Max Fitness', 'Median Fitness','Location','SouthEast')
+    
 
    
    

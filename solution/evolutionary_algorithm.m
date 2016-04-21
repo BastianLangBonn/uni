@@ -4,10 +4,10 @@
 clear;
 %% Algorithm Parameters
 population_size = 30;
-number_of_genes = 10;
+number_of_genes = 80;
 crossover_probability = 0.9;
 mutation_probability = 1./number_of_genes;
-maximum_generations = 100;
+maximum_generations = 200;
 
 
 %% Initialize Population
@@ -24,20 +24,28 @@ for generation=1:maximum_generations
     %% Evaluate Population
     % Simply count the number of ones in every gene
     fitness = sum(population,2);
-    [best_fitness, index] = max(fitness);
+    [best_fitness(generation), index] = max(fitness);
     best_individuum = population(index,:);
-    median_fitness = median(fitness);
+    median_fitness(generation) = median(fitness);
     
     %% Early Termination
-    if best_fitness == number_of_genes
+    if best_fitness(generation) == number_of_genes
         break;
     end
     
     %% Selection
     % Tournament
-    first_mates = tournament_select(population, fitness, population_size);
-    second_mates = tournament_select(population, fitness, population_size);
-
+    
+    competitors = randi(population_size, population_size, 2);
+    first_competitor_won = fitness(competitors(:,1)) > fitness(competitors(:,2));
+    winner_indizes = [competitors(first_competitor_won,1);competitors(~first_competitor_won,2)];
+    first_mates = population(winner_indizes,:);
+    
+    competitors = randi(population_size, population_size, 2);
+    first_competitor_won = fitness(competitors(:,1)) > fitness(competitors(:,2));
+    winner_indizes = [competitors(first_competitor_won,1);competitors(~first_competitor_won,2)];
+    second_mates = population(winner_indizes,:);
+    
     %% Generate Next Generation
     % Crossover
     % Determine if crossover will be done for each pair of mates
@@ -66,7 +74,7 @@ for generation=1:maximum_generations
     
     population = next_generation;
     
-    % View Parents and Children
+    % Plot Parents and Children
     subplot(1,3,1);imagesc(first_mates);xlabel('Genes');ylabel('Individuals');title('ParentsA')
     subplot(1,3,2);imagesc(second_mates);xlabel('Genes');ylabel('Individuals');title('ParentsB')
     subplot(1,3,3);imagesc(population);xlabel('Genes');ylabel('Individuals');title('Children')
@@ -82,4 +90,6 @@ plot(median_fitness);
 xlabel('Generations');
 ylabel('Fitness');
 legend('Max Fitness', 'Median Fitness','Location','SouthEast')
+
+best_individuum
   
