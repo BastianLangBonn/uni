@@ -76,10 +76,10 @@
 \subsection{Consider how to best record the end poses of the three times 20 runs of the robot.}
 This experiment is about getting a model of the movement of robot. 
 So we are interested in the end pose of the robot after applying a motion command to a robot standing in the start pose. 
-As for one part's position of the robot will not be enough to specify the orientation of the robot, we consider the positions of all three wheels when specifying the pose of a robot.
+As for one part's position of the robot will not be enough to specify the orientation of the robot, we consider the positions of two fixed points when specifying the pose of a robot.
 
 To measure the end position of the robot, we need to specify and record the end pose of the robot with respect to some coordinate system. 
-As for we are interested in the movement with respect to the starting pose, we define this as the origin of our system.
+As for we are interested in the movement with respect to the starting pose, we define the starting position as the origin of our system.
 
 To reduce measurement errors and make the measurement process easier, we use a grid on the paper ground. 
 To avoid to much (unnecessary) work in advance we use a coarse grid of 10cm x 10cm sized cells. 
@@ -95,7 +95,7 @@ To determine the exact position we use a ruler within these cells.
 	\end{itemize}
 	\textbf{Measuring Facility}
 	\begin{itemize}
-		\item The ground paper with the grid (see figure \ref{facility})
+		\item The ground paper with the grid (see figure \ref{fig_facility})
 		\item Measurement tools (ruler)
 	\end{itemize}
 	\textbf{Measurand:}
@@ -104,13 +104,12 @@ To determine the exact position we use a ruler within these cells.
 	\end{itemize}
 	\textbf{Measured (quantity) values:}
 	\begin{itemize}
-		\item Position of left wheel
-		\item Position of right wheel
-		\item Position of front wheel
+		\item Position of first marker
+		\item Position of second marker
 	\end{itemize}
 	\textbf{Measurement Result:}
 	\begin{itemize}
-		\item Robots end pose specified by three wheel-positions
+		\item Robots end pose specified by two markers
 	\end{itemize}
 	\textbf{Device under Test (DUT):}
 	\begin{itemize}
@@ -118,7 +117,7 @@ To determine the exact position we use a ruler within these cells.
 	\end{itemize}
 	\textbf{Sensitivity:}
 	\begin{itemize}
-		\item Millimeters
+		\item 1mm
 	\end{itemize}
 	\textbf{Display:}
 	\begin{itemize}
@@ -144,22 +143,24 @@ To determine the exact position we use a ruler within these cells.
 \subsubsection{The Robot's Design}
 Our robot is the 5 minutes bot as can be seen in figure \ref{fig_5_min_bot}.
 It consists of two actuated wheels on the sides of the robot and one free spinning wheel in the front.
+Additionally we attach two markers (not in the figure yet) in the front and the back of the robot. 
+These markers must not touch the ground due to friction, but they need to be close to the ground to be able to measure their positions as accurate as possible.
 
 \subsubsection{The Measurement Process}
 We first fix and mark the robot's starting pose on the paper ground.
-For each run we place the robot's wheels exactly on their marks and run the movement program.
-After the robot has reached its end position, we mark the wheel positions and then use our grid and a ruler to get the values of their positions.
+For each run we place the robot's markers exactly on their marks on the paper and run the movement program.
+After the robot has reached its end position, we mark the marker's new positions and then use our grid and a ruler to get the values of their positions.
 Each value gets recorded.
 
 \subsubsection{Expected Problems}
-One problem will be the exact measurement of the wheel poses. 
-There will probably already be small inaccuracies when marking the wheel positions, but also using the ruler to determine the values of the positions will yield additional inaccuracies.
+One problem will be the exact measurement of the marker positions. 
+There will probably already be small inaccuracies when marking these positions, but also using the ruler to determine the values of the positions will yield additional inaccuracies within a few millimeter.
 
 Another problem will be the exact positioning of the robot in the start pose.
 
 \subsection{Give a rough (but justified by some arguments) estimation of the expected accuracy and precision of your measurement process.}
-As humans we are probably able to place the robot in its start pose and to mark its end pose with only a few (~5mm) millimeters off. The measurement using a ruler and our grid will probably hold another one or two millimeters. 
-So we expect errors within the range of roughly a centimeter.
+As humans we are probably able to place the robot in its start pose and to mark its end pose with only a few (~2mm) millimeters off. The measurement using the markers, a ruler and our grid will probably hold another two or three millimeters of error. 
+So we expect errors within the range of roughly half a centimeter.
 
 
 
