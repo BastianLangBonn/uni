@@ -32,6 +32,7 @@
 
 \usepackage{subcaption}
 \usepackage{pdfpages}
+\usepackage{float}
 
 \usepackage{fancyhdr} % Custom headers and footers
 \pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
@@ -76,7 +77,7 @@ Experiment Report \\% The assignment title
 \tableofcontents
 \newpage
 
-\section{Introduction}
+\section{Abstract}
 % Especially how to mark positions, how to ensure identical start postitions
 % Program and Parameters used to drive the robot
 % Any observation made during the execution, that may help to understand the outcome of the experiments
@@ -93,7 +94,7 @@ It has the standard two actuated wheels to the left and the right of the robot a
 The actuated wheels have a diameter of 5.6cm and are each about 8.5cm displaced with respect to the center. 
 Right next to its actuated wheels are two markers close to the ground aligned with the wheel axis to be used to measure the position of the robot.
 
-\begin{figure}[h]
+\begin{figure}[H]
  
 \begin{subfigure}{0.5\textwidth}
 \includegraphics[width=0.9\linewidth, height=5cm]{front.png} 
@@ -136,10 +137,10 @@ After each run we erase all but the start markers and place the robot the back a
 We repeat this 20 times for each experiment.
 During all the experiments the robot is plugged to the power source.
 
-\begin{figure}[h]
+\begin{figure}[H]
  
 \includegraphics[width=0.9\linewidth]{experimental_setup.png} 
-\caption{Scetch of Measurement Process}
+\caption{Sketch of Experiment Performance}
 \label{fig:setup}
 \end{figure}
 
@@ -152,7 +153,7 @@ The second was driving in a right arc by commanding the left wheel to do 2 rotat
 The last scenario was driving in a left arc by rotating the left wheel once with half power and the right wheel twice with full power.
 The programs created in Lego's visual IDE can be seen in figure \ref{fig:code}
 
-\begin{figure}[h]
+\begin{figure}[H]
  
 \begin{subfigure}{0.5\textwidth}
 \includegraphics[width=0.9\linewidth, height=5cm]{forward_code.PNG} 
@@ -179,16 +180,7 @@ The programs created in Lego's visual IDE can be seen in figure \ref{fig:code}
 % Plot of 2D coordinates
 The results of the experiments can be seen in the appendix (Section \ref{sec:appendix}).
 
-\begin{figure}[h]
- 
-\begin{subfigure}{0.5\textwidth}
-\includegraphics[width=0.9\linewidth, height=5cm]{forward_code.PNG} 
-\caption{Program for forward motion}
-\label{fig:sub_data}
-\end{subfigure} 
-\caption{Measured and inferred data of the experiments}
-\label{fig:result}
-\end{figure}
+
 
 
 \subsection{Forward}
@@ -214,7 +206,7 @@ But it turned out that the robot was turning slightly more to the right than to 
 Overall we could observe a small bias to the right.
 
 
-\begin{figure}[h]
+\begin{figure}[H]
  
 \begin{subfigure}{0.5\textwidth}
 \includegraphics[width=0.9\linewidth, height=5cm]{forward.png} 

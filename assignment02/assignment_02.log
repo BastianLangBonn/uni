@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.1.17)  18 APR 2016 13:07
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.1.17)  18 APR 2016 13:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -487,13 +487,21 @@ File: pppdftex.def 2013/08/25 v0.4v Pdfpages driver for pdfTeX (AM)
 \c@AM@survey=\count108
 \AM@templatesizebox=\box30
 )
+(/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count109
+\float@exts=\toks27
+\float@box=\box31
+\@float@everytoks=\toks28
+\@floatcapt=\box32
+)
 
 Class scrartcl Warning: Usage of package `fancyhdr' together
 (scrartcl)              with a KOMA-Script class is not recommended.
 (scrartcl)              I'd suggest to use 
 (scrartcl)              package `scrpage2' or `scrlayer-scrpage'.
 (scrartcl)              Nevertheless, using requested
-(scrartcl)              package `fancyhdr' on input line 37.
+(scrartcl)              package `fancyhdr' on input line 38.
 
 (/usr/share/texlive/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
 \fancy@headwidth=\skip57
@@ -509,67 +517,67 @@ Class scrartcl Warning: Usage of package `fancyhdr' together
 (./assignment_02.aux)
 \openout1 = `assignment_02.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 72.
-LaTeX Font Info:    ... okay on input line 72.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 72.
-LaTeX Font Info:    ... okay on input line 72.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 72.
-LaTeX Font Info:    ... okay on input line 72.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 72.
-LaTeX Font Info:    ... okay on input line 72.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 72.
-LaTeX Font Info:    ... okay on input line 72.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 72.
-LaTeX Font Info:    ... okay on input line 72.
-LaTeX Font Info:    Checking defaults for FML/futm/m/it on input line 72.
-LaTeX Font Info:    Try loading font information for FML+futm on input line 72.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 73.
+LaTeX Font Info:    ... okay on input line 73.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 73.
+LaTeX Font Info:    ... okay on input line 73.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 73.
+LaTeX Font Info:    ... okay on input line 73.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 73.
+LaTeX Font Info:    ... okay on input line 73.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 73.
+LaTeX Font Info:    ... okay on input line 73.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 73.
+LaTeX Font Info:    ... okay on input line 73.
+LaTeX Font Info:    Checking defaults for FML/futm/m/it on input line 73.
+LaTeX Font Info:    Try loading font information for FML+futm on input line 73.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/fourier/fmlfutm.fd
 File: fmlfutm.fd 2004/10/30 Fontinst v1.926 font definitions for FML/futm.
 )
-LaTeX Font Info:    ... okay on input line 72.
-LaTeX Font Info:    Checking defaults for FMS/futm/m/n on input line 72.
-LaTeX Font Info:    Try loading font information for FMS+futm on input line 72.
+LaTeX Font Info:    ... okay on input line 73.
+LaTeX Font Info:    Checking defaults for FMS/futm/m/n on input line 73.
+LaTeX Font Info:    Try loading font information for FMS+futm on input line 73.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/fourier/fmsfutm.fd
 File: fmsfutm.fd 2004/10/30 Fontinst v1.926 font definitions for FMS/futm.
 )
-LaTeX Font Info:    ... okay on input line 72.
-LaTeX Font Info:    Checking defaults for FMX/futm/m/n on input line 72.
-LaTeX Font Info:    Try loading font information for FMX+futm on input line 72.
+LaTeX Font Info:    ... okay on input line 73.
+LaTeX Font Info:    Checking defaults for FMX/futm/m/n on input line 73.
+LaTeX Font Info:    Try loading font information for FMX+futm on input line 73.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/fourier/fmxfutm.fd
 File: fmxfutm.fd futm-extension
 )
-LaTeX Font Info:    ... okay on input line 72.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 72.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 72.
+LaTeX Font Info:    ... okay on input line 73.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 73.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 73.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 72.
-LaTeX Font Info:    Try loading font information for T1+futs on input line 72.
+LaTeX Font Info:    ... okay on input line 73.
+LaTeX Font Info:    Try loading font information for T1+futs on input line 73.
 
 (/usr/share/texlive/texmf-dist/tex/latex/fourier/t1futs.fd
 File: t1futs.fd 2004/03/02 Fontinst v1.926 font definitions for T1/futs.
 )
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count109
+\scratchcounter=\count110
 \scratchdimen=\dimen124
-\scratchbox=\box31
-\nofMPsegments=\count110
-\nofMParguments=\count111
-\everyMPshowfont=\toks27
-\MPscratchCnt=\count112
+\scratchbox=\box33
+\nofMPsegments=\count111
+\nofMParguments=\count112
+\everyMPshowfont=\toks29
+\MPscratchCnt=\count113
 \MPscratchDim=\dimen125
-\MPnumerator=\count113
-\makeMPintoPDFobject=\count114
-\everyMPtoPDFconversion=\toks28
+\MPnumerator=\count114
+\makeMPintoPDFobject=\count115
+\everyMPtoPDFconversion=\toks30
 ) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -615,37 +623,38 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: float package is loaded.
 Package caption Info: End \AtBeginDocument code.
-\AtBeginShipoutBox=\box32
-LaTeX Font Info:    Try loading font information for T1+cmss on input line 75.
+\AtBeginShipoutBox=\box34
+LaTeX Font Info:    Try loading font information for T1+cmss on input line 76.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmss.fd
 File: t1cmss.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    Try loading font information for FML+futmi on input line 75
+LaTeX Font Info:    Try loading font information for FML+futmi on input line 76
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/fourier/fmlfutmi.fd
 File: fmlfutmi.fd 2004/10/30 Fontinst v1.926 font definitions for FML/futmi.
 )
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 13.24796pt on input line 75.
+(Font)              scaled to size 13.24796pt on input line 76.
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 9.19998pt on input line 75.
+(Font)              scaled to size 9.19998pt on input line 76.
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 7.35999pt on input line 75.
+(Font)              scaled to size 7.35999pt on input line 76.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 13.24796pt on input line 75.
+(Font)              scaled to size 13.24796pt on input line 76.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 9.19998pt on input line 75.
+(Font)              scaled to size 9.19998pt on input line 76.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 7.35999pt on input line 75.
-LaTeX Font Info:    Try loading font information for U+msa on input line 75.
+(Font)              scaled to size 7.35999pt on input line 76.
+LaTeX Font Info:    Try loading font information for U+msa on input line 76.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 75.
+LaTeX Font Info:    Try loading font information for U+msb on input line 76.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -675,27 +684,27 @@ LaTeX Font Info:    Font shape `U/futm/m/n' will be
 <front.png, id=8, 2831.57875pt x 1364.09625pt>
 File: front.png Graphic file (type png)
  <use front.png>
-Package pdftex.def Info: front.png used on input line 99.
+Package pdftex.def Info: front.png used on input line 100.
 (pdftex.def)             Requested size: 188.2069pt x 142.24565pt.
 
 <side.png, id=10, 2099.845pt x 1399.2275pt>
 File: side.png Graphic file (type png)
  <use side.png>
-Package pdftex.def Info: side.png used on input line 104.
+Package pdftex.def Info: side.png used on input line 105.
 (pdftex.def)             Requested size: 188.20891pt x 142.25815pt.
 
 <top.png, id=11, 1755.55875pt x 1755.55875pt>
 File: top.png Graphic file (type png)
  <use top.png>
-Package pdftex.def Info: top.png used on input line 109.
+Package pdftex.def Info: top.png used on input line 110.
 (pdftex.def)             Requested size: 188.20992pt x 142.24234pt.
 
-Overfull \hbox (1.71913pt too wide) in paragraph at lines 98--113
+Overfull \hbox (1.71913pt too wide) in paragraph at lines 99--114
 []$[]$ $[]$
  []
 
 [2 <./front.png> <./side.png> <./top.png>]
-LaTeX Font Info:    Try loading font information for TS1+futs on input line 128
+LaTeX Font Info:    Try loading font information for TS1+futs on input line 129
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/fourier/ts1futs.fd
@@ -705,166 +714,145 @@ File: ts1futs.fd 2004/03/26 Fontinst v1.926 font definitions for TS1/futs.
 File: experimental_setup.png Graphic file (type png)
 
 <use experimental_setup.png>
-Package pdftex.def Info: experimental_setup.png used on input line 141.
+Package pdftex.def Info: experimental_setup.png used on input line 142.
 (pdftex.def)             Requested size: 376.42744pt x 469.43262pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<forward_code.PNG, id=19, 412.54124pt x 384.2355pt>
+ [3] [4 <./experimental_setup.png>]
+<forward_code.PNG, id=25, 412.54124pt x 384.2355pt>
 File: forward_code.PNG Graphic file (type png)
  <use forward_code.PNG>
-Package pdftex.def Info: forward_code.PNG used on input line 158.
+Package pdftex.def Info: forward_code.PNG used on input line 159.
 (pdftex.def)             Requested size: 188.21645pt x 142.25871pt.
 
-<right_arc_code.PNG, id=20, 415.85362pt x 385.74112pt>
+<right_arc_code.PNG, id=26, 415.85362pt x 385.74112pt>
 File: right_arc_code.PNG Graphic file (type png)
 
 <use right_arc_code.PNG>
-Package pdftex.def Info: right_arc_code.PNG used on input line 163.
+Package pdftex.def Info: right_arc_code.PNG used on input line 164.
 (pdftex.def)             Requested size: 188.21745pt x 142.26286pt.
- <left_arc_code.PNG, id=21, 421.27388pt x 414.348pt>
+ <left_arc_code.PNG, id=27, 421.27388pt x 414.348pt>
 File: left_arc_code.PNG Graphic file (type png)
 
 <use left_arc_code.PNG>
-Package pdftex.def Info: left_arc_code.PNG used on input line 168.
+Package pdftex.def Info: left_arc_code.PNG used on input line 169.
 (pdftex.def)             Requested size: 188.21515pt x 142.26106pt.
 
-Overfull \hbox (1.71913pt too wide) in paragraph at lines 157--172
+Overfull \hbox (1.71913pt too wide) in paragraph at lines 158--173
 []$[]$ $[]$
  []
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-File: forward_code.PNG Graphic file (type png)
-<use forward_code.PNG>
-Package pdftex.def Info: forward_code.PNG used on input line 185.
-(pdftex.def)             Requested size: 188.21645pt x 142.25871pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[3] <forward.png, id=25, 578.16pt x 433.62pt>
+[5 <./forward_code.PNG> <./right_arc_code.PNG> <./left_arc_code.PNG>]
+<forward.png, id=34, 578.16pt x 433.62pt>
 File: forward.png Graphic file (type png)
  <use forward.png>
-Package pdftex.def Info: forward.png used on input line 220.
+Package pdftex.def Info: forward.png used on input line 212.
 (pdftex.def)             Requested size: 188.20854pt x 142.26135pt.
 
-<right_arc.png, id=26, 578.16pt x 433.62pt>
+<right_arc.png, id=35, 578.16pt x 433.62pt>
 File: right_arc.png Graphic file (type png)
  <use right_arc.png>
-Package pdftex.def Info: right_arc.png used on input line 225.
+Package pdftex.def Info: right_arc.png used on input line 217.
 (pdftex.def)             Requested size: 188.20854pt x 142.26135pt.
 
-<left_arc.png, id=27, 578.16pt x 433.62pt>
+<left_arc.png, id=36, 578.16pt x 433.62pt>
 File: left_arc.png Graphic file (type png)
  <use left_arc.png>
-Package pdftex.def Info: left_arc.png used on input line 230.
+Package pdftex.def Info: left_arc.png used on input line 222.
 (pdftex.def)             Requested size: 188.20854pt x 142.26135pt.
 
-Overfull \hbox (1.71913pt too wide) in paragraph at lines 219--234
+Overfull \hbox (1.71913pt too wide) in paragraph at lines 211--226
 []$[]$ $[]$
  []
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<final_results.pdf, id=28, 845.1575pt x 597.23125pt>
+[6 <./forward.png> <./right_arc.png> <./left_arc.png>]
+<final_results.pdf, id=43, 845.1575pt x 597.23125pt>
 File: final_results.pdf Graphic file (type pdf)
  <use final_results.pdf>
-Package pdftex.def Info: final_results.pdf used on input line 242.
+Package pdftex.def Info: final_results.pdf used on input line 234.
 (pdftex.def)             Requested size: 845.15544pt x 597.22978pt.
 File: final_results.pdf Graphic file (type pdf)
 
 <use final_results.pdf>
-Package pdftex.def Info: final_results.pdf used on input line 242.
+Package pdftex.def Info: final_results.pdf used on input line 234.
 (pdftex.def)             Requested size: 845.15544pt x 597.22978pt.
 File: final_results.pdf Graphic file (type pdf)
  <use final_results.pdf>
-Package pdftex.def Info: final_results.pdf used on input line 242.
+Package pdftex.def Info: final_results.pdf used on input line 234.
 (pdftex.def)             Requested size: 845.15544pt x 597.22978pt.
 File: final_results.pdf Graphic file (type pdf)
  <use final_results.pdf>
-Package pdftex.def Info: final_results.pdf used on input line 242.
+Package pdftex.def Info: final_results.pdf used on input line 234.
 (pdftex.def)             Requested size: 845.15544pt x 597.22978pt.
 
-[4] <final_results.pdf, id=36, page=1, 845.1575pt x 597.23125pt>
+[7] <final_results.pdf, id=52, page=1, 845.1575pt x 597.23125pt>
 File: final_results.pdf Graphic file (type pdf)
 
 <use final_results.pdf, page 1>
-Package pdftex.def Info: final_results.pdf, page1 used on input line 242.
+Package pdftex.def Info: final_results.pdf, page1 used on input line 234.
 (pdftex.def)             Requested size: 845.15544pt x 597.22978pt.
 File: final_results.pdf Graphic file (type pdf)
  <use final_results.pdf, page 1>
-Package pdftex.def Info: final_results.pdf, page1 used on input line 242.
+Package pdftex.def Info: final_results.pdf, page1 used on input line 234.
 (pdftex.def)             Requested size: 597.61578pt x 422.30568pt.
 File: final_results.pdf Graphic file (type pdf)
 
 <use final_results.pdf, page 1>
-Package pdftex.def Info: final_results.pdf, page1 used on input line 242.
+Package pdftex.def Info: final_results.pdf, page1 used on input line 234.
 (pdftex.def)             Requested size: 597.61578pt x 422.30568pt.
 File: final_results.pdf Graphic file (type pdf)
  <use final_results.pdf, page 1>
-Package pdftex.def Info: final_results.pdf, page1 used on input line 242.
+Package pdftex.def Info: final_results.pdf, page1 used on input line 234.
 (pdftex.def)             Requested size: 597.61578pt x 422.30568pt.
 File: final_results.pdf Graphic file (type pdf)
 
 <use final_results.pdf, page 1>
-Package pdftex.def Info: final_results.pdf, page1 used on input line 242.
+Package pdftex.def Info: final_results.pdf, page1 used on input line 234.
 (pdftex.def)             Requested size: 597.61578pt x 422.30568pt.
- [5 <./final_results.pdf>]
-<final_results.pdf, id=46, page=2, 845.1575pt x 597.23125pt>
+ [8 <./final_results.pdf>]
+<final_results.pdf, id=62, page=2, 845.1575pt x 597.23125pt>
 File: final_results.pdf Graphic file (type pdf)
 
 <use final_results.pdf, page 2>
-Package pdftex.def Info: final_results.pdf, page2 used on input line 242.
+Package pdftex.def Info: final_results.pdf, page2 used on input line 234.
 (pdftex.def)             Requested size: 597.61578pt x 422.30568pt.
 File: final_results.pdf Graphic file (type pdf)
  <use final_results.pdf, page 2>
-Package pdftex.def Info: final_results.pdf, page2 used on input line 242.
+Package pdftex.def Info: final_results.pdf, page2 used on input line 234.
 (pdftex.def)             Requested size: 597.61578pt x 422.30568pt.
 File: final_results.pdf Graphic file (type pdf)
 
 <use final_results.pdf, page 2>
-Package pdftex.def Info: final_results.pdf, page2 used on input line 242.
+Package pdftex.def Info: final_results.pdf, page2 used on input line 234.
 (pdftex.def)             Requested size: 597.61578pt x 422.30568pt.
- [6 <./final_results.pdf>]
-<final_results.pdf, id=50, page=3, 845.1575pt x 597.23125pt>
+ [9 <./final_results.pdf>]
+<final_results.pdf, id=66, page=3, 845.1575pt x 597.23125pt>
 File: final_results.pdf Graphic file (type pdf)
 
 <use final_results.pdf, page 3>
-Package pdftex.def Info: final_results.pdf, page3 used on input line 242.
+Package pdftex.def Info: final_results.pdf, page3 used on input line 234.
 (pdftex.def)             Requested size: 597.61578pt x 422.30568pt.
 File: final_results.pdf Graphic file (type pdf)
  <use final_results.pdf, page 3>
-Package pdftex.def Info: final_results.pdf, page3 used on input line 242.
+Package pdftex.def Info: final_results.pdf, page3 used on input line 234.
 (pdftex.def)             Requested size: 597.61578pt x 422.30568pt.
 File: final_results.pdf Graphic file (type pdf)
 
 <use final_results.pdf, page 3>
-Package pdftex.def Info: final_results.pdf, page3 used on input line 242.
+Package pdftex.def Info: final_results.pdf, page3 used on input line 234.
 (pdftex.def)             Requested size: 597.61578pt x 422.30568pt.
- [7 <./final_results.pdf>] [8 <./experimental_setup.png>] [9 <./forward_code.PN
-G> <./right_arc_code.PNG> <./left_arc_code.PNG>] [10 <./forward.png> <./right_a
-rc.png> <./left_arc.png>] (./assignment_02.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- ) 
+ [10 <./final_results.pdf>] (./assignment_02.aux) ) 
 Here is how much of TeX's memory you used:
- 7620 strings out of 493304
- 114520 string characters out of 6139871
- 225946 words of memory out of 5000000
- 10899 multiletter control sequences out of 15000+600000
+ 7666 strings out of 493304
+ 115161 string characters out of 6139871
+ 224231 words of memory out of 5000000
+ 10941 multiletter control sequences out of 15000+600000
  87575 words of font info for 94 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  48i,18n,52p,274b,489s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/texliv
-e/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/t
-ype1/adobe/utopia/putr8a.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfsx
-1095.pfb>
-Output written on assignment_02.pdf (10 pages, 13212238 bytes).
+{/usr/share/texmf/fonts/enc/
+dvips/cm-super/cm-super-t1.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/b
+ase/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/adobe/utopia/putr8a.pfb><
+/usr/share/texmf/fonts/type1/public/cm-super/sfsx1095.pfb>
+Output written on assignment_02.pdf (10 pages, 13212024 bytes).
 PDF statistics:
  81 PDF objects out of 1000 (max. 8388607)
  37 compressed objects within 1 object stream
