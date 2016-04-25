@@ -44,6 +44,7 @@ plot_data(right_wheel_data, 2);
 
 center_data.title = 'Center of Motion Positions';
 plot_data(center_data, 3);
+boxplot(center_data.ground(:,2));
 
 % theta
 number_of_bins = 20;
@@ -66,6 +67,5 @@ xlabel('x in cm');
 ylabel('y in cm');
 axis([min(complete_data.ground(:,1))-1, max(complete_data.ground(:,1))+1,0, max(complete_data.ground(:,2))+1]);
 legend('Complete Movement', 'median', 'mean', 'mode', 'start','Location','SouthEast');
-
 
 
