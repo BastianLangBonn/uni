@@ -10,13 +10,13 @@ rolling_resistance_coefficient = 0.005; % unit?
 normal_force = mass * 9.81; % in kg*m/s²
 
 %% Read track information
-track = importdata('st_augustin_02_1km.csv', ';', 0);
+track = importdata('st_augustin_01_2_2km.csv', ';', 0);
 travelled_distance = track(:,1);
 elevation = track(:,2);
 
 %% Simulate
 velocity(1) = 1;
-command = 1;
+command = 0.01;
 time(1) = 0;
 slope(length(track)) = 0;
 for index=1:length(track)-1
@@ -37,3 +37,5 @@ figure(1);
 hold on;
 % plot(travelled_distance, energy);
 plot(travelled_distance, velocity);
+figure(2);
+plot(travelled_distance, slope);
