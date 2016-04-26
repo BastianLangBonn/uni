@@ -1,0 +1,28 @@
+\begin{thebibliography}{1}
+
+\bibitem{gaier2014evolving}
+Adam Gaier and Alexander Asteroth.
+\newblock Evolving look ahead controllers for energy optimal driving and path
+  planning.
+\newblock In {\em Innovations in Intelligent Systems and Applications (INISTA)
+  Proceedings, 2014 IEEE International Symposium on}, pages 138--145. IEEE,
+  2014.
+
+\bibitem{gomez2003active}
+Faustino~J Gomez and Risto Miikkulainen.
+\newblock Active guidance for a finless rocket using neuroevolution.
+\newblock In {\em Genetic and Evolutionary Computation—GECCO 2003}, pages
+  2084--2095. Springer, 2003.
+
+\bibitem{stella}
+Department of~Computer~Science.
+\newblock Stella.
+\newblock \url{https://www.h-brs.de/en/stella}, 2013.
+\newblock [Online; accessed 25-April-2016].
+
+\bibitem{stanley2002evolving}
+Kenneth~O Stanley and Risto Miikkulainen.
+\newblock Evolving neural networks through augmenting topologies.
+\newblock {\em Evolutionary computation}, 10(2):99--127, 2002.
+
+\end{thebibliography}
