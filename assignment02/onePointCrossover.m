@@ -1,17 +1,13 @@
-function [ offspring ] = onePointCrossover( matesA, matesB )
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
-    populationSize = length(matesA(:,1));
-    genomeSize = length(matesA(1,:));
-    crossoverPoint = randi(genomeSize,populationSize,1);
+function [ offspring ] = onePointCrossover( mateA, mateB, crossoverPoint )
+% Does one point crossover on two mates
+%   Takes genes of mateA until crossover point, then takes remaining genes
+%   in the order of appearance in mateB.
+
+    partA = mateA(1:crossoverPoint);
+    % Find values in mateB that are not in partA and keep their order
+    missingPart = setdiff(mateB, partA, 'stable'); 
     
-    for index=1:populationSize
-        mate_a = matesA(index,:);
-        mate_b = matesB(index,:);
-        for gene=crossoverPoint:genomeSize
-            find(mate_b==mate_a(gene));
-        end        
-    end
-    offspring = matesA;
+    offspring = [partA, missingPart];
+    
 end
 

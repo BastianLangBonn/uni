@@ -1,14 +1,14 @@
 % intersect
 
 %% Initialize Parameters
-maximumGenerations = 10;
+maximumGenerations = 1000;
 populationSize = 18;
 crossoverRate = 0.9;
 
 %% Read Cities
-cities = importdata('cities_test.csv');
+cities = importdata('cities.csv');
 numberOfGenes = length(cities.data);
-mutationRate = 1;%/numberOfGenes;
+mutationRate = 1/numberOfGenes;
 
 %% Compute Distances
 distances = zeros(length(cities.data), length(cities.data));
@@ -43,11 +43,11 @@ for generation = 1:maximumGenerations
     matesB = tournamentSelect(population, fitness, populationSize);
     
     % Recombination
-    population = onePointCrossover(matesA, matesB);
+    population = onePointCrossoverSet(matesA, matesB, crossoverRate);
     
     % Mutation
-    %population = mutateNeighbours(population, mutation_rate);
-    population = mutateRandomly(population, mutationRate);
+    population = mutateNeighbours(population, mutationRate);
+    %population = mutateRandomly(population, mutationRate);
     
     % Elitism
     population(1,:) = bestIndividual;
@@ -61,16 +61,18 @@ end
 
 bestFitness
 %cities.data(best_individual,2);
-figure(2);
-hold on;
-plot(cities.data(bestIndividual,2), cities.data(bestIndividual,3));
+figure(2);clf;hold on;
+plot([cities.data(bestIndividual,2);cities.data(bestIndividual(1),2)],...
+    [cities.data(bestIndividual,3);cities.data(bestIndividual(1),3)]);
 plot(cities.data(:,2), cities.data(:,3),'bo');
 plot(cities.data(bestIndividual(1),2), cities.data(bestIndividual(1),3),'r.');
+xlabel('x-coordinates');
+ylabel('y-coordinates');
+legend('Best found route', 'cities', 'start city');
 
-figure(3);
-hold on;
+figure(3);clf;hold on;
 plot(-1*bestFitness);
 plot(-1*medianFitness);
-ylabel('travelled distance');
+ylabel('travelled distance in km');
 xlabel('generation');
 legend('best fitness','median fitness');
