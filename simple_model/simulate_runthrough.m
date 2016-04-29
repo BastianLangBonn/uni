@@ -57,11 +57,18 @@ title('slope over time');
 xlabel('travelled distance in m');
 ylabel('slope');
 
+% subplot(2,2,4);
+% plot(travelled_distance, overall_energy);
+% title('overall energy usage over time');
+% xlabel('travelled distance in m');
+% ylabel('energy used');
+
 subplot(2,2,4);
-plot(travelled_distance, overall_energy);
+plot(travelled_distance, elevation);
 title('overall energy usage over time');
 xlabel('travelled distance in m');
 ylabel('energy used');
+
 
 n_velocity = velocity/norm(velocity);
 n_slope = slope/norm(slope);
@@ -77,3 +84,8 @@ title('normalized comparison of data');
 xlabel('travelled distance');
 ylabel('normalized value');
 legend('velocity','slope','energy','overall energy used');
+
+
+
+%% Acceleration
+% 
