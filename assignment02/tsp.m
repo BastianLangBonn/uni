@@ -1,12 +1,14 @@
+% intersect
+
 %% Initialize Parameters
-maximum_generations = 1000;
-population_size = 18;
-crossover_rate = 0.9;
+maximumGenerations = 10;
+populationSize = 18;
+crossoverRate = 0.9;
 
 %% Read Cities
-cities = importdata('cities.csv');
-number_of_genes = length(cities.data);
-mutation_rate = 1;%/number_of_genes;
+cities = importdata('cities_test.csv');
+numberOfGenes = length(cities.data);
+mutationRate = 1;%/numberOfGenes;
 
 %% Compute Distances
 distances = zeros(length(cities.data), length(cities.data));
@@ -18,57 +20,57 @@ for x = 1:length(cities.data)
 end
 
 %% Initialize population
-population = zeros(population_size, length(cities.data));
-for index = 1:population_size
+population = zeros(populationSize, length(cities.data));
+for index = 1:populationSize
     population(index,:) = randperm(length(cities.data));
 end
 
 figure(1);
 imagesc(population);
 
-best_fitness = zeros(maximum_generations,1);
-median_fitness = zeros(maximum_generations,1);
+bestFitness = zeros(maximumGenerations,1);
+medianFitness = zeros(maximumGenerations,1);
 %% Evolution Loop
-for generation = 1:maximum_generations
+for generation = 1:maximumGenerations
     % Evaluate population
     fitness = -1* evaluate(population, distances);
-    [best_fitness(generation), best_index] = max(fitness);
-    median_fitness(generation) = median(fitness);
-    best_individual = population(best_index,:);
+    [bestFitness(generation), best_index] = max(fitness);
+    medianFitness(generation) = median(fitness);
+    bestIndividual = population(best_index,:);
     
     % Tournament Selection
-    mates_a = tournament_select(population, fitness, population_size);
-    mates_b = tournament_select(population, fitness, population_size);
+    matesA = tournamentSelect(population, fitness);
+    matesB = tournamentSelect(population, fitness);
     
     % Recombination
-    population = one_point_crossover(mates_a, mates_b);
+    population = onePointCrossover(matesA, matesB);
     
     % Mutation
-    %population = neighbour_mutation(population, mutation_rate);
-    population = randomly_mutate(population, mutation_rate);
+    %population = mutateNeighbours(population, mutation_rate);
+    population = mutateRandomly(population, mutationRate);
     
     % Elitism
-    population(1,:) = best_individual;
+    population(1,:) = bestIndividual;
     
     % Plot Parents and Children
-    subplot(1,3,1);imagesc(mates_a);xlabel('Genes');ylabel('Individuals');title('ParentsA')
-    subplot(1,3,2);imagesc(mates_b);xlabel('Genes');ylabel('Individuals');title('ParentsB')
+    subplot(1,3,1);imagesc(matesA);xlabel('Genes');ylabel('Individuals');title('ParentsA')
+    subplot(1,3,2);imagesc(matesB);xlabel('Genes');ylabel('Individuals');title('ParentsB')
     subplot(1,3,3);imagesc(population);xlabel('Genes');ylabel('Individuals');title('Children')
     pause(0.1);
 end
 
-best_fitness
+bestFitness
 %cities.data(best_individual,2);
 figure(2);
 hold on;
-plot(cities.data(best_individual,2), cities.data(best_individual,3));
+plot(cities.data(bestIndividual,2), cities.data(bestIndividual,3));
 plot(cities.data(:,2), cities.data(:,3),'bo');
-plot(cities.data(best_individual(1),2), cities.data(best_individual(1),3),'r.');
+plot(cities.data(bestIndividual(1),2), cities.data(bestIndividual(1),3),'r.');
 
 figure(3);
 hold on;
-plot(-1*best_fitness);
-plot(-1*median_fitness);
+plot(-1*bestFitness);
+plot(-1*medianFitness);
 ylabel('travelled distance');
 xlabel('generation');
 legend('best fitness','median fitness');
