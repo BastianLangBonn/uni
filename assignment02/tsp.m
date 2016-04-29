@@ -39,8 +39,8 @@ for generation = 1:maximumGenerations
     bestIndividual = population(best_index,:);
     
     % Tournament Selection
-    matesA = tournamentSelect(population, fitness);
-    matesB = tournamentSelect(population, fitness);
+    matesA = tournamentSelect(population, fitness, populationSize);
+    matesB = tournamentSelect(population, fitness, populationSize);
     
     % Recombination
     population = onePointCrossover(matesA, matesB);
