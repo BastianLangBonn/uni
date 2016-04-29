@@ -16,10 +16,9 @@ children = rand(nChild,nGenes);
 
 %% Begin Evolution
 mutRate = 0.5;
-%prompt = 'Which is closest? ';
-%bestHist = [];
-smallestDifference = zeros(nGenerations,1);
-bestHist = zeros(nGenerations, nGenes);
+prompt = 'Which is closest? ';
+bestHist = [];
+sma
 for generation=1:nGenerations
     for iChild=1:nChild
         subplot(3,3,childIds(iChild));
@@ -35,7 +34,7 @@ for generation=1:nGenerations
             (children(iChild,2) - target(1,2))^2 +...
             (children(iChild,3) - target(1,3))^2);
     end
-    [smallestDifference(generation), best] = min(difference);
+    [smallesDifference(generation), best] = min(difference);
     %best = children(iBest,:);
     
     if best == 0;break;end
@@ -56,7 +55,7 @@ plot(bestHist(:,3),'b-');
 xlabel('Generations');ylabel('RBG Values');title('Color Error');
 
 figure(3);clf;hold on;
-plot(smallestDifference);
+plot(
 
 
 end
