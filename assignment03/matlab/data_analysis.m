@@ -55,6 +55,10 @@ theta_degrees_data.title = 'Theta in degrees';
 hist_data(theta_degrees_data, number_of_bins, 5);
 
 % All movement in one
+complete_data.median = [left_wheel_data.median;right_wheel_data.median;center_data.median];
+complete_data.mode = [left_wheel_data.mode;right_wheel_data.mode;center_data.mode];
+complete_data.mean = [left_wheel_data.mean;right_wheel_data.mean;center_data.mean];
+
 figure(6);
 hold on;
 plot(complete_data.ground(:,1), complete_data.ground(:,2), 'b.');
