@@ -1,11 +1,11 @@
-% intersect
+clear;
 
 %% Initialize Parameters
-maximumGenerations = 1000;
-populationSize = 18;
+maximumGenerations = 10000;
+populationSize = 30;
 crossoverRate = 0.9;
+nSpecies = populationSize/3;
 
-%% Read Cities
 cities = importdata('cities.csv');
 numberOfGenes = length(cities.data);
 mutationRate = 1/numberOfGenes;
@@ -25,18 +25,24 @@ for index = 1:populationSize
     population(index,:) = randperm(length(cities.data));
 end
 
-figure(1);
-imagesc(population);
+
 
 bestFitness = zeros(maximumGenerations,1);
 medianFitness = zeros(maximumGenerations,1);
 %% Evolution Loop
+tic;
 for generation = 1:maximumGenerations
     % Evaluate population
-    fitness = -1* evaluate(population, distances);
+    fitness = -1* computeRouteDistance(population, distances);
+    
+    % Store fitness information for analysis and elitism
     [bestFitness(generation), best_index] = max(fitness);
     medianFitness(generation) = median(fitness);
     bestIndividual = population(best_index,:);
+    
+    % Speciate population
+    fitness = speciatePopulation(population, fitness, nSpecies);
+    
     
     % Tournament Selection
     matesA = tournamentSelect(population, fitness, populationSize);
@@ -46,20 +52,21 @@ for generation = 1:maximumGenerations
     population = onePointCrossoverSet(matesA, matesB, crossoverRate);
     
     % Mutation
-    population = mutateNeighbours(population, mutationRate);
-    %population = mutateRandomly(population, mutationRate);
+    %population = mutateNeighbours(population, mutationRate);
+    population = mutateRandomly(population, mutationRate);
     
     % Elitism
     population(1,:) = bestIndividual;
     
     % Plot Parents and Children
-    subplot(1,3,1);imagesc(matesA);xlabel('Genes');ylabel('Individuals');title('ParentsA')
-    subplot(1,3,2);imagesc(matesB);xlabel('Genes');ylabel('Individuals');title('ParentsB')
-    subplot(1,3,3);imagesc(population);xlabel('Genes');ylabel('Individuals');title('Children')
-    pause(0.1);
+%     figure(1);
+%     subplot(1,3,1);imagesc(matesA);xlabel('Genes');ylabel('Individuals');title('ParentsA')
+%     subplot(1,3,2);imagesc(matesB);xlabel('Genes');ylabel('Individuals');title('ParentsB')
+%     subplot(1,3,3);imagesc(population);xlabel('Genes');ylabel('Individuals');title('Children')
+%     pause(0.001);
 end
 
-bestFitness
+bestFitness(end)
 %cities.data(best_individual,2);
 figure(2);clf;hold on;
 plot([cities.data(bestIndividual,2);cities.data(bestIndividual(1),2)],...
@@ -76,3 +83,7 @@ plot(-1*medianFitness);
 ylabel('travelled distance in km');
 xlabel('generation');
 legend('best fitness','median fitness');
+
+
+% Use Speciation with kmeans
+% print city names of best individual

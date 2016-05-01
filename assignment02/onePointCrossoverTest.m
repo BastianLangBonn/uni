@@ -44,3 +44,18 @@ else
     expectedOffspring
     subject
 end
+
+%% 1/3
+mateA = [1,2,3,4];
+mateB = [4,3,2,1];
+expectedOffspring = [1,4,3,2];
+crossoverPoint = 1;
+subject = onePointCrossover(mateA, mateB, crossoverPoint);
+
+if subject == expectedOffspring
+    disp('1/3: Test Passed')
+else
+    disp('1/3: Test Failed')
+    expectedOffspring
+    subject
+end
