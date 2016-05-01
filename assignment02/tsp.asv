@@ -12,8 +12,7 @@ nSpecies = populationSize/3;
 cities = importdata('cities.csv');
 numberOfGenes = length(cities.data);
 mutationRate = 1/numberOfGenes;
-% Use mode that showed most promising during experiments: no speciation
-% random mutation with two point crossover
+% Use 
 isSpeciationActivated = false;
 isCrossoverOnePoint = false;
 isMutationRandom = true;
@@ -97,7 +96,7 @@ for generation = 1:maximumGenerations
     % computation time nor in loss of a special individual.
     population(1,:) = bestIndividual;
 end
-toc;
+
 %% Show Results
 
 %% Plot Route

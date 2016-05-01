@@ -92,6 +92,7 @@ p(8).useSpeciation = false;
 name{8} = 'neighbour two point';
 
 %% Run Experiments
+tic;
 for i=1:8
     tic;
     clear bestFitness medianFitness;
@@ -104,7 +105,7 @@ for i=1:8
     p(i).medianMedianFitness = median(medianFitness,1);
     toc;
 end
-
+toc;
 
 %% Plot Routes
 % for i=1:8
@@ -116,23 +117,13 @@ end
 
 %% Plot Fitnesses
 figure(1);clf;hold on;
-% Helper Library for a better color distribution over plots
-colorSet = varycolor(8);
+grey = 
+color = ['y','m','c','r','g','b','grey','k'];
 for i=1:8
-    lineHandles(i) = plot(-1*p(i).medianBestFitness,'-','LineWidth',2,'Color',colorSet(i,:));
+    lineHandles(i) = plot(-1*p(i).medianBestFitness,'-','LineWidth',2,'Color',color(i));
     plot(-1*p(i).medianMedianFitness,'--','Color',get(lineHandles(i),'Color'));
 end
 ylabel('travelled distance in km');
 xlabel('generation');
 legend(lineHandles,name,'Location','NorthEast');
 title('Method Effects');
-
-%% Conclusion
-% Not only can be seen that the random mutation outperforms the swapping of
-% only neigbouring cities. It can also be seen that the experiments that
-% did not use speciation performed better than those who did.
-% Last but not least and intuitively the experiments using speciation took
-% longer to finish than the others.
-% The conclusion is that for this problem kmeans as a form of speciation is
-% not a good choice compared to not using speciation at all. Random
-% mutation in combination with two point crossover works best.
