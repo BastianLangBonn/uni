@@ -1,0 +1,28 @@
+% This file was created with JabRef 2.10b2.
+% Encoding: UTF-8
+
+
+@Misc{calibration,
+  Title                    = {Description of the calibration parameters},
+  HowPublished             = {\url{http://www.vision.caltech.edu/bouguetj/calib_doc/htmls/parameters.html}},
+  Note                     = {Accessed: 2016-05-01},
+
+  Owner                    = {bastian},
+  Timestamp                = {2016.05.02}
+}
+
+@Misc{tutorial,
+  Title                    = {First calibration example - Corner extraction, calibration, additional tools},
+  HowPublished             = {\url{http://www.vision.caltech.edu/bouguetj/calib_doc/htmls/example.html}},
+  Note                     = {Accessed: 2016-05-01}
+}
+
+@Misc{wiki,
+  Title                    = {Wikipedia},
+  HowPublished             = {\url{https://en.wikipedia.org}},
+  Note                     = {Accessed: 2016-05-01},
+
+  Owner                    = {bastian},
+  Timestamp                = {2016.05.02}
+}
+
