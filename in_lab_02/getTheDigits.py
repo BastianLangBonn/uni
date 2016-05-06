@@ -99,6 +99,7 @@ def predictFile(filename):
 
     nn = loadModel('nn.pkl')
     data = np.genfromtxt(filename,dtype='str')
+    y = data[:,0]
     X = data[:,1]
     inputs = []
     for element in X:
@@ -108,8 +109,15 @@ def predictFile(filename):
     predictions = nn.predict(X)
     result = []
     for element in predictions:
-        result.append(convertToNumber(element))
-                
+        result.append(''.join(convertToNumber(element)))
+             
+    error = y == result
+    print(y[0])
+    print(result[0])
+    print(error)
+    plt.plot(error)
+    plt.ylabel('prediction error')
+    plt.show()
         
     return result
 
@@ -119,6 +127,6 @@ def writeFile(data, filename):
         
         f.write('case #{}: {}\n'.format(i+1, ''.join(data[i])))
         
-
+#trainModel()
 data = predictFile('validation.txt')
 writeFile(data, 'validation.out')
