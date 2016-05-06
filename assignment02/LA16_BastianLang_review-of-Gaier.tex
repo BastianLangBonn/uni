@@ -20,6 +20,7 @@
 
 \documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
 
+\usepackage{float}
 \usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
 \usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
 \usepackage[english]{babel} % English language/hyphenation
@@ -56,12 +57,13 @@
 \normalfont \normalsize 
 \textsc{Bonn-Rhein-Sieg University of Applied Sciences} \\ [25pt] % Your university, school and/or department name(s)
 \horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
-\huge Scientific Experimentation and Evaluation\\
-- Assignment 01 - \\ % The assignment title
+\huge Learning and Adaptivity\\
+- Assignment 02 - \\
+Evolved Feature Ensemble Learning\\ % The assignment title
 \horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
 }
 
-\author{Bastian Lang, Mazin Eltayeb} % Your name
+\author{Bastian Lang} % Your name
 
 \date{\normalsize\today} % Today's date or a custom date
 
@@ -72,98 +74,67 @@
 \tableofcontents
 \newpage
 
-\section{Design of Experiment}
-\subsection{Consider how to best record the end poses of the three times 20 runs of the robot.}
-This experiment is about getting a model of the movement of robot. 
-So we are interested in the end pose of the robot after applying a motion command to a robot standing in the start pose. 
-As for one part's position of the robot will not be enough to specify the orientation of the robot, we consider the positions of all three wheels when specifying the pose of a robot.
+\section{Part I - Questions about the project}
+\subsection{What did they do?}
+\begin{itemize}
+	\item Replication of the work of \cite{lillywhite2013feature}
+	\item Automatically construct features for image classification using evolutionary techniques
+	\item Perform image transformation on image set
+	\item Use transformed images within weak classifier (perceptron)
+	\item Combine weak classifiers using Adaboost
+	\item Set of image transformations form the single individuals
+\end{itemize}
+\subsection{Which Machine Learning approaches did they apply?}
+\begin{itemize}
+	\item Perceptron
+	\item Evolutionary Algorithm
+	\item Adaboost (Adaptive Boosting)
+\end{itemize}
+\subsection{What data set and which features did they use?}
+256 90X59 pixel images, half of leaves and half of airplanes, both on noisy backgrounds.
+\subsection{Were they successful at what they were attempting?}
+Yes. In every run a strong classifier with a 100\% recognition rate could be found.
 
-To measure the end position of the robot, we need to specify and record the end pose of the robot with respect to some coordinate system. 
-As for we are interested in the movement with respect to the starting pose, we define this as the origin of our system.
+\section{Part II - Questions regarding your thoughts on the project}
+\subsection{Why did you choose to read this project report?}
+The authors are both interested in evolutionary strategies and neural networks and this work itself includes evolutionary strategies. 
+I am very interested in this field myself.
+\subsection{Did you learn anything by reading this project report? If yes: What?}
+The report was not detailed enough and I am familiar with the basics of the used algorithms, so no.
+\subsection{What was the most useful graphic displayed in the project report?}
+See figure \ref{fig:helpful}.
 
-To reduce measurement errors and make the measurement process easier, we use a grid on the paper ground. 
-To avoid to much (unnecessary) work in advance we use a coarse grid of 10cm x 10cm sized cells. 
-To determine the exact position we use a ruler within these cells.
-
-\subsubsection{Experimental Terms}
-
-	\textbf{Measurement System}
-	\begin{itemize}
-		\item The ground paper with the grid
-		\item Measurement tools (ruler)
-		\item Robot
-	\end{itemize}
-	\textbf{Measuring Facility}
-	\begin{itemize}
-		\item The ground paper with the grid (see figure \ref{facility})
-		\item Measurement tools (ruler)
-	\end{itemize}
-	\textbf{Measurand:}
-	\begin{itemize}
-		\item Travelled distance
-	\end{itemize}
-	\textbf{Measured (quantity) values:}
-	\begin{itemize}
-		\item Position of left wheel
-		\item Position of right wheel
-		\item Position of front wheel
-	\end{itemize}
-	\textbf{Measurement Result:}
-	\begin{itemize}
-		\item Robots end pose specified by three wheel-positions
-	\end{itemize}
-	\textbf{Device under Test (DUT):}
-	\begin{itemize}
-		\item Robot (see figure \ref{fig_5_min_bot})
-	\end{itemize}
-	\textbf{Sensitivity:}
-	\begin{itemize}
-		\item Millimeters
-	\end{itemize}
-	\textbf{Display:}
-	\begin{itemize}
-		\item Gridded paper ground
-	\end{itemize}
-
-
-
-\subsection{Describe in writing the robots design, the measurement process and the expected problems.}
-\begin{figure}[ht]
-	\centering
-  \includegraphics[width=0.5\textwidth]{5min_bot.JPG}
-	\caption{The five minutes robot : http://www.nxtprograms.com/five\textunderscore minute\textunderscore bot/DCP\textunderscore 8899.JPG}
-	\label{fig_5_min_bot}
+\begin{figure}[H]
+\includegraphics[width=0.8\textwidth]{helpful.png}
+\caption{Most helpful figure}
+\label{fig:helpful}
 \end{figure}
-
-\begin{figure}[ht]
-	\centering
-  \includegraphics[width=0.5\textwidth]{facility.jpeg}
-	\caption{The measurement facility: gridded paper}
-	\label{fig_facility}
+\subsection{What was the most eye catching graphic displayed in the project report?}
+See figure \ref{fig:catching}.
+\begin{figure}[H]
+\includegraphics[width=0.8\textwidth]{catching.png}
+\caption{Most catching figure}
+\label{fig:catching}
 \end{figure}
-\subsubsection{The Robot's Design}
-Our robot is the 5 minutes bot as can be seen in figure \ref{fig_5_min_bot}.
-It consists of two actuated wheels on the sides of the robot and one free spinning wheel in the front.
+\subsection{Did you find it interesting? Why or why not?}
+I haven't seen the combination of EA and Adaboost before, so it was interesting.
 
-\subsubsection{The Measurement Process}
-We first fix and mark the robot's starting pose on the paper ground.
-For each run we place the robot's wheels exactly on their marks and run the movement program.
-After the robot has reached its end position, we mark the wheel positions and then use our grid and a ruler to get the values of their positions.
-Each value gets recorded.
+\section{Part III - What would you do differently}
+\subsection{Would you accept the task (of improving the work done)?}
+Yes
+\subsection{What would you do differently?}
+As the authors suggested the EA is not applied as it should have been. It evolves the weak classifiers which then get combined to form a strong one. The strong classifier should be included in the EA as well.
+\subsection{Why do you expect better results?}
+This approach would focus more on finding weak classifiers that are good in cooperating with other weak classifiers instead of just being evaluated on their own.
+\subsection{How long would you estimate it would take you to improve upon the previous results?}
+Full time and motivated? 2 weeks?
+\subsection{How much of an improvement would you estimate you'd be able to achieve?}
+The authors used a simple data set so the gain would probably be small on this data. On other data I don't know how this algorithm would perform, so I am not able to give an estimate.
+\subsection{Visualization of data set}
+No data set available.
 
-\subsubsection{Expected Problems}
-One problem will be the exact measurement of the wheel poses. 
-There will probably already be small inaccuracies when marking the wheel positions, but also using the ruler to determine the values of the positions will yield additional inaccuracies.
-
-Another problem will be the exact positioning of the robot in the start pose.
-
-\subsection{Give a rough (but justified by some arguments) estimation of the expected accuracy and precision of your measurement process.}
-As humans we are probably able to place the robot in its start pose and to mark its end pose with only a few (~5mm) millimeters off. The measurement using a ruler and our grid will probably hold another one or two millimeters. 
-So we expect errors within the range of roughly a centimeter.
-
-
-
-
+\bibliographystyle{plain}
+\bibliography{literature.bib}
 
 
 \end{document}
