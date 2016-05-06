@@ -8,7 +8,8 @@ Created on Fri May  6 19:25:31 2016
 import numpy as np
 import collections 
 from pandas import read_csv
-#from sklearn.neural_network import MLPClassifier
+from sknn.mlp import Regressor, Layer
+from sklearn.cross_validation import train_test_split
 
 def createInput(counter):
     # Create input list out of most important characters
@@ -28,8 +29,8 @@ def createInput(counter):
 def createLabel(number):
     #given a number returns the expected output
     counter = collections.Counter(str(number))
-    print number
-    print counter.elements
+#    print(number)
+#    print(counter.elements)
     result = []
     result.append(counter['0'])
     result.append(counter['1'])
@@ -45,17 +46,31 @@ def createLabel(number):
 
 
 # Read the data
-data = read_csv('./training_data_test.txt',delimiter = ' ', names=('label','data'),converters={'label': lambda x: str(x)})
-labels = data.label[:]
-trainingData = data.data[:]
+data = read_csv('./training_data.txt',delimiter = ' ', names=('label','data'),converters={'label': lambda x: str(x)})
+labels = data.label[:3000]
+trainingData = data.data[:3000]
 
 # Preprocess Data
+inputs = []
+outputs = []
 for i in range(trainingData.size):
     counter = collections.Counter(trainingData[i])
-    label = createLabel(labels[i])
-    print createInput(counter)
-    print label
+    outputs.append(createLabel(labels[i]))
+    inputs.append(createInput(counter))
     
+inputs = np.asarray(inputs)
+outputs = np.asarray(outputs)
+#print(inputs)
+
+X_train, X_test, y_train, y_test = train_test_split(inputs, outputs, test_size=0.33, random_state=42)
+
+nn = Regressor(
+    layers=[
+        Layer("Rectifier", units=100),
+        Layer("Linear")],
+    learning_rate=0.02,
+    n_iter=10)
+nn.fit(X_train, y_train)
 
 
 
