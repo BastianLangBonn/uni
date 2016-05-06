@@ -10,6 +10,9 @@ import collections
 from pandas import read_csv
 from sknn.mlp import Regressor, Layer
 from sklearn.cross_validation import train_test_split
+import pickle
+import matplotlib.pyplot as plt
+
 
 def createInput(counter):
     # Create input list out of most important characters
@@ -44,40 +47,78 @@ def createLabel(number):
     result.append(counter['9'])
     return result
 
-
-# Read the data
-data = read_csv('./training_data.txt',delimiter = ' ', names=('label','data'),converters={'label': lambda x: str(x)})
-labels = data.label[:3000]
-trainingData = data.data[:3000]
-
-# Preprocess Data
-inputs = []
-outputs = []
-for i in range(trainingData.size):
-    counter = collections.Counter(trainingData[i])
-    outputs.append(createLabel(labels[i]))
-    inputs.append(createInput(counter))
+def trainModel():
+    # Read the data
+    data = read_csv('./training_data.txt',delimiter = ' ', names=('label','data'),converters={'label': lambda x: str(x)})
+    labels = data.label[:3000]
+    trainingData = data.data[:3000]
     
-inputs = np.asarray(inputs)
-outputs = np.asarray(outputs)
-#print(inputs)
+    # Preprocess Data
+    inputs = []
+    outputs = []
+    for i in range(trainingData.size):
+        counter = collections.Counter(trainingData[i])
+        outputs.append(createLabel(labels[i]))
+        inputs.append(createInput(counter))
+        
+    inputs = np.asarray(inputs)
+    outputs = np.asarray(outputs)
+    #print(inputs)
+    
+    X_train, X_test, y_train, y_test = train_test_split(inputs, outputs, test_size=0.33, random_state=42)
+    
+    nn = Regressor(
+        layers=[
+            Layer("Rectifier", units=100),
+            Layer("Linear")],
+        learning_rate=0.02,
+        n_iter=10)
+    nn.fit(X_train, y_train)
+    
+    pickle.dump(nn, open('nn.pkl', 'wb'))
+    
+    predictTest = nn.predict(X_test)
+    
+    error = predictTest - y_test
 
-X_train, X_test, y_train, y_test = train_test_split(inputs, outputs, test_size=0.33, random_state=42)
+    plt.plot(error)
+    plt.ylabel('prediction error')
+    plt.show()
 
-nn = Regressor(
-    layers=[
-        Layer("Rectifier", units=100),
-        Layer("Linear")],
-    learning_rate=0.02,
-    n_iter=10)
-nn.fit(X_train, y_train)
+def loadModel(filename):
+    return pickle.load(open(filename, 'rb'))
 
+def convertToNumber(modelOutput):
+    result = []
+    for i in range(10):
+        for j in range(int(round(modelOutput[i]))):
+            result.append(str(i))
+    return result
 
+def predictFile(filename):
 
+    nn = loadModel('nn.pkl')
+    data = np.genfromtxt(filename,dtype='str')
+    X = data[:,1]
+    inputs = []
+    for element in X:
+        counter = collections.Counter(element)
+        inputs.append(createInput(counter))
+    X = np.asarray(inputs)
+    predictions = nn.predict(X)
+    result = []
+    for element in predictions:
+        result.append(convertToNumber(element))
+                
+        
+    return result
 
+def writeFile(data, filename):
+    f = open(filename, 'w')
+    for i in range(len(data)):
+        
+        f.write('case #{}: {}\n'.format(i+1, ''.join(data[i])))
+        
 
-
-#trainingData = data[:,0]
-#trainingLabels = data[:,1]
-#print trainingLabels[0]
-
+data = predictFile('validation.txt')
+writeFile(data, 'validation.out')
