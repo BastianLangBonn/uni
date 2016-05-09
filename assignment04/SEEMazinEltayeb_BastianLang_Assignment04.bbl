@@ -1,0 +1,20 @@
+\begin{thebibliography}{1}
+
+\bibitem{calibration}
+Description of the calibration parameters.
+\newblock
+  \url{http://www.vision.caltech.edu/bouguetj/calib_doc/htmls/parameters.html}.
+\newblock Accessed: 2016-05-01.
+
+\bibitem{tutorial}
+First calibration example - corner extraction, calibration, additional tools.
+\newblock
+  \url{http://www.vision.caltech.edu/bouguetj/calib_doc/htmls/example.html}.
+\newblock Accessed: 2016-05-01.
+
+\bibitem{wiki}
+Wikipedia.
+\newblock \url{https://en.wikipedia.org}.
+\newblock Accessed: 2016-05-01.
+
+\end{thebibliography}
