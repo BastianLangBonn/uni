@@ -16,11 +16,11 @@ void error(char *msg){
 }
 
 int main(){
-    int sockfd, portno = 8168, n;
+    int sockfd, portno = 2300, n;
     struct sockaddr_in serv_addr;
     struct hostent *server;
     
-    char buffer[10000], tmp[256], *ptr;
+    char buffer[256], tmp[256], *ptr;
     int t=0, rpm;
     
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -37,48 +37,29 @@ int main(){
         error("ERROR connecting");
     
     memset(buffer, 0, 256);
-    strcpy(buffer, "X-set-channel: 0s" );
+    // strcpy(buffer, "X-set-channel: 0s" );
     
-    n = write(sockfd,buffer,strlen(buffer));
+    //n = write(sockfd,buffer,strlen(buffer));
     if (n < 0) 
          error("ERROR writing to socket");
     
     while(1){
-	printf("Beginning of loop\n");
+	    //printf("Beginning of loop\n");
         memset(buffer,0,256);
-	printf("bzeroed buffer\n");
+	    //printf("bzeroed buffer\n");
         memset(tmp,0,sizeof(buffer));
-	printf("bzeroed tmp\n");
+	    //printf("bzeroed tmp\n");
         ptr = NULL;
-	printf("Trying to read socket\n");
+	    printf("Trying to read socket\n");
         n = read(sockfd,buffer,255);
         if (n < 0) 
             error("ERROR reading from socket");
         if(n>0){
             printf("Received message: %s\n",buffer);
-            
-            /*  Verarbeitung der Daten  */
-            ptr = strstr(buffer, "RPM=");   //Sucht in der Ausgabe nach 'RPM='
-            // ^RPM='366.00' />
-            // printf("%s", ptr);
-            
-            // ptr = strstr(ptr, "'");
-            ptr=ptr+sizeof(*ptr)*5;
-            // printf("%s", ptr);
-            t = strcspn(ptr, "'");
-            
-            strncpy(tmp, ptr, t);
-            
-            // printf("%s\n", tmp);
-            
-            rpm = atoi(tmp);
-            
-            printf("Extracted RPM: %d\n", rpm);
-	    
         }
-        printf("End of loop\n");
+        //printf("End of loop\n");
     }
-    printf("Dropped out of loop...\n");
+    //printf("Dropped out of loop...\n");
     
     return 0;
 }

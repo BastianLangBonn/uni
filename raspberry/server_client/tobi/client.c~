@@ -78,7 +78,7 @@ int main(){
         }
         printf("End of loop\n");
     }
-    printf("Dropped out of loop...\n");
+    printf("Dropped out of loop...");
     
     return 0;
 }
