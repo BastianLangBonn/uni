@@ -1,0 +1,7 @@
+\select@language {english}
+\contentsline {section}{\numberline {1}Abstract}{2}
+\contentsline {section}{\numberline {2}Setup}{2}
+\contentsline {section}{\numberline {3}Description Camera Parameters}{2}
+\contentsline {section}{\numberline {4}Possible Problems}{5}
+\contentsline {section}{\numberline {5}Results}{5}
+\contentsline {section}{\numberline {6}Appendix}{6}
