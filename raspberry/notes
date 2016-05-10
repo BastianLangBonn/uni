@@ -51,3 +51,6 @@ TODOs:
 - Steuerung.c erweitern, sodass die Sensordaten geloggt werden
 - Steuerung.c erweitern, sodass per Buttonklick Fahrmodi durchgeschaltet werden können
 - Not-Aus-Schalter einbauen
+
+- Current energy usage (not only motor command)
+battery charge

@@ -48,3 +48,8 @@ TODOs:
 - Steuerung.c so umbauen, dass es sich als Client sowohl an den Hall-Sensor als auch an das GPS verbindet
 - Schleife in Steuerung.c wieder einbinden
 - Quarqd.py so umschreiben, dass es eine Socket-Verbindung öffnet und als Server fungiert, der bei Verbindung Hall-Daten versendet.
+- Steuerung.c erweitern, sodass die Sensordaten geloggt werden
+- Steuerung.c erweitern, sodass per Buttonklick Fahrmodi durchgeschaltet werden können
+- Not-Aus-Schalter einbauen
+
+- Current energy usage (not only motor command)
