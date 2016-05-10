@@ -54,3 +54,5 @@ TODOs:
 
 - Current energy usage (not only motor command)
 battery charge
+
+- GPS data input works, now do the same for ant+

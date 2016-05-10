@@ -78,6 +78,8 @@ int _motor_limited = 0;			// Legt das max Tempo für die Motorunterstuetzung fes
 float _current_activation = 0;		// Legt den HIGH Anteil vom PWM-Signal fest
 					// 0 <= current_activation <= 1
 float _current_speed = 0;
+float _current_latitude = 0.0;
+float _current_longitude = 0.0;
 int _lcd_handler;
 char _setup_done = 0, _filename[256];
 
@@ -89,6 +91,9 @@ unsigned int _lastpeak;
 /****************************************************************************************************/
 
 void *sensor_thread(void *arg){
+    #ifdef DEBUG
+        printf("Sensor thread started\n"); 
+    #endif
 	while(1){
 
 		/*  Motor an- und ausschalten  */
@@ -150,6 +155,9 @@ void *sensor_thread(void *arg){
 		
 		delay(SENSOR_UPDATE); //Verhindert busy-waiting
 	}
+	#ifdef DEBUG
+        printf("Sensory thread ended\n"); 
+    #endif
 }
 
 /****************************************************************************************************/
@@ -157,6 +165,9 @@ void *sensor_thread(void *arg){
 /****************************************************************************************************/
 
 void *display_thread(void *arg){
+    #ifdef DEBUG
+        printf("Display Thread started\n"); 
+    #endif
 	while(1){
 		lcdClear(_lcd_handler);
 		lcdPrintf(_lcd_handler, "%d km/h", _current_speed);
@@ -168,6 +179,9 @@ void *display_thread(void *arg){
 		}
 		delay(DISPLAY_UPDATE);
 	}
+	#ifdef DEBUG
+        printf("Display Thread Ended\n"); 
+    #endif
 }
 
 /****************************************************************************************************/
@@ -180,9 +194,13 @@ void error(char *msg){
 
 void *gps_thread(void *arg){
         
+        #ifdef DEBUG
+            printf("GPS thread started\n"); 
+        #endif
         int sockfd, portno = 2300, n;
         struct sockaddr_in serv_addr;
         struct hostent *server;
+        char *latitude, *longitude;
             
         char buffer[256], tmp[256], *ptr;
         int t=0, rpm;
@@ -208,24 +226,35 @@ void *gps_thread(void *arg){
              error("ERROR writing to socket");
             
         while(1){
-               //printf("Beginning of loop\n");
             memset(buffer,0,256);
-                //printf("bzeroed buffer\n");
             memset(tmp,0,sizeof(buffer));
-                    //printf("bzeroed tmp\n");
             ptr = NULL;
-            // printf("Trying to read socket\n");
             n = read(sockfd,buffer,255);
             if (n < 0) 
                 error("ERROR reading from socket");
             if(n>0){
                 printf("Received message: %s\n", buffer);
-                // GPGGA,134436.000,0000.0000,N,00000.0000,E,0,00,0.0,0.0,M,0.0,M,,0000*6A
+                                
+                // Get data out of message
+                latitude = strtok(buffer, ";");
+                latitude = strtok(NULL, ";");
+                longitude = strtok(NULL, ";");
                 
+                latitude = strtok(latitude, "=");
+                latitude = strtok(NULL, "=");
+                _current_latitude = atof(latitude);
+                
+                longitude = strtok(longitude, "=");
+                longitude = strtok(NULL, "=");
+                _current_longitude = atof(longitude);
+                #ifdef DEBUG
+                    printf("GPS THREAD: extracted position:%.2fN;%.2fE\n", _current_latitude, _current_longitude); 
+                #endif
             }
-                //printf("End of loop\n");
         }
-            //printf("Dropped out of loop...\n");
+        #ifdef DEBUG
+            printf("GPS thread terminated\n"); 
+        #endif
 }
 
 /****************************************************************************************************/
@@ -241,8 +270,11 @@ int setup(){
    //     #ifdef DEBUG
 	//printf("Setup started, _setup_done = %d\n", _setup_done);
 //	#endif
-  //      _lastpeak  = micros();
-    //    sprintf(_filename, "/home/pi/AMT/log/log_.txt");
+    #ifdef DEBUG
+        printf("Setup started\n"); 
+    #endif
+    _lastpeak  = micros();
+    sprintf(_filename, "/home/pi/AMT/log/log_.txt");
 
 	int res = 0;
 	wiringPiSetup();
@@ -264,7 +296,7 @@ int setup(){
 	res = pthread_create(&display_thr, NULL, display_thread, NULL);
 	if(res != 0){
 		#ifdef DEBUG
-		printf("Display Thread Create Error\n");
+		    printf("Display Thread Create Error\n");
 		#endif
 		return res;
 	}
@@ -272,19 +304,22 @@ int setup(){
 	res = pthread_create(&sensor_thr, NULL, sensor_thread, NULL);
 	if(res != 0){
 		#ifdef DEBUG
-		printf("Sensor Thread Create Error\n");
+		    printf("Sensor Thread Create Error\n");
 		#endif
 		return res;
 	}
 
-        res = pthread_create(&gps_thr, NULL, gps_thread, NULL);
-        if(res != 0){
+    res = pthread_create(&gps_thr, NULL, gps_thread, NULL);
+    if(res != 0){
 		#ifdef DEBUG
-		printf("GPS Thread Create Error\n");
+		    printf("GPS Thread Create Error\n");
 		#endif
 		return res;
 	}
 
+    #ifdef DEBUG
+        printf("Setup done\n"); 
+    #endif
     //    _setup_done = 1;
      //   #ifdef DEBUG
 	//printf("Setup done, _setup_done = %d\n", _setup_done);
@@ -296,7 +331,7 @@ int setup(){
 /****************************************************************************************************/
 /*  Write_to_file                                                                                   */
 /*                                                                                                  */
-/*  Writes some text to a file									    */
+/*  Writes information into a file                            									    */
 /****************************************************************************************************/
 void write_to_file(char* text){
         /* Open file to append, create if not existent*/
@@ -357,14 +392,14 @@ float read_velocity(){
 }
 
 /****************************************************************************************************/
-/*  check_vehicle_speed		                						    */
+/*  check_speed_limit                                                    						    */
 /****************************************************************************************************/
 /* Check if motor needs to be switched off due to speed limit */
-int check_vehicle_speed(){
+int check_speed_limit(){
 	if(_current_speed >= MAX_TEMPO && _motor_limited == 0){
-		_motor_limited = 1;
-	}else if(_current_speed < MAX_TEMPO && _motor_limited){
-		_motor_limited = 0;
+		return 1;
+	}else{
+		return 0;
 	}
 }
 
@@ -396,7 +431,9 @@ void log_data(){
         sprintf(printout, "timestamp: %d, velocity: %.2fkm/h", _now, _current_speed);
         write_to_file(printout);
         sprintf(printout, "timestamp: %d, pwm-signal: %d", _now, (int)(PWM_RANGE * _current_activation));
-        write_to_file(printout);        
+        write_to_file(printout);     
+        sprintf(printout, "timestamp: %d, position: %.2fN, %.2fE", _now, _current_latitude, _current_longitude);
+        write_to_file(printout);   
 
 }
 
@@ -408,12 +445,14 @@ int main(){
 
 	
         setup();
-        _now = micros();
-        _current_speed = read_velocity();
-        _motor_limited = check_vehicle_speed();
-        send_motor_signal();
-        _lastpeak = _now;
-        log_data();
+        while(1){
+            _now = micros();
+            //_current_speed = read_velocity();
+            _motor_limited = check_speed_limit();
+            send_motor_signal();
+            _lastpeak = _now;
+            log_data();
 
-	delay(SPEED_UPDATE);
+	        delay(SPEED_UPDATE);
+	    }
 }

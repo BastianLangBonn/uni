@@ -125,23 +125,23 @@ def submitSensoryData(path, connection):
                     latitude = round(latitude + (latitudeMinutes / 60), 6)
                     longitude = round(longitude + (longitudeMinutes / 60), 6)
 
-			    # Signalquality herausfiltern
+                    # Signalquality herausfiltern
                     quality = int(dataList[6])
 
-			    # Anzahl der satellite herausfiltern
+    			    # Anzahl der satellite herausfiltern
                     satellite = int(dataList[7])
 
-			    # height herausfiltern
+	    		    # height herausfiltern
                     height = float(dataList[9])
 
-			    # checksum auslesen
+	    		    # checksum auslesen
                     checksum = dataList[14]
 
-			    # Ausgabe
+	    		    # Ausgabe
                     print >>sys.stderr, 'sending data...'
 
                     #connection.sendall('{}\n'.format(input))
-                  
+                    connection.sendall('time:{};latitude:{};longitude:{}\n'.format(dataTime, latitude, longitude))
                     #time.sleep(1)
 
                     f.write('{}\n'.format(input));
