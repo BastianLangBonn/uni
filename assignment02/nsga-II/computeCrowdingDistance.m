@@ -1,29 +1,39 @@
 function [ distance ] = computeCrowdingDistance( p )
-%COMPUTECROWDINGDISTANCE Summary of this function goes here
-%   Detailed explanation goes here
+%COMPUTECROWDINGDISTANCE Computes the crowding distance for a population
+%   Given a population and its values for leadingZeros and trailingOnes,
+%   this function computes its crowding distance
     nPopulation = size(p.population, 1);
     distance = zeros(nPopulation, 1);
     
     
-    % Leading Zeros
-    % TODO first sort by leading zeros
-    [values, index] = sort(p.leadingZeros);
+   distance = computeDistanceAccordingGoal(distance, p.leadingZeros);
+   distance = computeDistanceAccordingGoal(distance, p.trailingOnes);
+    
+   
+    
+end
+
+function [distance] = computeDistanceAccordingGoal(distance, values)
+%COMPUTEDISTANCEACCORDINGGOAL Computes the distance for one goal
+    % Sort distance according to goal values
+    [sorted, index] = sort(values);
+    distance = distance(index);
+    
+    % Set first and last value to inf
     distance(1) = Inf;
     distance(end) = Inf;
     
-    for i=2:nPopulation-1
-        distance(i) = distance(i) + ...
-            ((p.leadingZeros(i+1) - p.leadingZeros(i-1))/...
-            (max(p.leadingZeros) - min(p.leadingZeros)));
+    % Create reverse permutation index
+    unsorted = 1:length(values);
+    reverseIndex(index) = unsorted;
+    
+    for i=2:length(values)-1
+        % Compute distance values w.r.t. sorted list
+        distance(i) = distance(i) + ((sorted(i+1) - sorted(i-1))/...
+            (max(sorted) - min(sorted)));
     end
     
-    % Trailing Ones
-    % TODO sort by trailing ones and set first and last to Inf
-    for i=2:nPopulation-1
-        distance(i) = distance(i) + ...
-            ((p.trailingOnes(i+1) - p.trailingOnes(i-1))/...
-            (max(p.trailingOnes) - min(p.trailingOnes)));
-    end
-    
+    % Restore original ordering
+    distance = distance(reverseIndex);
 end
 
