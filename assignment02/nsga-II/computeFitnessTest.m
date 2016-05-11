@@ -6,5 +6,5 @@ expetedTrailingOnes = 1;
 
 result = computeFitness(population);
 
-disp(result{1}.leadingZeros == expectedLeadingZeros);
-disp(result{1}.trailingOnes == expetedTrailingOnes)
+disp(result.leadingZeros(1) == expectedLeadingZeros);
+disp(result.trailingOnes(1) == expetedTrailingOnes)

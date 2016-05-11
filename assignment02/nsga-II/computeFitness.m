@@ -1,20 +1,22 @@
-function [ fitness ] = computeFitness( population )
+function [ result ] = computeFitness( population )
 %COMPUTEFITNESS Summary of this function goes here
 %   Detailed explanation goes here
     for i=1:size(population,1)
         % Leading zeros
         nLeadingZeros = 0;
-        while population(i,nLeadingZeros+1) == 0
+        while nLeadingZeros +1  < size(population,2) &&...
+                population(i,nLeadingZeros+1) == 0
            nLeadingZeros = nLeadingZeros + 1; 
         end
         
-        nTrailingOnes = 0;
-        while population(i,end-nTrailingOnes) == 1
-            nTrailingOnes = nTrailingOnes + 1;
+        nTailingOnes = 0;
+        while nTailingOnes < size(population,2) &&...
+                population(i,end-nTailingOnes) == 1
+            nTailingOnes = nTailingOnes + 1;
         end
         
-        fitness{i}.leadingZeros = nLeadingZeros;
-        fitness{i}.trailingOnes = nTrailingOnes;
+        result.leadingZeros(i) = nLeadingZeros;
+        result.tailingOnes(i) = nTailingOnes;
     end
     
 

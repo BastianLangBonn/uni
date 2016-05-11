@@ -17,7 +17,7 @@ function [ paretoFront ] = dominationSort( p )
         end
         
         if nDominators(i) == 0
-           paretoFront{1} = [paretoFront{i} i];
+           paretoFront{1} = [paretoFront{1} i];
         end
     end
     
@@ -25,7 +25,6 @@ function [ paretoFront ] = dominationSort( p )
     while ~isempty(paretoFront{i});
        temp = [];
        for index = paretoFront{i}
-           disp('foobar')
            for dominated = dominationSet{index}
               nDominators(dominated) = nDominators(dominated) - 1;
               if nDominators(dominated) == 0

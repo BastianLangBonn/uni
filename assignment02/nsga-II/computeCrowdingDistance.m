@@ -1,13 +1,16 @@
-function [ distance ] = computeCrowdingDistance( p )
+function [ distance ] = computeCrowdingDistance( population )
 %COMPUTECROWDINGDISTANCE Computes the crowding distance for a population
 %   Given a population and its values for leadingZeros and trailingOnes,
 %   this function computes its crowding distance
-    nPopulation = size(p.population, 1);
+    nPopulation = size(population, 1);
     distance = zeros(nPopulation, 1);
     
+    fitness = computeFitness(population);
     
-   distance = computeDistanceAccordingGoal(distance, p.leadingZeros);
-   distance = computeDistanceAccordingGoal(distance, p.trailingOnes);
+    
+    
+   distance = computeDistanceAccordingGoal(distance, fitness.leadingZeros);
+   distance = computeDistanceAccordingGoal(distance, fitness.tailingOnes);
     
    
     
