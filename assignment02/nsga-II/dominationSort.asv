@@ -1,0 +1,32 @@
+function [ paretoFront ] = dominationSort( p )
+%DOMINATIONSORT Summary of this function goes here
+%   Detailed explanation goes here
+    [dominationSet{1:size(p.population,1)}] = deal([]);
+    nDominators = zeros(size(p.population, 1),1);
+    paretoFront{1} = [];
+    for i=1:size(p.population,1)
+        for j=1:size(p.population,1)
+           if i~=j
+               if isDominating(i,j,p)
+                   dominationSet{i} = [dominationSet{i} j];
+               elseif isDominating(j,i,p)
+                       nDominators(i) = nDominators(i) + 1;
+               end
+                   
+           end
+        end
+        
+        if nDominators(i) == 0
+           paretoFront{1} = [paretoFront{i} i];
+        end
+    end
+    
+    i = 1;
+    while length(paretoFront{i}) ~= 0;
+       temp = [];
+       for index = paretoFront{i}
+           disp('foobar')
+       end
+    end
+    
+end
