@@ -14,7 +14,7 @@ numberOfGenes = length(cities.data);
 mutationRate = 1/numberOfGenes;
 % Use mode that showed most promising during experiments: no speciation
 % random mutation with two point crossover
-isSpeciationActivated = false;
+isNichingActivated = false;
 isCrossoverOnePoint = false;
 isMutationRandom = true;
 
@@ -60,7 +60,7 @@ for generation = 1:maximumGenerations
     
     % Speciate population by using kMeans with amount of clusters equal to
     % the parameter nSpecies.
-    if isSpeciationActivated
+    if isNichingActivated
         fitness = speciatePopulation(population, fitness, nSpecies);
     end
     

@@ -1,6 +1,8 @@
 function [ result ] = computeFitness( population )
-%COMPUTEFITNESS Summary of this function goes here
-%   Detailed explanation goes here
+%COMPUTEFITNESS Computes the fitness of the population
+%   Computes the number of leading zeros and tailing ones for every
+%   individual within the population and stores both values as fields in
+%   result.
     for i=1:size(population,1)
         % Leading zeros
         nLeadingZeros = 0;

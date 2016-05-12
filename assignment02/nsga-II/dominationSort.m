@@ -1,6 +1,15 @@
 function [ paretoFront ] = dominationSort( p )
-%DOMINATIONSORT Summary of this function goes here
-%   Detailed explanation goes here
+%DOMINATIONSORT Divides a population into pareto fronts of increasing
+%order.
+%   Computes the domination sets and counts for every individual and
+%   assigns each individual to the pareto front it belongs to.
+%   This is done by checking for each individual the individuals it
+%   dominates and is dominated by. If there is no dominating individual,
+%   the individual goes into the front. 
+%   For every next front the previous fronts get subtracted from each
+%   remaining individual's domination counter. Again, if one of the
+%   remaining individual's counter decreases to zero, it belongs to the
+%   next front.
     [dominationSet{1:size(p.population,1)}] = deal([]);
     nDominators = zeros(size(p.population, 1),1);
     paretoFront{1} = [];

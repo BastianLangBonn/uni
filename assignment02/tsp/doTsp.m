@@ -1,14 +1,13 @@
 function [ result ] = doTsp( parameters )
-%DOTSP Summary of this function goes here
-%   Detailed explanation goes here
+%DOTSP Function to run EA for TSP
 
     %% Initialize Parameters
     %Read data from parameter
     maxGenerations = parameters.maxGenerations;
     populationSize = parameters.populationSize;
     crossoverRate = parameters.crossoverRate;
-    nSpecies = parameters.nSpecies;
-    useSpeciation = parameters.useSpeciation;
+    nNiches = parameters.nNiches;
+    useNiching = parameters.useNiching;
     useRandomMutation = parameters.useRandomMutation;
     useOnePointCrossover = parameters.useOnePointCrossover;
     mutationRate = parameters.mutationRate;
@@ -48,8 +47,8 @@ function [ result ] = doTsp( parameters )
         bestIndividual = population(best_index,:);
 
         % Speciate population
-        if useSpeciation
-            fitness = speciatePopulation(population, fitness, nSpecies);
+        if useNiching
+            fitness = speciatePopulation(population, fitness, nNiches);
         end
         
         % Tournament Selection
