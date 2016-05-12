@@ -10,6 +10,9 @@ function [ result ] = computeFitness( population )
                 population(i,nLeadingZeros+1) == 0
            nLeadingZeros = nLeadingZeros + 1; 
         end
+        if population(i,end) == 0 && nLeadingZeros == size(population,2) -1
+           nLeadingZeros = size(population, 2); 
+        end
         
         nTailingOnes = 0;
         while nTailingOnes < size(population,2) &&...
