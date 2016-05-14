@@ -1,7 +1,7 @@
 %% Track Simulations
 clear;
 % Read track information
-track = importdata('Flat.csv', ';', 0);
+track = importdata('test1.csv', ';', 0);
 travelledDistance = track(:,1);
 elevation = track(:,2);
 
@@ -19,14 +19,16 @@ r = simulateTrack(track);
 figure(2);clf;hold on;
 colormap(summer);
 x = travelledDistance; % displacement 
-z = zeros(size(x));%r.energy';
+z = r.energy';
 y = elevation; %Elevation
 col = r.energy';  % This is the color, vary with x in this case., for instance velocity
-surface([x;x],[y;y],[z;z],[col;col],...
+[X,Y]=meshgrid(x,y);  
+surface([x;x],[y;y],[z;z],...
         'facecol','no',...
         'edgecol','interp',...
         'linew',6);
 title('Power Used on Track')
+
 
 % figure(2);clf;hold on;
 % plot(r.time, r.velocity);
