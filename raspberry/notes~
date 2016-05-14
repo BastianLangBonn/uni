@@ -39,4 +39,18 @@
 --- Geringes Problem, da durch append und timestamps einzelne Fahrten unterscheidbar sind
 -- Was ist mit Zuständen wie motor_limit, bremse_gezogen etc?
 -- Evtl muss steuerung.c und quarqd.py so umgebaut werden, dass steuerung.c nicht von quarqd aufgerufen wird und eine endlosschleife besitzt, die stdin überprüft.
+-- Button-press sollte in diesem Szenario nicht funktionieren...
 
+- Es funktioniert jetzt, auf dem Raspberry einen python-Server zu starten, der bei Verbindung die GPS-daten sendet. Per C kann sich ein Client verbinden und erhält diese Daten.
+-- Das gleiche müsste jetzt für den Hall-Sensor gemacht werden. Anschließend kann die Schleife wieder zurückgebaut werden und im C-Skript verwendet werden
+
+TODOs:
+- Steuerung.c so umbauen, dass es sich als Client sowohl an den Hall-Sensor als auch an das GPS verbindet
+- Schleife in Steuerung.c wieder einbinden
+- Quarqd.py so umschreiben, dass es eine Socket-Verbindung öffnet und als Server fungiert, der bei Verbindung Hall-Daten versendet.
+- Steuerung.c erweitern, sodass die Sensordaten geloggt werden
+- Steuerung.c erweitern, sodass per Buttonklick Fahrmodi durchgeschaltet werden können
+- Not-Aus-Schalter einbauen
+
+- Current energy usage (not only motor command)
+battery charge

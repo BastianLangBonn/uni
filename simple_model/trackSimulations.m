@@ -18,12 +18,12 @@ r = simulateTrack(track);
 
 figure(2);clf;hold on;
 colormap(summer);
-x = travelledDistance; % displacement 
-z = r.energy';
-y = elevation; %Elevation
-col = r.energy';  % This is the color, vary with x in this case., for instance velocity
-[X,Y]=meshgrid(x,y);  
-surface([x;x],[y;y],[z;z],...
+
+x = travelledDistance'; % displacement 
+z = zeros(size(x)); % zero, because not used
+y = elevation'; %Elevation
+col = 1:length(x);  % This is the color, vary with x in this case., for instance velocity
+surface([x;x],[y;y],[z;z],[col;col],...
         'facecol','no',...
         'edgecol','interp',...
         'linew',6);
