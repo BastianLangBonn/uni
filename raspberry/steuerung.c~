@@ -95,7 +95,7 @@ void *sensor_thread(void *arg){
                         }
                         _current_activation = _motor_on * 0.1;
                         #ifdef DEBUG
-			printf("Motor activation set to %.2f.\n", _current_activaton);
+			printf("Motor activation set to %.2f.\n", _current_activation);
 			#endif
 			delay(200); //Notwendig wegen springen des Schalters 
 		}
@@ -170,36 +170,36 @@ void *display_thread(void *arg){
 int setup(){
 	pthread_t sensor_thr, display_thr;
 	
-        if(_setup_done == 1){
-                return 0;
-        }
-        #ifdef DEBUG
-	printf("Setup started, _setup_done = %d\n", _setup_done);
+    if(_setup_done == 1){
+        return 0;
+    }
+    #ifdef DEBUG
+	    printf("Setup started, _setup_done = %d\n", _setup_done);
 	#endif
-        _lastpeak  = micros();
-        sprintf(_filename, "/home/pi/AMT/log/log_.txt");
+    _lastpeak  = micros();
+    sprintf(_filename, "/home/pi/AMT/log/log_.txt");
 
 	int res = 0;
 	wiringPiSetup();
 	res = softPwmCreate(GPIO_PWM, 0, PWM_RANGE);
 	if(res != 0){
 		#ifdef DEBUG
-		printf("PWM Create Error\n");
+		    printf("PWM Create Error\n");
 		#endif
 		return res;
 	}
 	pinMode(GPIO_MOTOR_SWITCH, INPUT);
 	pinMode(GPIO_BRAKE1, INPUT);
-        #ifdef BRAKE2
-	pinMode(GPIO_BRAKE2, INPUT);
-        #endif
+    #ifdef BRAKE2
+	    pinMode(GPIO_BRAKE2, INPUT);
+    #endif
 	pinMode(GPIO_SPEED, INPUT);
 	_lcd_handler = lcdInit(LCD_ROWS, LCD_COLUMNS, LCD_BITS, LCD_RS, LCD_STRB, LCD_D0, LCD_D1, LCD_D2, LCD_D3, LCD_D4, LCD_D5, LCD_D6, LCD_D7);
 	
 	res = pthread_create(&display_thr, NULL, display_thread, NULL);
 	if(res != 0){
 		#ifdef DEBUG
-		printf("Display Thread Create Error\n");
+		    printf("Display Thread Create Error\n");
 		#endif
 		return res;
 	}
@@ -207,13 +207,13 @@ int setup(){
 	res = pthread_create(&sensor_thr, NULL, sensor_thread, NULL);
 	if(res != 0){
 		#ifdef DEBUG
-		printf("Sensor Thread Create Error\n");
+		    printf("Sensor Thread Create Error\n");
 		#endif
 		return res;
 	}
-        _setup_done = 1;
-        #ifdef DEBUG
-	printf("Setup done, _setup_done = %d\n", _setup_done);
+    _setup_done = 1;
+    #ifdef DEBUG
+	    printf("Setup done, _setup_done = %d\n", _setup_done);
 	#endif
 	
 	return res;
@@ -228,11 +228,11 @@ void write_to_file(char* text){
         /* Open file to append, create if not existent*/
         FILE *f = fopen(_filename, "a");
         if (f == NULL){
-                    FILE *f = fopen(_filename, "w");
-                    if(f == NULL){
-                    printf("Error opening file: %s!\n", _filename);
-                    return;
-                }
+            FILE *f = fopen(_filename, "w");
+            if(f == NULL){
+                printf("Error opening file: %s!\n", _filename);
+                return;
+            }
         }
 
         /* print text */
@@ -246,10 +246,10 @@ void write_to_file(char* text){
 /****************************************************************************************************/
 // Reads ant+ information written to stdin
 float read_velocity(){
-        char buffer[BUFMAX + 1], tmp[256];
+    char buffer[BUFMAX + 1], tmp[256];
 	char *bp = buffer, *ptr;
 	int t=0, c, rpm;
-        float result;
+    float result;
 
 
 	FILE *in;
@@ -257,29 +257,29 @@ float read_velocity(){
 		*bp++ = c;
 	}
 	*bp = 0;    // Null-terminate the string
-        #ifdef DEBUG        
-	        printf("read_velocity: Received Buffer: %s", buffer);
-        #endif
-        /*  Verarbeitung der Daten  */
-        // Searches for 'RPM=' in output
-        ptr = strstr(buffer, "RPM=");
-        // Remove leading "RPM='"        
-        ptr=ptr+sizeof(*ptr)*5;
-        t = strcspn(ptr, "'");
+    #ifdef DEBUG        
+        printf("read_velocity: Received Buffer: %s", buffer);
+    #endif
+    /*  Verarbeitung der Daten  */
+    // Searches for 'RPM=' in output
+    ptr = strstr(buffer, "RPM=");
+    // Remove leading "RPM='"        
+    ptr=ptr+sizeof(*ptr)*5;
+    t = strcspn(ptr, "'");
 
-        // Remove trailing "'"    
-        strncpy(tmp, ptr, t); 
-    
-        // Char to Integer        
-        rpm = atoi(tmp);
-        // Compute speed out of rpm and wheel length in km/h
-        result = rpm * WHEEL_LENGTH * 0.06;
-    
-        #ifdef DEBUG
-                printf("rpm: %d\n", rpm);
-                printf("velocity: %.2f\n", result);
-        #endif
-        return result;
+    // Remove trailing "'"    
+    strncpy(tmp, ptr, t); 
+
+    // Char to Integer        
+    rpm = atoi(tmp);
+    // Compute speed out of rpm and wheel length in km/h
+    result = rpm * WHEEL_LENGTH * 0.06;
+
+    #ifdef DEBUG
+        printf("rpm: %d\n", rpm);
+        printf("velocity: %.2f\n", result);
+    #endif
+    return result;
 }
 
 /****************************************************************************************************/
