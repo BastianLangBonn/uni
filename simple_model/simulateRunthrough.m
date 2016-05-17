@@ -8,7 +8,7 @@ track = importdata('Hill.csv', ';', 0);
 %track = importdata('./tracks/Ex3.csv', ';', 0);
 
 %% Simulate
-command = 1;
+command = 0.05;
 result = simulateTrack(track, command);
     
 
@@ -74,5 +74,8 @@ plot(result.travelledDistance, result.elevation);
 plot(result.travelledDistance, result.velocity);
 plot(result.travelledDistance, result.energy);
 legend('elevation', 'velocity', 'energy');
+
+figure(5);clf;hold on;
+plot(result.time, result.energy);
 %% Acceleration
 % 

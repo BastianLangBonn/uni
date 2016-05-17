@@ -5,14 +5,15 @@ clear;
 
 %% Read track information
 track = importdata('Hill.csv', ';', 0);
+%track = importdata('./tracks/Ex3.csv', ';', 0);
 
 %% Simulate
-command = 1;
+command = 0.05;
 result = simulateTrack(track, command);
     
 
 %% Result
-figure(1);
+figure(1);clf;
 hold on;
 subplot(2,2,1);
 plot(result.travelledDistance, result.energy);
@@ -41,7 +42,7 @@ ylabel('elevation');
 
 
 figure(2);clf;hold on;
-colormap(summer);
+colormap(winter);
 
 x = result.travelledDistance'; % displacement 
 z = zeros(size(x)); % zero, because not used
@@ -51,10 +52,33 @@ surface([x;x],[y;y],[z;z],[col;col],...
         'facecol','no',...
         'edgecol','interp',...
         'linew',6);
-title('Power Used on Track')
+title('energy usage based on elevation over time');
+colorbar
 
+figure(3);clf;hold on;
+colormap(winter);
 
+x = result.travelledDistance'; % displacement 
+z = zeros(size(x)); % zero, because not used
+y = result.elevation'; %Elevation
+col = result.velocity;%1:length(x);  % This is the color, vary with x in this case., for instance velocity
+surface([x;x],[y;y],[z;z],[col;col],...
+        'facecol','no',...
+        'edgecol','interp',...
+        'linew',6);
+title('Velocity usage based on elevation over time');
+colorbar
 
+figure(4);clf;hold on;
+plot(result.travelledDistance, result.elevation);
+plot(result.travelledDistance, result.velocity);
+plot(result.travelledDistance, result.energy);
+legend('elevation', 'velocity', 'energy');
 
+figure(4);clf;hold on;
+plot(result.travelledDistance, result.elevation);
+plot(result.travelledDistance, result.velocity);
+plot(result.travelledDistance, result.energy);
+legend('elevation', 'velocity', 'energy');
 %% Acceleration
 % 
