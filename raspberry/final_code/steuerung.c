@@ -87,7 +87,7 @@ unsigned int _now;
 unsigned int _lastpeak;
 
 /****************************************************************************************************/
-/*  Sensor Thread										    */
+/*  Sensor Thread										            */
 /****************************************************************************************************/
 
 void *sensor_thread(void *arg){
@@ -98,60 +98,59 @@ void *sensor_thread(void *arg){
 
 		/*  Motor an- und ausschalten  */
 		if(digitalRead(GPIO_MOTOR_SWITCH)){
-                        _motor_on++;
-                        if(_motor_on > 10){
-                                _motor_on = 0;
-                                #ifdef DEBUG
-				printf("Motor turned off\n");
-				#endif
-                        }
-                        _current_activation = _motor_on * 0.1;
-                        #ifdef DEBUG
-			printf("Motor activation set to %.2f.\n", _current_activation);
-			#endif
-			delay(200); //Notwendig wegen springen des Schalters 
+            _motor_on++;
+            if(_motor_on > 10){
+                _motor_on = 0;
+                #ifdef DEBUG
+			        printf("Motor turned off\n");
+			    #endif
+            }
+        _current_activation = _motor_on * 0.1;
+        #ifdef DEBUG
+		    printf("Motor activation set to %.2f.\n", _current_activation);
+		#endif
+		delay(200); //Notwendig wegen springen des Schalters 
 		}
 		
 		/*  Bremsen  */
-                #ifndef BRAKE2   								
-		if(digitalRead(GPIO_BRAKE1) == 0 && _brake_on == 0){
-			//Bremse neu betaetigt
-			_brake_on = 1;
-			#ifdef DEBUG
-			printf("Bremse gezogen\n");
-			#endif
-		}
-                #endif
+        #ifndef BRAKE2   								
+		    if(digitalRead(GPIO_BRAKE1) == 0 && _brake_on == 0){
+			    //Bremse neu betaetigt
+			    _brake_on = 1;
+			    #ifdef DEBUG
+			        printf("Bremse gezogen\n");
+			    #endif
+		    }
+        #endif
                 
-                #ifdef BRAKE2									
-                if((digitalRead(GPIO_BRAKE1) == 0 || GPIO_BRAKE2 == 0 ) && _brake_on == 0){					//old: &&
-                        _brake_on = 1;
-			#ifdef DEBUG
-			printf("Bremse gezogen\n");
-			#endif
-                }
-                #endif
-		
-		
+        #ifdef BRAKE2									
+            if((digitalRead(GPIO_BRAKE1) == 0 || GPIO_BRAKE2 == 0 ) && _brake_on == 0){
+                _brake_on = 1;
+			    #ifdef DEBUG
+			        printf("Bremse gezogen\n");
+			    #endif
+            }
+        #endif
+			
 		#ifndef BRAKE2
-		if(digitalRead(GPIO_BRAKE1) == 1 && _brake_on == 1){
-			//Bremse wieder losgelassen
-			_brake_on = 0;
-			#ifdef DEBUG
-			printf("Bremse losgelassen\n");
-			#endif
-		}
-                #endif
+		    if(digitalRead(GPIO_BRAKE1) == 1 && _brake_on == 1){
+			    //Bremse wieder losgelassen
+			    _brake_on = 0;
+			    #ifdef DEBUG
+			        printf("Bremse losgelassen\n");
+			    #endif
+		    }
+        #endif
                 
-                #ifdef BRAKE2
-		if((digitalRead(GPIO_BRAKE1) == 1 || digitalRead(GPIO_BRAKE2)) == 1 _brake_on == 1){	// old:&&
-			//Bremse wieder losgelassen
-			_brake_on = 0;
-			#ifdef DEBUG
-			printf("Bremse losgelassen\n");
-			#endif
-		}
-                #endif
+        #ifdef BRAKE2
+		    if((digitalRead(GPIO_BRAKE1) == 1 || digitalRead(GPIO_BRAKE2)) == 1 _brake_on == 1){	// old:&&
+			    //Bremse wieder losgelassen
+			    _brake_on = 0;
+			    #ifdef DEBUG
+			        printf("Bremse losgelassen\n");
+			    #endif
+		    }
+        #endif
 		
 		delay(SENSOR_UPDATE); //Verhindert busy-waiting
 	}
@@ -184,77 +183,76 @@ void *display_thread(void *arg){
     #endif
 }
 
-/****************************************************************************************************/
-/*  GPS Thread										    */
-/****************************************************************************************************/
+
 void error(char *msg){
   perror(msg);
   exit(0);
 }
-
+/****************************************************************************************************/
+/*  GPS Thread										    */
+/****************************************************************************************************/
 void *gps_thread(void *arg){
         
-        #ifdef DEBUG
-            printf("GPS thread started\n"); 
-        #endif
-        int sockfd, portno = 2300, n;
-        struct sockaddr_in serv_addr;
-        struct hostent *server;
-        char *latitude, *longitude;
-            
-        char buffer[256], tmp[256], *ptr;
-        int t=0, rpm;
-            
-        sockfd = socket(AF_INET, SOCK_STREAM, 0);
-        if (sockfd < 0) 
-                error("ERROR opening socket");
-        server = gethostbyname("localhost");
-        memset((char *) &serv_addr, 0, sizeof(serv_addr));
-        serv_addr.sin_family = AF_INET;
-        bcopy((char *)server->h_addr, 
-             (char *)&serv_addr.sin_addr.s_addr,
-             server->h_length);
-        serv_addr.sin_port = htons(portno);
-        if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0) 
-            error("ERROR connecting");
-            
-        memset(buffer, 0, 256);
-        // strcpy(buffer, "X-set-channel: 0s" );
-            
-        //n = write(sockfd,buffer,strlen(buffer));
+    #ifdef DEBUG
+        printf("GPS thread started\n"); 
+    #endif
+    int sockfd, portno = 2300, n;
+    struct sockaddr_in serv_addr;
+    struct hostent *server;
+    char *latitude, *longitude;
+        
+    char buffer[256], tmp[256], *ptr;
+    int t=0, rpm;
+        
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (sockfd < 0){ 
+        error("ERROR opening socket");
+    }
+    server = gethostbyname("localhost");
+    memset((char *) &serv_addr, 0, sizeof(serv_addr));
+    serv_addr.sin_family = AF_INET;
+    bcopy((char *)server->h_addr, 
+         (char *)&serv_addr.sin_addr.s_addr,
+         server->h_length);
+    serv_addr.sin_port = htons(portno);
+    if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0){ 
+        error("ERROR connecting");
+    }
+        
+    memset(buffer, 0, 256);
+    if (n < 0) 
+         error("ERROR writing to socket");
+        
+    while(1){
+        memset(buffer,0,256);
+        memset(tmp,0,sizeof(buffer));
+        ptr = NULL;
+        n = read(sockfd,buffer,255);
         if (n < 0) 
-             error("ERROR writing to socket");
+            error("ERROR reading from socket");
+        if(n>0){
+            printf("Received message: %s\n", buffer);
+                            
+            // Get data out of message
+            latitude = strtok(buffer, ";");
+            latitude = strtok(NULL, ";");
+            longitude = strtok(NULL, ";");
             
-        while(1){
-            memset(buffer,0,256);
-            memset(tmp,0,sizeof(buffer));
-            ptr = NULL;
-            n = read(sockfd,buffer,255);
-            if (n < 0) 
-                error("ERROR reading from socket");
-            if(n>0){
-                printf("Received message: %s\n", buffer);
-                                
-                // Get data out of message
-                latitude = strtok(buffer, ";");
-                latitude = strtok(NULL, ";");
-                longitude = strtok(NULL, ";");
-                
-                latitude = strtok(latitude, "=");
-                latitude = strtok(NULL, "=");
-                _current_latitude = atof(latitude);
-                
-                longitude = strtok(longitude, "=");
-                longitude = strtok(NULL, "=");
-                _current_longitude = atof(longitude);
-                #ifdef DEBUG
-                    printf("GPS THREAD: extracted position:%.2fN;%.2fE\n", _current_latitude, _current_longitude); 
-                #endif
-            }
+            latitude = strtok(latitude, "=");
+            latitude = strtok(NULL, "=");
+            _current_latitude = atof(latitude);
+            
+            longitude = strtok(longitude, "=");
+            longitude = strtok(NULL, "=");
+            _current_longitude = atof(longitude);
+            #ifdef DEBUG
+                printf("GPS THREAD: extracted position:%.2fN;%.2fE\n", _current_latitude, _current_longitude); 
+            #endif
         }
-        #ifdef DEBUG
-            printf("GPS thread terminated\n"); 
-        #endif
+    }
+    #ifdef DEBUG
+        printf("GPS thread terminated\n"); 
+    #endif
 }
 
 /****************************************************************************************************/
@@ -263,13 +261,7 @@ void *gps_thread(void *arg){
 
 int setup(){
 	pthread_t sensor_thr, display_thr, gps_thr;
-	
-   //     if(_setup_done == 1){
-   //             return 0;
-   //     }
-   //     #ifdef DEBUG
-	//printf("Setup started, _setup_done = %d\n", _setup_done);
-//	#endif
+
     #ifdef DEBUG
         printf("Setup started\n"); 
     #endif
@@ -281,15 +273,15 @@ int setup(){
 	res = softPwmCreate(GPIO_PWM, 0, PWM_RANGE);
 	if(res != 0){
 		#ifdef DEBUG
-		printf("PWM Create Error\n");
+		    printf("PWM Create Error\n");
 		#endif
 		return res;
 	}
 	pinMode(GPIO_MOTOR_SWITCH, INPUT);
 	pinMode(GPIO_BRAKE1, INPUT);
-        #ifdef BRAKE2
-	pinMode(GPIO_BRAKE2, INPUT);
-        #endif
+    #ifdef BRAKE2
+	    pinMode(GPIO_BRAKE2, INPUT);
+    #endif
 	pinMode(GPIO_SPEED, INPUT);
 	_lcd_handler = lcdInit(LCD_ROWS, LCD_COLUMNS, LCD_BITS, LCD_RS, LCD_STRB, LCD_D0, LCD_D1, LCD_D2, LCD_D3, LCD_D4, LCD_D5, LCD_D6, LCD_D7);
 	
@@ -320,10 +312,6 @@ int setup(){
     #ifdef DEBUG
         printf("Setup done\n"); 
     #endif
-    //    _setup_done = 1;
-     //   #ifdef DEBUG
-	//printf("Setup done, _setup_done = %d\n", _setup_done);
-	//#endif
 	
 	return res;
 }
@@ -337,11 +325,11 @@ void write_to_file(char* text){
         /* Open file to append, create if not existent*/
         FILE *f = fopen(_filename, "a");
         if (f == NULL){
-                    FILE *f = fopen(_filename, "w");
-                    if(f == NULL){
-                    printf("Error opening file: %s!\n", _filename);
-                    return;
-                }
+            FILE *f = fopen(_filename, "w");
+            if(f == NULL){
+                printf("Error opening file: %s!\n", _filename);
+                return;
+            }
         }
 
         /* print text */
@@ -355,40 +343,39 @@ void write_to_file(char* text){
 /****************************************************************************************************/
 // Reads ant+ information written to stdin
 float read_velocity(){
-        char buffer[BUFMAX + 1], tmp[256];
+    char buffer[BUFMAX + 1], tmp[256];
 	char *bp = buffer, *ptr;
 	int t=0, c, rpm;
-        float result;
-
+    float result;
 
 	FILE *in;
 	while (EOF != (c = fgetc(stdin)) && (bp - buffer) < BUFMAX) {
 		*bp++ = c;
 	}
 	*bp = 0;    // Null-terminate the string
-        #ifdef DEBUG        
-	        printf("read_velocity: Received Buffer: %s", buffer);
-        #endif
-        /*  Verarbeitung der Daten  */
-        // Searches for 'RPM=' in output
-        ptr = strstr(buffer, "RPM=");
-        // Remove leading "RPM='"        
-        ptr=ptr+sizeof(*ptr)*5;
-        t = strcspn(ptr, "'");
+    #ifdef DEBUG        
+        printf("read_velocity: Received Buffer: %s", buffer);
+    #endif
+    /*  Verarbeitung der Daten  */
+    // Searches for 'RPM=' in output
+    ptr = strstr(buffer, "RPM=");
+    // Remove leading "RPM='"        
+    ptr=ptr+sizeof(*ptr)*5;
+    t = strcspn(ptr, "'");
 
-        // Remove trailing "'"    
-        strncpy(tmp, ptr, t); 
-    
-        // Char to Integer        
-        rpm = atoi(tmp);
-        // Compute speed out of rpm and wheel length in km/h
-        result = rpm * WHEEL_LENGTH * 0.06;
-    
-        #ifdef DEBUG
-                printf("rpm: %d\n", rpm);
-                printf("velocity: %.2f\n", result);
-        #endif
-        return result;
+    // Remove trailing "'"    
+    strncpy(tmp, ptr, t); 
+
+    // Char to Integer        
+    rpm = atoi(tmp);
+    // Compute speed out of rpm and wheel length in km/h
+    result = rpm * WHEEL_LENGTH * 0.06;
+
+    #ifdef DEBUG
+        printf("rpm: %d\n", rpm);
+        printf("velocity: %.2f\n", result);
+    #endif
+    return result;
 }
 
 /****************************************************************************************************/
@@ -408,16 +395,16 @@ int check_speed_limit(){
 /****************************************************************************************************/
 /* Sends the Pwm signal to the motor depending on some values */
 void send_motor_signal(){
-        /*  Ein- und Ausschalten des PWM-Signals  */
-        if(_brake_on == 0 && _motor_on > 0 && _motor_limited == 0){
-                //Einschalten des PWM-Signals
-                softPwmWrite(GPIO_PWM, (int)(PWM_RANGE * _current_activation / 2));
-                sleep(1);
-                softPwmWrite(GPIO_PWM, (int)(PWM_RANGE * _current_activation));
-        }else{
-                //Ausschalten des PWM-Signals
-                softPwmWrite(GPIO_PWM, 0);
-        }
+    /*  Ein- und Ausschalten des PWM-Signals  */
+    if(_brake_on == 0 && _motor_on > 0 && _motor_limited == 0){
+        //Einschalten des PWM-Signals
+        softPwmWrite(GPIO_PWM, (int)(PWM_RANGE * _current_activation / 2));
+        sleep(1);
+        softPwmWrite(GPIO_PWM, (int)(PWM_RANGE * _current_activation));
+    }else{
+        //Ausschalten des PWM-Signals
+        softPwmWrite(GPIO_PWM, 0);
+    }
 }
 
 
@@ -427,13 +414,13 @@ void send_motor_signal(){
 // Log important data into file
 void log_data(){        
 /* Log data to file*/
-        char printout[256];
-        sprintf(printout, "timestamp: %d, velocity: %.2fkm/h", _now, _current_speed);
-        write_to_file(printout);
-        sprintf(printout, "timestamp: %d, pwm-signal: %d", _now, (int)(PWM_RANGE * _current_activation));
-        write_to_file(printout);     
-        sprintf(printout, "timestamp: %d, position: %.2fN, %.2fE", _now, _current_latitude, _current_longitude);
-        write_to_file(printout);   
+    char printout[256];
+    sprintf(printout, "timestamp: %d, velocity: %.2fkm/h", _now, _current_speed);
+    write_to_file(printout);
+    sprintf(printout, "timestamp: %d, pwm-signal: %d", _now, (int)(PWM_RANGE * _current_activation));
+    write_to_file(printout);     
+    sprintf(printout, "timestamp: %d, position: %.2fN, %.2fE", _now, _current_latitude, _current_longitude);
+    write_to_file(printout);   
 
 }
 
@@ -442,17 +429,16 @@ void log_data(){
 /****************************************************************************************************/
 
 int main(){
-
 	
-        setup();
-        while(1){
-            _now = micros();
-            //_current_speed = read_velocity();
-            _motor_limited = check_speed_limit();
-            send_motor_signal();
-            _lastpeak = _now;
-            log_data();
+    setup();
+    while(1){
+        _now = micros();
+        //_current_speed = read_velocity();
+        _motor_limited = check_speed_limit();
+        send_motor_signal();
+        _lastpeak = _now;
+        log_data();
 
-	        delay(SPEED_UPDATE);
-	    }
+        delay(SPEED_UPDATE);
+    }
 }
