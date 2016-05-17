@@ -171,8 +171,8 @@ void *display_thread(void *arg){
 		lcdClear(_lcd_handler);
 		lcdPrintf(_lcd_handler, "%d km/h", _current_speed);
 		lcdPosition(_lcd_handler, 0, 1);
-		if(_motor_on){
-			lcdPrintf(_lcd_handler, "Motor an");
+		if(_motor_on > 0){
+			lcdPrintf(_lcd_handler, "Act: %.2f", _motor_on * 0.1);
 		}else{
 			lcdPrintf(_lcd_handler, "Motor aus");
 		}
@@ -229,6 +229,7 @@ void *gps_thread(void *arg){
                 printf("GPS THREAD: extracted position:%.2fN;%.2fE\n", _current_latitude, _current_longitude); 
             #endif
         }
+		delay(SENSOR_UPDATE); //Verhindert busy-waiting
     }
     #ifdef DEBUG
         printf("GPS thread terminated\n"); 
@@ -273,6 +274,7 @@ void *ant_thread(void *arg){
 				printf("velocity: %.2f\n", _current_speed);
 			#endif
         }
+		delay(SENSOR_UPDATE); //Verhindert busy-waiting
     }
     	
 	#ifdef DEBUG
@@ -438,10 +440,9 @@ void send_motor_signal(){
 
 /****************************************************************************************************/
 /*  log_data			                        					    */
+/*  Log data into file 													*/
 /****************************************************************************************************/
-// Log important data into file
-void log_data(){        
-/* Log data to file*/
+void log_data(){       
     char printout[256];
     sprintf(printout, "timestamp: %d, velocity: %.2fkm/h", _now, _current_speed);
     write_to_file(printout);
@@ -449,7 +450,6 @@ void log_data(){
     write_to_file(printout);     
     sprintf(printout, "timestamp: %d, position: %.2fN, %.2fE", _now, _current_latitude, _current_longitude);
     write_to_file(printout);   
-
 }
 
 /****************************************************************************************************/
