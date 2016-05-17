@@ -196,40 +196,20 @@ void *gps_thread(void *arg){
     #ifdef DEBUG
         printf("GPS thread started\n"); 
     #endif
-    int sockfd, portno = 2300, n;
-    struct sockaddr_in serv_addr;
-    struct hostent *server;
-    char *latitude, *longitude;
-        
-    char buffer[256], tmp[256], *ptr;
-    int t=0, rpm;
-        
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd < 0){ 
-        error("ERROR opening socket");
-    }
-    server = gethostbyname("localhost");
-    memset((char *) &serv_addr, 0, sizeof(serv_addr));
-    serv_addr.sin_family = AF_INET;
-    bcopy((char *)server->h_addr, 
-         (char *)&serv_addr.sin_addr.s_addr,
-         server->h_length);
-    serv_addr.sin_port = htons(portno);
-    if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0){ 
-        error("ERROR connecting");
-    }
+    int sockfd, n;
+    char *latitude, *longitude;        
+    char buffer[256], tmp[256], *ptr;    
         
     memset(buffer, 0, 256);
-    if (n < 0) 
-         error("ERROR writing to socket");
-        
+	sockfd = createSockFd(2300);
     while(1){
         memset(buffer,0,256);
         memset(tmp,0,sizeof(buffer));
         ptr = NULL;
         n = read(sockfd,buffer,255);
-        if (n < 0) 
+        if (n < 0){
             error("ERROR reading from socket");
+		}
         if(n>0){
             printf("Received message: %s\n", buffer);
                             
@@ -256,17 +236,88 @@ void *gps_thread(void *arg){
 }
 
 /****************************************************************************************************/
+/*  ANT+ Thread										    */
+/****************************************************************************************************/
+void *ant_thread(void *arg){
+    #ifdef DEBUG
+        printf("ANT+ Thread started\n"); 
+    #endif
+	int sockfd, n;   
+    char buffer[256], tmp[256], *ptr;
+    int t=0, rpm;
+    sockfd = createSockFd(2301);
+	memset(buffer, 0, 256);
+    while(1){
+        memset(buffer,0,256);
+        memset(tmp,0,sizeof(buffer));
+        ptr = NULL;
+        n = read(sockfd,buffer,255);
+        if (n < 0) 
+            error("ERROR reading from socket");
+        if(n>0){
+            printf("Received message: %s\n",buffer);
+			/*  Verarbeitung der Daten  */
+			// Searches for 'RPM=' in output
+			ptr = strstr(buffer, "RPM=");
+			// Remove leading "RPM='"        
+			ptr=ptr+sizeof(*ptr)*5;
+			t = strcspn(ptr, "'");
+			// Remove trailing "'"    
+			strncpy(tmp, ptr, t); 
+			// Char to Integer        
+			rpm = atoi(tmp);
+			// Compute speed out of rpm and wheel length in km/h
+			_current_speed = rpm * WHEEL_LENGTH * 0.06;
+			#ifdef DEBUG
+				printf("rpm: %d\n", rpm);
+				printf("velocity: %.2f\n", _current_speed);
+			#endif
+        }
+    }
+    	
+	#ifdef DEBUG
+        printf("ANT+ Thread Ended\n"); 
+    #endif
+}
+
+/****************************************************************************************************/
+/*  CreateSocketFd										    */
+/*  Creates a socket connection to the given port number on localhost 				*/
+/****************************************************************************************************/
+int createSockFd(int portno){
+	int sockfd;
+    struct sockaddr_in serv_addr;
+    struct hostent *server;
+    
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (sockfd < 0){
+        error("ERROR opening socket");
+	}
+    server = gethostbyname("localhost");
+    memset((char *) &serv_addr, 0, sizeof(serv_addr));
+    serv_addr.sin_family = AF_INET;
+    bcopy((char *)server->h_addr, 
+         (char *)&serv_addr.sin_addr.s_addr,
+         server->h_length);
+    serv_addr.sin_port = htons(portno);
+    if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0){ 
+        error("ERROR connecting");
+	}
+
+	return sockfd;
+}
+/****************************************************************************************************/
 /*  Setup											    */
 /****************************************************************************************************/
 
 int setup(){
-	pthread_t sensor_thr, display_thr, gps_thr;
+	pthread_t sensor_thr, display_thr, gps_thr, ant_thr;
 
     #ifdef DEBUG
         printf("Setup started\n"); 
     #endif
     _lastpeak  = micros();
-    sprintf(_filename, "/home/pi/AMT/log/log_.txt");
+    sprintf(_filename, "/home/pi/AMT/log/log_%d.txt", _lastpeak);
 
 	int res = 0;
 	wiringPiSetup();
@@ -284,7 +335,19 @@ int setup(){
     #endif
 	pinMode(GPIO_SPEED, INPUT);
 	_lcd_handler = lcdInit(LCD_ROWS, LCD_COLUMNS, LCD_BITS, LCD_RS, LCD_STRB, LCD_D0, LCD_D1, LCD_D2, LCD_D3, LCD_D4, LCD_D5, LCD_D6, LCD_D7);
+		
+    #ifdef DEBUG
+        printf("Setup done\n"); 
+    #endif
 	
+	return res;
+}
+
+/****************************************************************************************************/
+/*  createThreads                                                                                 */
+/****************************************************************************************************/
+void createThreads(){
+	// Create Display Thread
 	res = pthread_create(&display_thr, NULL, display_thread, NULL);
 	if(res != 0){
 		#ifdef DEBUG
@@ -293,6 +356,7 @@ int setup(){
 		return res;
 	}
 	
+	// Create Sensor Thread
 	res = pthread_create(&sensor_thr, NULL, sensor_thread, NULL);
 	if(res != 0){
 		#ifdef DEBUG
@@ -300,7 +364,8 @@ int setup(){
 		#endif
 		return res;
 	}
-
+	
+	// Create GPS Thread
     res = pthread_create(&gps_thr, NULL, gps_thread, NULL);
     if(res != 0){
 		#ifdef DEBUG
@@ -309,11 +374,14 @@ int setup(){
 		return res;
 	}
 
-    #ifdef DEBUG
-        printf("Setup done\n"); 
-    #endif
-	
-	return res;
+	// Create ANT+ Thread
+	res = pthread_create(&ant_thr, NULL, ant_thread, NULL);
+    if(res != 0){
+		#ifdef DEBUG
+		    printf("ANT+ Thread Create Error\n");
+		#endif
+		return res;
+	}
 }
 
 /****************************************************************************************************/
@@ -336,46 +404,6 @@ void write_to_file(char* text){
         fprintf(f, "%s\n", text);
 
         fclose(f);
-}
-
-/****************************************************************************************************/
-/*  read_velocity		                						    */
-/****************************************************************************************************/
-// Reads ant+ information written to stdin
-float read_velocity(){
-    char buffer[BUFMAX + 1], tmp[256];
-	char *bp = buffer, *ptr;
-	int t=0, c, rpm;
-    float result;
-
-	FILE *in;
-	while (EOF != (c = fgetc(stdin)) && (bp - buffer) < BUFMAX) {
-		*bp++ = c;
-	}
-	*bp = 0;    // Null-terminate the string
-    #ifdef DEBUG        
-        printf("read_velocity: Received Buffer: %s", buffer);
-    #endif
-    /*  Verarbeitung der Daten  */
-    // Searches for 'RPM=' in output
-    ptr = strstr(buffer, "RPM=");
-    // Remove leading "RPM='"        
-    ptr=ptr+sizeof(*ptr)*5;
-    t = strcspn(ptr, "'");
-
-    // Remove trailing "'"    
-    strncpy(tmp, ptr, t); 
-
-    // Char to Integer        
-    rpm = atoi(tmp);
-    // Compute speed out of rpm and wheel length in km/h
-    result = rpm * WHEEL_LENGTH * 0.06;
-
-    #ifdef DEBUG
-        printf("rpm: %d\n", rpm);
-        printf("velocity: %.2f\n", result);
-    #endif
-    return result;
 }
 
 /****************************************************************************************************/
@@ -433,7 +461,6 @@ int main(){
     setup();
     while(1){
         _now = micros();
-        //_current_speed = read_velocity();
         _motor_limited = check_speed_limit();
         send_motor_signal();
         _lastpeak = _now;
