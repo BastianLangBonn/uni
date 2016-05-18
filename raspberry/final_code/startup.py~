@@ -7,20 +7,20 @@ import thread
 
 
 
-def startQuarqd():
+def startQuarqd()
     print('starting quarqd')
     call("/home/pi/AMT/quarqd")
     print('started quarqd')
     
-def startAnt():
+def startAnt()
     execfile("/home/pi/AMT/ant.py")
     print('started ant.py')
     
-def startGps():
+def startGps()
     execfile("/home/pi/AMT/gps.py")
     print('started gps.py')
 
-def startSteuerung():
+def startSteuerung()
     call("/home/pi/AMT/steuerung")
     print('started steuerung')
 

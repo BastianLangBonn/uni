@@ -82,7 +82,7 @@ float _current_speed = 0;
 float _current_latitude = 0.0;
 float _current_longitude = 0.0;
 int _lcd_handler;
-char _setup_done = 0, _filename[256];
+char _setup_done = 0;
 
 unsigned int _lastPeak;
 
@@ -93,11 +93,13 @@ unsigned int _lastPeak;
 /****************************************************************************************************/
 void write_to_file(char* text){
         /* Open file to append, create if not existent*/
-        FILE *f = fopen(_filename, "a");
+        char filename[256];
+        sprintf(filename, "/home/pi/AMT/log/log_%d.txt", micros());
+        FILE *f = fopen(filename, "a");
         if (f == NULL){
-            FILE *f = fopen(_filename, "w");
+            FILE *f = fopen(filename, "w");
             if(f == NULL){
-                printf("Error opening file: %s!\n", _filename);
+                printf("Error opening file: %s!\n", filename);
                 return;
             }
         }
@@ -380,8 +382,7 @@ int setup(){
     #ifdef DEBUG
         printf("Setup started\n"); 
     #endif
-    _lastPeak  = micros();
-    sprintf(_filename, "/home/pi/AMT/log/log_%d.txt", _lastPeak);
+    _lastPeak  = micros();;
 
 	int res = 0;
 	wiringPiSetup();

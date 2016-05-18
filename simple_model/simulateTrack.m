@@ -3,12 +3,12 @@ function [ result ] = simulateTrack( track, command )
 %   Detailed explanation goes here
 
     %% Parameters
-    mass = 80; % in kg. Needs to be corrected
-    airDensity = 1.225; % in kg/m³
+    mass = 90; % in kg. Needs to be corrected
+    airDensity = 1.225; % in kg/mï¿½
     ftp = 200; % Not exactly sure what it is, but needed to compute wheel force
     effectiveFrontalArea = 0.3; % unit?
     rollingResistanceCoefficient = 0.005; % unit?
-    normalForce = mass * 9.81; % in kg*m/s²
+    normalForce = mass * 9.81; % in kg*m/sï¿½
 
     %% Read track information
     result.travelledDistance = track(:,1);
