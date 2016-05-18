@@ -1,4 +1,4 @@
-function [ result ] = simulateTrack( track, command )
+function [ result ] = simulateTrackDistance( track, command )
 %SIMULATETRACK Summary of this function goes here
 %   Detailed explanation goes here
 
