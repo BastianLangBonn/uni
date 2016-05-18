@@ -61,6 +61,7 @@
 #define DISPLAY_UPDATE      1000
 #define SENSOR_UPDATE       20
 #define SPEED_UPDATE        20
+#define LOGGING_UPDATE      100
 
 #define BUFMAX              100
 
@@ -81,10 +82,50 @@ float _current_speed = 0;
 float _current_latitude = 0.0;
 float _current_longitude = 0.0;
 int _lcd_handler;
-char _setup_done = 0, _filename[256];
+char _setup_done = 0;
 
-unsigned int _now;
-unsigned int _lastpeak;
+unsigned int _lastPeak;
+
+/****************************************************************************************************/
+/*  Write_to_file                                                                                   */
+/*                                                                                                  */
+/*  Writes information into a file                            									    */
+/****************************************************************************************************/
+void write_to_file(char* text){
+        /* Open file to append, create if not existent*/
+        char filename[256];
+        sprintf(filename, "/home/pi/AMT/log/log_%d.txt", micros());
+        FILE *f = fopen(filename, "a");
+        if (f == NULL){
+            FILE *f = fopen(filename, "w");
+            if(f == NULL){
+                printf("Error opening file: %s!\n", filename);
+                return;
+            }
+        }
+
+        /* print text */
+        fprintf(f, "%s\n", text);
+
+        fclose(f);
+}
+
+/****************************************************************************************************/
+/*  log_data			                        					    */
+/*  Log data into file 													*/
+/****************************************************************************************************/
+void log_data(){       
+    char printout[256];
+    unsigned int timestamp = micros();
+    sprintf(printout, "timestamp: %d, velocity: %.2fkm/h", timestamp, _current_speed);
+    write_to_file(printout);
+    sprintf(printout, "timestamp: %d, pwm-signal: %d", timestamp, (int)(PWM_RANGE * _current_activation));
+    write_to_file(printout);     
+    sprintf(printout, "timestamp: %d, position: %.2fN, %.2fE", timestamp, _current_latitude, _current_longitude);
+    write_to_file(printout);   
+    sprintf(printout, "timestamp: %d, activation level: %.2f", timestamp, _current_activation);
+    write_to_file(printout);   
+}
 
 /****************************************************************************************************/
 /*  Sensor Thread										            */
@@ -211,7 +252,7 @@ void *gps_thread(void *arg){
             error("ERROR reading from socket");
 		}
         if(n>0){
-            printf("Received message: %s\n", buffer);
+            printf("Received GPS message: %s\n", buffer);
                             
             // Get data out of message
             latitude = strtok(buffer, ";");
@@ -256,23 +297,30 @@ void *ant_thread(void *arg){
         if (n < 0) 
             error("ERROR reading from socket");
         if(n>0){
-            printf("Received message: %s\n",buffer);
+            printf("Received ATN+ message: %s\n",buffer);
 			/*  Verarbeitung der Daten  */
 			// Searches for 'RPM=' in output
-			ptr = strstr(buffer, "RPM=");
-			// Remove leading "RPM='"        
-			ptr=ptr+sizeof(*ptr)*5;
-			t = strcspn(ptr, "'");
-			// Remove trailing "'"    
-			strncpy(tmp, ptr, t); 
-			// Char to Integer        
-			rpm = atoi(tmp);
-			// Compute speed out of rpm and wheel length in km/h
-			_current_speed = rpm * WHEEL_LENGTH * 0.06;
-			#ifdef DEBUG
-				printf("rpm: %d\n", rpm);
-				printf("velocity: %.2f\n", _current_speed);
-			#endif
+			if(strstr(buffer, "RPM=")){
+			    ptr = strstr(buffer, "RPM=");
+			    // Remove leading "RPM='"        
+			    ptr=ptr+sizeof(*ptr)*5;
+			    t = strcspn(ptr, "'");
+			    // Remove trailing "'"    
+			    strncpy(tmp, ptr, t); 
+			    // Char to Integer        
+			    rpm = atoi(tmp);
+			    // Compute speed out of rpm and wheel length in km/h
+			    _current_speed = rpm * WHEEL_LENGTH * 0.06;
+			    _lastPeak = micros();
+			    #ifdef DEBUG
+				    printf("rpm: %d\n", rpm);
+				    printf("velocity: %.2f\n", _current_speed);
+			    #endif
+			} else{
+			    #ifdef DEBUG
+				    printf("String did not contain RPM\n");
+			    #endif			    
+			}
         }
 		delay(SENSOR_UPDATE); //Verhindert busy-waiting
     }
@@ -282,6 +330,23 @@ void *ant_thread(void *arg){
     #endif
 }
 
+/****************************************************************************************************/
+/*  Logging Thread										    */
+/****************************************************************************************************/
+void *logging_thread(void *arg){
+    #ifdef DEBUG
+        printf("Logging Thread started\n"); 
+    #endif
+    
+    while(1){
+        log_data();
+        delay(LOGGING_UPDATE);
+    }
+    
+	#ifdef DEBUG
+        printf("Logging Thread Ended\n"); 
+    #endif
+}
 /****************************************************************************************************/
 /*  CreateSocketFd										    */
 /*  Creates a socket connection to the given port number on localhost 				*/
@@ -313,13 +378,11 @@ int createSockFd(int portno){
 /****************************************************************************************************/
 
 int setup(){
-	pthread_t sensor_thr, display_thr, gps_thr, ant_thr;
 
     #ifdef DEBUG
         printf("Setup started\n"); 
     #endif
-    _lastpeak  = micros();
-    sprintf(_filename, "/home/pi/AMT/log/log_%d.txt", _lastpeak);
+    _lastPeak  = micros();;
 
 	int res = 0;
 	wiringPiSetup();
@@ -337,6 +400,8 @@ int setup(){
     #endif
 	pinMode(GPIO_SPEED, INPUT);
 	_lcd_handler = lcdInit(LCD_ROWS, LCD_COLUMNS, LCD_BITS, LCD_RS, LCD_STRB, LCD_D0, LCD_D1, LCD_D2, LCD_D3, LCD_D4, LCD_D5, LCD_D6, LCD_D7);
+	
+	res = createThreads();
 		
     #ifdef DEBUG
         printf("Setup done\n"); 
@@ -348,7 +413,10 @@ int setup(){
 /****************************************************************************************************/
 /*  createThreads                                                                                 */
 /****************************************************************************************************/
-void createThreads(){
+int createThreads(){
+    pthread_t sensor_thr, display_thr, gps_thr, ant_thr, logging_thr;
+    int res = 0;
+
 	// Create Display Thread
 	res = pthread_create(&display_thr, NULL, display_thread, NULL);
 	if(res != 0){
@@ -384,28 +452,16 @@ void createThreads(){
 		#endif
 		return res;
 	}
-}
-
-/****************************************************************************************************/
-/*  Write_to_file                                                                                   */
-/*                                                                                                  */
-/*  Writes information into a file                            									    */
-/****************************************************************************************************/
-void write_to_file(char* text){
-        /* Open file to append, create if not existent*/
-        FILE *f = fopen(_filename, "a");
-        if (f == NULL){
-            FILE *f = fopen(_filename, "w");
-            if(f == NULL){
-                printf("Error opening file: %s!\n", _filename);
-                return;
-            }
-        }
-
-        /* print text */
-        fprintf(f, "%s\n", text);
-
-        fclose(f);
+	
+	// Create Logging Thread
+	res = pthread_create(&logging_thr, NULL, logging_thread, NULL);
+    if(res != 0){
+		#ifdef DEBUG
+		    printf("Logging Thread Create Error\n");
+		#endif
+		return res;
+	}
+	return res;
 }
 
 /****************************************************************************************************/
@@ -432,24 +488,15 @@ void send_motor_signal(){
         sleep(1);
         softPwmWrite(GPIO_PWM, (int)(PWM_RANGE * _current_activation));
     }else{
-        //Ausschalten des PWM-Signals
+        //Ausschalten des PWM-Signals     
         softPwmWrite(GPIO_PWM, 0);
     }
 }
 
-
-/****************************************************************************************************/
-/*  log_data			                        					    */
-/*  Log data into file 													*/
-/****************************************************************************************************/
-void log_data(){       
-    char printout[256];
-    sprintf(printout, "timestamp: %d, velocity: %.2fkm/h", _now, _current_speed);
-    write_to_file(printout);
-    sprintf(printout, "timestamp: %d, pwm-signal: %d", _now, (int)(PWM_RANGE * _current_activation));
-    write_to_file(printout);     
-    sprintf(printout, "timestamp: %d, position: %.2fN, %.2fE", _now, _current_latitude, _current_longitude);
-    write_to_file(printout);   
+void checkVelocityForDelay(){
+    if ( (micros() - _lastPeak) > 2000000){
+        _current_speed = 0;
+    }
 }
 
 /****************************************************************************************************/
@@ -460,11 +507,9 @@ int main(){
 	
     setup();
     while(1){
-        _now = micros();
         _motor_limited = check_speed_limit();
         send_motor_signal();
-        _lastpeak = _now;
-        log_data();
+        checkVelocityForDelay();       
 
         delay(SPEED_UPDATE);
     }

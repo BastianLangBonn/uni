@@ -5,6 +5,8 @@
 
 import socket
 import sys
+import time
+import serial
 
 # Function to connect to ant+ and send received data to connected
 # host
@@ -17,14 +19,28 @@ def submitAntData(connection):
         s.connect(( host, port ))
 
         s.send('X-set-channel: 0s\n')
+        path = '/home/pi/AMT/out'
+        filename = '{}/ant_out_{}'.format(path,time.time());
+        f = open(filename, 'w')
+        
+        # Prevent files from getting too big
+        nLines = 0;
+        nFiles = 1;
 
         while True:
             # Receive data from ant+
-            print >>sys.stderr, 'sending data...'
             data=s.recv(1000000)
-            connection.sendall(data);            
+            connection.sendall(data);
+            print >>sys.stderr, 'sending data: %s' % data  
+            if nLines > 1000000:
+                f.close();
+                filename = '{}/ant_out_{}_{}'.format(path, nFiles, time.time());
+                f = open(filename, 'w');
+                nLines = 0;
+                nFiles += 1;          
         s.close()
 
+# Function that waits for an incomming connection and then starts submitting data
 def listenForConnection():
     
     # Create a TCP/IP socket

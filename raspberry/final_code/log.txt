@@ -1,0 +1,144 @@
+timestamp: 213001, velocity: 0.00km/h
+timestamp: 213001, pwm-signal: 0
+timestamp: 213001, position: 0.00N, 0.00E
+timestamp: 213001, activation level: 0.00
+timestamp: 714794, velocity: 0.00km/h
+timestamp: 714794, pwm-signal: 0
+timestamp: 714794, position: 0.00N, 0.00E
+timestamp: 714794, activation level: 0.00
+timestamp: 1215708, velocity: 0.00km/h
+timestamp: 1215708, pwm-signal: 0
+timestamp: 1215708, position: 0.00N, 0.00E
+timestamp: 1215708, activation level: 0.00
+timestamp: 1716646, velocity: 0.00km/h
+timestamp: 1716646, pwm-signal: 0
+timestamp: 1716646, position: 0.00N, 0.00E
+timestamp: 1716646, activation level: 0.00
+timestamp: 2217561, velocity: 0.00km/h
+timestamp: 2217561, pwm-signal: 0
+timestamp: 2217561, position: 0.00N, 0.00E
+timestamp: 2217561, activation level: 0.00
+timestamp: 2718387, velocity: 0.00km/h
+timestamp: 2718387, pwm-signal: 0
+timestamp: 2718387, position: 0.00N, 0.00E
+timestamp: 2718387, activation level: 0.00
+timestamp: 3219289, velocity: 0.00km/h
+timestamp: 3219289, pwm-signal: 0
+timestamp: 3219289, position: 0.00N, 0.00E
+timestamp: 3219289, activation level: 0.00
+timestamp: 3720066, velocity: 0.00km/h
+timestamp: 3720066, pwm-signal: 0
+timestamp: 3720066, position: 0.00N, 0.00E
+timestamp: 3720066, activation level: 0.00
+timestamp: 4221000, velocity: 0.00km/h
+timestamp: 4221000, pwm-signal: 0
+timestamp: 4221000, position: 0.00N, 0.00E
+timestamp: 4221000, activation level: 0.00
+timestamp: 4721838, velocity: 0.00km/h
+timestamp: 4721838, pwm-signal: 0
+timestamp: 4721838, position: 0.00N, 0.00E
+timestamp: 4721838, activation level: 0.00
+timestamp: 5222775, velocity: 0.00km/h
+timestamp: 5222775, pwm-signal: 0
+timestamp: 5222775, position: 0.00N, 0.00E
+timestamp: 5222775, activation level: 0.00
+timestamp: 5723786, velocity: 0.00km/h
+timestamp: 5723786, pwm-signal: 0
+timestamp: 5723786, position: 0.00N, 0.00E
+timestamp: 5723786, activation level: 0.00
+timestamp: 6224711, velocity: 0.00km/h
+timestamp: 6224711, pwm-signal: 0
+timestamp: 6224711, position: 0.00N, 0.00E
+timestamp: 6224711, activation level: 0.00
+timestamp: 6725513, velocity: 0.00km/h
+timestamp: 6725513, pwm-signal: 0
+timestamp: 6725513, position: 0.00N, 0.00E
+timestamp: 6725513, activation level: 0.00
+timestamp: 7226415, velocity: 0.00km/h
+timestamp: 7226415, pwm-signal: 0
+timestamp: 7226415, position: 0.00N, 0.00E
+timestamp: 7226415, activation level: 0.00
+timestamp: 7727241, velocity: 0.00km/h
+timestamp: 7727241, pwm-signal: 0
+timestamp: 7727241, position: 0.00N, 0.00E
+timestamp: 7727241, activation level: 0.00
+timestamp: 8228203, velocity: 0.00km/h
+timestamp: 8228203, pwm-signal: 0
+timestamp: 8228203, position: 0.00N, 0.00E
+timestamp: 8228203, activation level: 0.00
+timestamp: 8729005, velocity: 0.09km/h
+timestamp: 8729005, pwm-signal: 0
+timestamp: 8729005, position: 0.00N, 0.00E
+timestamp: 8729005, activation level: 0.00
+timestamp: 9229936, velocity: 0.09km/h
+timestamp: 9229936, pwm-signal: 0
+timestamp: 9229936, position: 0.00N, 0.00E
+timestamp: 9229936, activation level: 0.00
+timestamp: 9730738, velocity: 6.68km/h
+timestamp: 9730738, pwm-signal: 0
+timestamp: 9730738, position: 0.00N, 0.00E
+timestamp: 9730738, activation level: 0.00
+timestamp: 10231665, velocity: 6.68km/h
+timestamp: 10231665, pwm-signal: 0
+timestamp: 10231665, position: 0.00N, 0.00E
+timestamp: 10231665, activation level: 0.00
+timestamp: 10738452, velocity: 6.59km/h
+timestamp: 10738452, pwm-signal: 0
+timestamp: 10738452, position: 0.00N, 0.00E
+timestamp: 10738452, activation level: 0.00
+timestamp: 11239364, velocity: 6.50km/h
+timestamp: 11239364, pwm-signal: 0
+timestamp: 11239364, position: 0.00N, 0.00E
+timestamp: 11239364, activation level: 0.00
+timestamp: 11740237, velocity: 6.50km/h
+timestamp: 11740237, pwm-signal: 0
+timestamp: 11740237, position: 0.00N, 0.00E
+timestamp: 11740237, activation level: 0.00
+timestamp: 12241151, velocity: 6.50km/h
+timestamp: 12241151, pwm-signal: 0
+timestamp: 12241151, position: 0.00N, 0.00E
+timestamp: 12241151, activation level: 0.00
+timestamp: 12741996, velocity: 6.50km/h
+timestamp: 12741996, pwm-signal: 0
+timestamp: 12741996, position: 0.00N, 0.00E
+timestamp: 12741996, activation level: 0.00
+timestamp: 13243037, velocity: 0.00km/h
+timestamp: 13243037, pwm-signal: 0
+timestamp: 13243037, position: 0.00N, 0.00E
+timestamp: 13243037, activation level: 0.00
+timestamp: 13743964, velocity: 0.00km/h
+timestamp: 13743964, pwm-signal: 0
+timestamp: 13743964, position: 0.00N, 0.00E
+timestamp: 13743964, activation level: 0.00
+timestamp: 14244900, velocity: 0.00km/h
+timestamp: 14244900, pwm-signal: 0
+timestamp: 14244900, position: 0.00N, 0.00E
+timestamp: 14244900, activation level: 0.00
+timestamp: 14745742, velocity: 0.00km/h
+timestamp: 14745742, pwm-signal: 0
+timestamp: 14745742, position: 0.00N, 0.00E
+timestamp: 14745742, activation level: 0.00
+timestamp: 15246627, velocity: 0.00km/h
+timestamp: 15246627, pwm-signal: 0
+timestamp: 15246627, position: 0.00N, 0.00E
+timestamp: 15246627, activation level: 0.00
+timestamp: 15747499, velocity: 0.00km/h
+timestamp: 15747499, pwm-signal: 0
+timestamp: 15747499, position: 0.00N, 0.00E
+timestamp: 15747499, activation level: 0.00
+timestamp: 16248460, velocity: 0.00km/h
+timestamp: 16248460, pwm-signal: 0
+timestamp: 16248460, position: 0.00N, 0.00E
+timestamp: 16248460, activation level: 0.00
+timestamp: 16749327, velocity: 0.00km/h
+timestamp: 16749327, pwm-signal: 0
+timestamp: 16749327, position: 0.00N, 0.00E
+timestamp: 16749327, activation level: 0.00
+timestamp: 17250240, velocity: 0.00km/h
+timestamp: 17250240, pwm-signal: 0
+timestamp: 17250240, position: 0.00N, 0.00E
+timestamp: 17250240, activation level: 0.00
+timestamp: 17751067, velocity: 0.00km/h
+timestamp: 17751067, pwm-signal: 0
+timestamp: 17751067, position: 0.00N, 0.00E
+timestamp: 17751067, activation level: 0.00
