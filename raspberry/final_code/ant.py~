@@ -25,6 +25,7 @@ def submitAntData(connection):
             connection.sendall(data);            
         s.close()
 
+# Function that waits for an incomming connection and then starts submitting data
 def listenForConnection():
     
     # Create a TCP/IP socket

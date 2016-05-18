@@ -20,9 +20,9 @@ def submitAntData(connection):
 
         while True:
             # Receive data from ant+
-            print >>sys.stderr, 'sending data...'
             data=s.recv(1000000)
-            connection.sendall(data);            
+            connection.sendall(data);
+            print >>sys.stderr, 'sending data: %s' % data            
         s.close()
 
 # Function that waits for an incomming connection and then starts submitting data
