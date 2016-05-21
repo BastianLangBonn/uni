@@ -48,6 +48,9 @@ function [ result ] = simulateTrackTime( track, command )
         result.acceleration(t) = vChange;
         result.energy(t) = W;
         result.distance(t) = x;
+        if v <=0
+            break
+        end
     end
     
 end

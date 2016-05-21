@@ -24,7 +24,7 @@ ylabel('energy');
 subplot(2,2,2);
 plot(result.time, result.velocity);
 title('velocity over time');
-xlabel('time in m');
+xlabel('time in s');
 ylabel('velocity in m/s');
 
 subplot(2,2,3);
