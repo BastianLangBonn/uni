@@ -45,7 +45,7 @@ for generation = 1:nGenerations
     % Produce Predictions and get error
     clear mse;
     parfor trial=1:nTrials
-        mse(trial) = evaluate(network{trial}, nInput, tdata);
+        mse(trial) = evaluate(network{trial}, nInput);
     end
     
 end
