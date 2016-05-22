@@ -8,6 +8,7 @@ tracks = dir('./tracks/*.csv');
 
 %% Simulate tracks
 for i = 1:length(tracks)
+    disp(['*** Track ' int2str(i)]);
     track = importdata(sprintf('./tracks/%s',tracks(i).name), ';', 0);
     
     
@@ -46,3 +47,5 @@ for i = 1 : length(data)
     end
 end
 
+%% Save Matlab Data File
+save 'trainingData.mat' data
