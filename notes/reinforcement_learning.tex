@@ -1,0 +1,170 @@
+%%% LaTeX Template: Two column assignment for BRSU
+%%% Based on two column article from: http://www.howtotex.com/
+%%% Preamble
+\documentclass[	DIV=calc,%
+				paper=a4,%
+				fontsize=11pt,%
+				twocolumn]{scrartcl}	 % KOMA-article class
+
+\usepackage{lipsum}	% Package to create dummy text
+\usepackage{blindtext}
+\usepackage[english]{babel}	                          % English language/hyphenation
+\usepackage[protrusion=true,expansion=true]{microtype} % Better typography
+\usepackage{amsmath,amsfonts,amsthm}					 % Math packages
+\usepackage[pdftex]{graphicx}	                          % Enable pdflatex
+\usepackage[svgnames]{xcolor}	                          % Enabling colors by their 'svgnames'
+\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats
+\usepackage{epstopdf}	 % Converts .eps to .pdf
+\usepackage{subfig}	     % Subfigures
+\usepackage{booktabs}	 % Nicer tables
+\usepackage{fix-cm}       % Custom fontsizes
+\usepackage{listings}
+\usepackage{soul}
+\usepackage{url}
+
+%%% Custom sectioning (sectsty package)
+\usepackage{sectsty}	 % Custom sectioning (see below)
+\allsectionsfont{%% Change font of al section commands
+	\usefont{OT1}{phv}{b}{n}%% bch-b-n: CharterBT-Bold font
+	}
+
+\sectionfont{%% Change font of \section command
+	\usefont{OT1}{phv}{b}{n}%% bch-b-n: CharterBT-Bold font
+	}
+
+
+\definecolor{brsugrey}{rgb}{0.9, 0.9, 0.9}
+\definecolor{brsublue}{rgb}{0, 0.594, 0.949}
+
+
+\newcommand{\upperRomannumeral}[1]{\uppercase\expandafter{\romannumeral#1}}
+
+%%% Headers and footers
+\usepackage{fancyhdr} % Needed to define custom headers/footers
+	\pagestyle{fancy} % Enabling the custom headers/footers
+\usepackage{lastpage}	
+
+% Header (empty)
+\lhead{}
+\chead{}
+\rhead{}
+% Footer (you may change this to your own needs)
+\lfoot{\footnotesize 
+\texttt{LAA} % Set to the course abbreviation 
+\textbullet ~ Lang % Set to your name
+\textbullet ~ Lecture Notes } % Set the assignment number
+\cfoot{}
+\rfoot{\footnotesize page \thepage\ of \pageref{LastPage}}	% "Page 1 of 2"
+\renewcommand{\headrulewidth}{0.0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+
+
+%%% Creating an initial of the very first character of the content
+\usepackage{lettrine}
+\newcommand{\initial}[1]{%
+     \lettrine[lines=3,lhang=0.3,nindent=0em]{
+     				\color{brsublue}
+     				{\textsf{#1}}}{}}
+
+%%% Title, author and date metadata
+\usepackage{titling}	% For custom titles
+
+\newcommand{\HorRule}{\color{brsublue}% Creating a horizontal rule
+					 \rule{\linewidth}{1pt}%
+					 \color{black}
+					 }
+
+\pretitle{\vspace{-30pt} \begin{flushleft} \HorRule 
+				\fontsize{25}{25} \usefont{OT1}{phv}{b}{n} \color{gray} \selectfont 
+				}
+\title{Learning and Adaptivity
+\\ Lecture Notes }% Title of your article goes here
+\posttitle{\par\end{flushleft}\vskip 0.5em}
+
+\preauthor{\begin{flushleft}
+\large \lineskip 0.25em \usefont{OT1}{phv}{b}{sl} \color{brsublue}}
+\author{Bastian Lang~}	% Author name goes here
+\postauthor{\footnotesize \usefont{OT1}{phv}{m}{sl} \color{Black} 
+BRS University of Applied Sciences % Institution of author
+\\email: bastian.lang@smail.inf.h-brs.de
+\par\end{flushleft}\HorRule}
+
+\date{\today} 
+
+%%% Begin document
+\begin{document}
+\maketitle
+\thispagestyle{fancy} % Enabling the custom headers/footers for the first page 
+% The first character should be within \initial{}
+\initial{T}\textbf{his document contains content of the lecture "Learning and Adaptivity" from the summer term in 2016 that might be of relevance for the examination.}
+
+\section{Reinforcement Learning}
+\subsection{Definition}
+Reinforcement learning is a class of problems where an agent learns a behaviour through trial-and-error interactions with a dynamic environment.
+
+\subsection{Strategies for solving RL problems}
+There are two main strategies to tackle reinforcement learning problems:
+\begin{itemize}
+	\item Search space of behaviours
+	\item Estimate the utility of taking actions
+\end{itemize}
+
+\subsection{The standard RL model}
+In the standard RL model an agent observes the current state of its environment, chooses an action based on its observations and receives a reinforcement signal indicating the value of this state transition.
+The agent tries to increase the values over the long run.
+
+\subsubsection{Formal RL Model}
+Given a discrete set of environment states \textbf{S}, a discrete set of agent actions \textbf{A} and a set of scalar reinforcement signals, find a policy \textbf{$\pi$} mapping states to actions such that it maximizes some long-run measure of reinforcement.
+
+\subsection{Models of Optimal Behaviour}
+\subsubsection{Finite-Horizon Model}
+Optimize expected reward for next h steps:
+
+\begin{equation}\label{eq:finite}
+	E (\sum^h_{t=0}r_t)
+\end{equation}
+
+Agent consideration of taking action is limited to h next steps.
+
+\subsubsection{Infinite-Horizon Discounted Model}
+Take long-run rewards into account, but discount future rewards with a discount factoy $\gamma$:
+
+\begin{equation}\label{eq:discount}	E(\sum^{\infty}_{t=0}\gamma^tr_t)
+\end{equation}
+
+\subsubsection{Average-Reward Model}
+Optimize long-run average reward:
+
+\begin{equation}\label{eq:average}
+\lim_{h\rightarrow \infty}E(\frac{1}{h}\sum^h_{t=0}r_t) 
+\end{equation}
+
+\subsection{The k-Armed Bandit Problem}
+In a room with \textit{k} gambling machines each with a different probability \textit{$p_i$} for winning, what is the best strategy for maximizing the reward when having \textit{h} pulls on all the machines.
+
+\subsection{Exploitation vs Exploration}
+The biggest difference to supervised learning is that in RL problems the agent has to explore its environment.
+
+\textbf{Justified Techniques:}
+\begin{itemize}
+	\item Dynamic Programming
+	\item Learning Automata
+\end{itemize}
+
+\textbf{Ad-hoc Techniques}
+\begin{itemize}
+	\item Greedy Strategies
+	\item Randomized Strategies
+	\item Interval-based Techniques
+\end{itemize}
+
+\subsubsection{Dynamic Programming}
+\begin{itemize}
+	\item Agent with fixed horizon
+	\item Use Bayesian reasoning to solve for optimal strategy
+	\item Assume prior joint distribution for parameters \{$p_i$\} independently uniformly distributed.
+	\item Compute a mapping from belief states to actions 
+\end{itemize}
+
+\end{document}
