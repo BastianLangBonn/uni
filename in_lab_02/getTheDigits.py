@@ -50,8 +50,8 @@ def createLabel(number):
 def trainModel():
     # Read the data
     data = read_csv('./training_data.txt',delimiter = ' ', names=('label','data'),converters={'label': lambda x: str(x)})
-    labels = data.label[:3000]
-    trainingData = data.data[:3000]
+    labels = data.label
+    trainingData = data.data
     
     # Preprocess Data
     inputs = []
@@ -98,9 +98,9 @@ def convertToNumber(modelOutput):
 def predictFile(filename):
 
     nn = loadModel('nn.pkl')
-    data = np.genfromtxt(filename,dtype='str')
-    y = data[:,0]
-    X = data[:,1]
+    data = np.genfromtxt(filename,dtype='str', skip_header=1)
+    #y = data[:,0]
+    X = data
     inputs = []
     for element in X:
         counter = collections.Counter(element)
@@ -111,13 +111,13 @@ def predictFile(filename):
     for element in predictions:
         result.append(''.join(convertToNumber(element)))
              
-    error = y == result
-    print(y[0])
-    print(result[0])
-    print(error)
-    plt.plot(error)
-    plt.ylabel('prediction error')
-    plt.show()
+    #error = y == result
+    #print(y[0])
+    #print(result[0])
+    #print(error)
+    #plt.plot(error)
+    #plt.ylabel('prediction error')
+    #plt.show()
         
     return result
 
@@ -127,6 +127,6 @@ def writeFile(data, filename):
         
         f.write('case #{}: {}\n'.format(i+1, ''.join(data[i])))
         
-#trainModel()
-data = predictFile('validation.txt')
-writeFile(data, 'validation.out')
+trainModel()
+data = predictFile('A-large-practice.in')
+writeFile(data, 'A-large-practice.out')
