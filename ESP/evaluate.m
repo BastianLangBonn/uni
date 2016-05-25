@@ -11,10 +11,10 @@ function [mse, fit] = evaluate(network, nImputs)
         prediction = [];
         for timeStep = 1:length(trial)
             activation(nInputs) = 1;
-            activation(1) = trial(timeStep, 1);
-            activation(2) = trial(timeStep, 2);
-            activation(3) = trial(timeStep, 3);
-            activation(4) = trial(timeStep, 4);
+            for i = 1:nInputs-1
+               activation(i) = trial(timeStep, i); 
+            end
+            %TODO: Use different activation functions
             activation = tanh(activation * network);
             prediction(timeStep) = activation(end-nImputs); 
         end
