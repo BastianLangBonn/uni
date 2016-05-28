@@ -1,0 +1,133 @@
+﻿body {
+	background-color: #ECEBEA;
+	color: #555555;
+	margin: 0px;
+	padding: 8px;
+	
+	font-family: "Helvetica Neue", "Helvetica", "Arial", "sans serif";
+}
+
+td {
+	padding: 15px;
+}
+
+#container {
+	width: inherit;
+	max-width: 960px;
+	margin: 0 auto 0 auto;
+}
+
+#kopfleiste {
+	width: inherit;
+	height: 80px;
+	background-color: #366BF4;
+	margin: 0px 0px 15px 0px;
+	padding: 0px 0px 0px 15px;
+	box-shadow: 2px 2px 2px 0px #515151;
+}
+
+#menu {
+	width: auto;
+	height: auto;
+	background-color: #FAF9F8;
+	float: left;
+	margin: 0px 15px 0px 0px;
+	padding: 10px;
+	box-shadow: 2px 2px 2px 0px #515151;
+}
+
+#inhalt {
+	width: auto;
+	height: auto;
+	background-color: #FAF9F8;
+	overflow: hidden; /* Damit das Layout mit float funktioniert */
+	padding: 10px 15px 10px 15px;
+	box-shadow: 2px 2px 2px 0px #515151;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+strong {
+	font-weight: bold;
+}
+
+a {
+	color: inherit;
+	font-family: inherit;
+	text-decoration: none;
+}
+
+tr.zweitezeile {
+	background-color: #ECEBEA;
+}
+
+a:link {
+	color: inherit;
+	font-family: inherit;
+	text-decoration: none;
+}
+
+a:visited {
+	color: inherit;
+	font-family: inherit;
+	text-decoration: none;
+}
+
+a:hover {
+	color: inherit;
+	font-family: inherit;
+	text-decoration: none;
+}
+
+a:active {
+	color: inherit;
+	font-family: inherit;
+	text-decoration: none;
+}
+
+#kopfleiste h1 {
+	margin: 0px;
+	padding: 0px;
+	font-size: 36px;
+	line-height: 80px;
+	color: #FAF9F8;
+}
+
+#menu li {
+	font-size: 16px;
+	margin: 0px 0px 15px 0px;
+	padding: 0px 10px 0px 10px;
+}
+
+#menu a:hover {
+	background-color: #ECEBEA;
+}
+
+#menu ul {
+	list-style-type: none;
+	padding: 0px;
+}
+
+#menu li.current {
+	background-color: #366BF4;
+	color: #FAF9F8;
+}
+
+#inhalt h2 {
+	font-size: 16px;
+	line-height: 1.4;
+	text-align: center;
+}
+
+#inhalt p {
+	font-size: 15px;
+	line-height: 1.3;
+}
+
+#inhalt a {
+	color:inherit;
+	font: inherit;
+	text-decoration: underline;
+}
