@@ -26,13 +26,17 @@ nacafoil= create_naca(nacaNumber,nEvaluationPoints);  % Create foil
 
 
 xMean = zeros(nGenes,1); % Initial mean is zero
-population = rand(nGenes, nOffspring) -0.5; % Initialize Population
+%population = rand(nGenes, nOffspring) -0.5; % Initialize Population
 figure(2); clf; hold on;
 for generation = 1 : maximumGenerations
 %% Generate Offspring
+    offspring = zeros(nGenes, nOffspring);
     for k=1:nOffspring
         offspring(:,k) = mvnrnd(zeros(1,nGenes),C); % ~N(0,C)
         offspring(:,k) = xMean + sigma * offspring(:,k);
+        % bind to -0.5,0.5
+        offspring(offspring>0.5) = 0.5; 
+        offspring(offspring<-0.5) = -0.5;
 %         arz(:,k) = randn(nGenes,1); % standard normally distributed vector
 %         arx(:,k) = xMean + sigma * (B*D * arz(:,k)); % add mutation % Eq. 37
 
@@ -84,8 +88,8 @@ for generation = 1 : maximumGenerations
 
     
     
-    plot(generation, fitness(1), 'ro');
-    plot(generation, median(fitness), 'bo');
+    plot(generation, fitness(1), 'r.');
+    plot(generation, median(fitness), 'b.');
     pause(0.01);
 end
 
