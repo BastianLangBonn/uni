@@ -26,6 +26,7 @@ function [ result ] = cmaes( evaluationFunction, nParameters,...
     
     xMean = zeros(nParameters,1); % Initial mean is zero
     nEvaluations = 0;
+%     figure(2); clf; hold on;
     for generation = 1:maximumGenerations
 %% Generate Offspring
         offspring = zeros(nParameters, nOffspring);
@@ -69,7 +70,7 @@ function [ result ] = cmaes( evaluationFunction, nParameters,...
         
     end
     
-%% Return important information
+%% Retur
     result.bestFitness = bestFitness;
     result.meanFitness = meanFitness;
     result.bestSolution = offspring(:,index(1));

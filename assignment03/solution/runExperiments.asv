@@ -30,9 +30,7 @@
 % using the evaluation function.
 % The offspring is then sorted by least error and the next mean is computed
 % by considering only the best offspring. The new covariance matrix is
-% computed by considering the old one plus the rank-mu-update.
-% Once the maximum number or a certain fitness threshold is reached, the
-% algorithm stops and returns the solution.
+% computed by considering the old one plus the 
 
 %% Initialize Parameters
 clear;
@@ -60,7 +58,7 @@ for experiment = 1:3
    p(experiment).bestSolution = bestSolution(:,index(1));
 end
 
-%% Visualization of Error Development
+%% Showing Results
 figure(1); clf; hold on;
 colorSet = varycolor(4);
 for i=1:3
@@ -73,7 +71,6 @@ xlabel('Generations');ylabel('Mean Square Error');grid on;
 title('Shape Matching')
 
 
-%% Visualization of Resulting Shapes
 nEvaluationPoints = 256; 
 
 for i=1:3

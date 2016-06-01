@@ -1,9 +1,7 @@
 function [ error ] = evaluateNacaShape( p )
 %EVALUATENACASHAPE Evaluates a shape by comparing it to a specified NACA
 %shape
-%   Input is a struct containing points describing a shape and the NACA
-%   number of the goal shape. Computes the difference between the y-values
-%   of the given points. Returns the mean square error.
+%   Input is a struct containing points describing a shape the NACA number
 
 
     % Naca
