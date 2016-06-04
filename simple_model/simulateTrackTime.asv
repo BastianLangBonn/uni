@@ -22,20 +22,18 @@ function [ result ] = simulateTrackTime( track, command )
         end
     end
     % Set last slope-value to 0 
-    result.slopeLookup(int2str(result.travelledDistance(end))) = 0;
+    result.slopeLookup(int2str(length(result.travelledDistance))) = 0;
     
     %% Simulate track
     t = 0;
     x = 0;
     v = 1;
     W = 0;
-    counter = 1;
-    while x <= result.travelledDistance(end)
-        tChange = 0.1;
-        xChange = 0.1 * v;
+    while x <= result.travelledDistance(length(result.travelledDistance))
+        tChange = 1;
+        xChange = v;
         Fu = maxPower * command / v;
-        disp(x);
-        slope = result.slopeLookup(int2str(round(x)));
+        slope = result.slopeLookup(int2str(x));
         vChange = (Fu - drag(v,slope))/90;
         WChange = Fu * v;
         t = t + tChange;
@@ -43,17 +41,16 @@ function [ result ] = simulateTrackTime( track, command )
         v = v + vChange;
         W = W + WChange;
         
-        result.time(counter) = t;
-        result.velocity(counter) = v;
-        result.command(counter) = command;
-        result.slope(counter) = slope;
-        result.acceleration(counter) = vChange;
-        result.energy(counter) = W;
-        result.distance(counter) = x;
+        result.time(t) = t;
+        result.velocity(t) = v;
+        result.command(t) = command;
+        result.slope(t) = slope;
+        result.acceleration(t) = vChange;
+        result.energy(t) = W;
+        result.distance(t) = x;
         if v <=0
             break
         end
-        counter = counter + 1;
     end
     
 end
