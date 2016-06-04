@@ -66,6 +66,7 @@ function [ result ] = cmaes( evaluationFunction, nParameters,...
 
         C = (1-cmu) * C ... % regard old matrix
             + cmu/sigma^2 * Cmu; % plus rank mu update
+
         
     end
     
