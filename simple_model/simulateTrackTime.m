@@ -34,7 +34,6 @@ function [ result ] = simulateTrackTime( track, command )
         tChange = 0.1;
         xChange = 0.1 * v;
         Fu = maxPower * command / v;
-        disp(x);
         slope = result.slopeLookup(int2str(round(x)));
         vChange = (Fu - drag(v,slope))/90;
         WChange = Fu * v;
