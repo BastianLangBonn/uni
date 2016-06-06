@@ -1,0 +1,30 @@
+function [p] = calculateVelocities(p)
+
+    for i=1:length(p)
+        for j=1:length(p(i).time)-1
+            index = (i-1) * length(p(i).time) + j;
+            x = p(i).x(j);
+            y = p(i).y(j);
+            theta = p(i).orientation(j);
+            xNew = p(i).x(j+1);
+            yNew = p(i).y(j+1);
+            thetaNew = p(i).orientation(j+1);
+            deltaT = p(i).time(j+1) - p(i).time(j);
+            v(index,1) = sqrt((xNew - x)^2 + (yNew - y)^2)/deltaT;
+            w(index,1) = (thetaNew - theta)/deltaT;    
+            if w(index,1) == inf
+               w(index,1) = 100000; 
+            end
+            if v(index,1) == inf
+               v(index,1) = 100000; 
+            end
+            if w(index,1) == -inf
+               w(index,1) = 0; 
+            end
+            if v(index,1) == -inf
+               v(index,1) = 0; 
+            end
+        end
+    end
+
+end

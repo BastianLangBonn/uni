@@ -1,3 +1,7 @@
+%% Motion Model Estimation
+% The task given was to calculate the alpha parameters based on some
+% experiments we performed. 
+
 clear;
 %% Read all log files
 forwardFiles = dir('./logs/forward*.log');
@@ -54,7 +58,7 @@ xlabel('x');
 ylabel('y');
 
 %% Split left turns into single experiments
-sequenceDuration = 5000;%round(left.duration/20);
+sequenceDuration = 2000;%round(left.duration/20);
 index = 1;
 iExperiment = 1;
 for sample = 1:length(left.time)
@@ -102,7 +106,6 @@ xlabel('x');
 ylabel('y');
 
 %% Split right turns into single experiments
-sequenceDuration = 5000;%round(right.duration/20);
 index = 1;
 iExperiment = 1;
 for sample = 1:length(right.time)
@@ -153,63 +156,140 @@ ylabel('y');
 %% Plot Forward Motion
 
 %% Split forwards into single experiments
-for i = 1:length(forward)
-    sequenceDuration = 5000;%round(forward(i).duration/20);
+index = 1;
+iExperiment = 0;
+for i = 1:length(forward)  
+    iExperiment = iExperiment + 1;
     index = 1;
-    iExperiment = 1;
     for sample = 1:length(forward(i).time)
         if forward(i).time(sample) >=...
                 forward(i).time(1) + iExperiment * sequenceDuration
             index = 1;
             iExperiment = iExperiment + 1;
         end
-        forwardExperiment(i).sequence(iExperiment).time(index) =...
+        forwardExperiment(iExperiment).time(index) =...
             forward(i).time(sample);
-        forwardExperiment(i).sequence(iExperiment).x(index) =...
+        forwardExperiment(iExperiment).x(index) =...
             forward(i).x(sample);
-        forwardExperiment(i).sequence(iExperiment).y(index) =...
+        forwardExperiment(iExperiment).y(index) =...
             forward(i).y(sample);
-        forwardExperiment(i).sequence(iExperiment).orientation(index) =...
+        forwardExperiment(iExperiment).orientation(index) =...
             forward(i).orientation(sample); 
         index = index + 1;
     end
+end
 
 % Make every experiment start from the same start pose
-    for j = 1:length(forwardExperiment(i))
-        % Get orientation
-        offsetX = forwardExperiment(i).sequence(j).x(1);
-        offsetY = forwardExperiment(i).sequence(j).y(1);
-        offsetOrientation = ...
-            forwardExperiment(i).sequence(j).orientation(1);
+for i = 1:length(forwardExperiment)
+    % Get orientation
+    offsetX = forwardExperiment(i).x(1);
+    offsetY = forwardExperiment(i).y(1);
+    offsetOrientation = ...
+        forwardExperiment(i).orientation(1);
 
-        for k = 1:length(forwardExperiment(i).sequence(j).time)
-            % translate
-            x = forwardExperiment(i).sequence(j).x(k) - offsetX;
-            y = forwardExperiment(i).sequence(j).y(k) - offsetY;
-            orientation = ...
-                forwardExperiment(i).sequence(j).orientation(k)...
-                - offsetOrientation;
+    for k = 1:length(forwardExperiment(i).time)
+        % translate
+        x = forwardExperiment(i).x(k) - offsetX;
+        y = forwardExperiment(i).y(k) - offsetY;
+        orientation = ...
+            forwardExperiment(i).orientation(k)...
+            - offsetOrientation;
 
-            % rotate
-            forwardExperiment(i).sequence(j).x(k) =...
-                cos(-offsetOrientation+pi)*x...
-                - sin(-offsetOrientation+pi)*y;
-            forwardExperiment(i).sequence(j).y(k) =...
-                sin(-offsetOrientation+pi)*x...
-                + cos(-offsetOrientation+pi)*y;
-            forwardExperiment(i).sequence(j).orientation(k) = orientation;
-        end
+        % rotate
+        forwardExperiment(i).x(k) =...
+            cos(-offsetOrientation+pi)*x...
+            - sin(-offsetOrientation+pi)*y;
+        forwardExperiment(i).y(k) =...
+            sin(-offsetOrientation+pi)*x...
+            + cos(-offsetOrientation+pi)*y;
+        forwardExperiment(i).orientation(k) = orientation;
     end
 end
+
 %% Plot Forward Motion
 figure(6);clf;hold on;
 for i = 1:length(forwardExperiment)
-    for j=1:length(forwardExperiment(i).sequence)
-        plot(forwardExperiment(i).sequence(j).x,...
-            forwardExperiment(i).sequence(j).y, 'b-');
-    end
+        plot(forwardExperiment(i).x,...
+            forwardExperiment(i).y, 'b-');
+
 end
 axis([-5 5 0 90]);
 title('Processed Forward Motions');
 xlabel('x');
 ylabel('y');
+
+
+
+%% Calculate mle for movements
+% Forward
+%concatenatedForward = concatenateValues(forwardExperiment);
+forwardExperiment = calculateVelocities(forwardExperiment);
+for i = 1:length(forwardExperiment)
+    if i==3 
+        forwardExperiment(i).pV = 0;
+        forwardExperiment(i).pW = 0;
+        continue; 
+    end
+    forwardExperiment(i).pV = mle(forwardExperiment(i).v,'dist','normal');
+    forwardExperiment(i).pW = mle(forwardExperiment(i).w,'dist','normal');
+end
+
+% Right
+%concatenatedRight = concatenateValues(rightExperiment);
+rightExperiment = calculateVelocities(rightExperiment);
+for i = 1:length(rightExperiment)
+    rightExperiment(i).pV = mle(rightExperiment(i).v,'dist','normal');
+    rightExperiment(i).pW = mle(rightExperiment(i).w,'dist','normal');
+end
+
+
+% Left
+%concatenatedLeft = concatenateValues(leftExperiment);
+leftExperiment = calculateVelocities(leftExperiment);
+for i=1:length(leftExperiment)
+    leftExperiment(i).pV = mle(leftExperiment(i).v,'dist','normal');
+    leftExperiment(i).pW = mle(leftExperiment(i).w,'dist','normal');
+end
+
+%% Find Alphas
+% Alpha calculation is still missing as for I am not entirely sure how to
+% do it
+
+%solve([leftExperiment(1).v'; leftExperiment(1).w']*x,x);
+
+% [alpha1, alpha2] = computeAlpha(forwardExperiment.v',...
+%     forwardExperiment.w',forwardExperiment.pV');
+% 
+% [alpha3, alpha4] = computeAlpha([left_v(:,1); right_v(:,1)], ...
+%                     [left_w(:,1); right_w(:,1)], ...
+%                     [left_w(:,2); right_w(:,2)]);
+% alpha5 = 1.0;
+% alpha6 = 1.0;
+
+
+%% Compute Motion Model
+% Computation of motion model has to be done similar to this for each
+% observed pose. Like this, for every observation a notion about how
+% likely it is will be calculated.
+vErr = [];
+wErr = [];
+gammaErr = [];
+for i=1:length(leftExperiment)
+    for j=1:length(leftExperiment(i).time)-1
+        x = leftExperiment(i).x(j);
+        y = leftExperiment(i).y(j);
+        theta = leftExperiment(i).orientation(j);
+        xNew = leftExperiment(i).x(j+1);
+        yNew = leftExperiment(i).y(j+1);
+        thetaNew = leftExperiment(i).orientation(j+1);
+        deltaT = leftExperiment(i).time(j+1) - leftExperiment(i).time(j);
+        v = sqrt((xNew - x)^2 + (yNew - y)^2)/deltaT;
+        w = (thetaNew - theta)/deltaT;
+        [a b c]= motionModel(x,y,theta,v,w,xNew,yNew,thetaNew...
+            ,deltaT);
+        vErr = [vErr a];
+        wErr = [wErr b];
+        gammaErr = [gammaErr c];
+    end
+end
+
