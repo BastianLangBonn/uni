@@ -27,7 +27,7 @@ nacafoil= create_naca(nacaNumber,nEvaluationPoints);  % Create foil
 
 xMean = zeros(nGenes,1); % Initial mean is zero
 %population = rand(nGenes, nOffspring) -0.5; % Initialize Population
-figure(2); clf; hold on;
+figure(1); clf; hold on;
 for generation = 1 : maximumGenerations
 %% Generate Offspring
     offspring = zeros(nGenes, nOffspring);
@@ -72,7 +72,7 @@ for generation = 1 : maximumGenerations
 
 %% Compute new mean
 	xMean = offspring(:,index(1:populationSize))*weights; % recombination
-	%zMean = arz(:,index(1:mu))*weights; % == Dˆ-1*B’*(xmean-xold)/sigma
+	%zMean = arz(:,index(1:mu))*weights; % == Dï¿½-1*Bï¿½*(xmean-xold)/sigma
     
 %% Adapt Covariance Matrix 
     % Compute Cmu
@@ -87,9 +87,25 @@ for generation = 1 : maximumGenerations
         + cmu/sigma^2 * Cmu; % plus rank mu update
 
     
+    figure(1); 
+    semilogy(generation, fitness(1), 'r.');
+    semilogy(generation, median(fitness), 'b.');
     
-    plot(generation, fitness(1), 'r.');
-    plot(generation, median(fitness), 'b.');
+    
+    [foil, nurbs] = pts2ind(offspring(:,index(1)),nEvaluationPoints);
+    figure(2);
+    plot(nacafoil(1,:),nacafoil(2,:), 'LineWidth', 3);
+    hold on;
+    plot(foil(1,:),foil(2,:), 'r', 'LineWidth', 3);
+    plot(nurbs.coefs(1,1:end/2),nurbs.coefs(2,1:end/2),'rx', 'LineWidth', 3);
+    axis equal;
+    axis([0 1 -0.7 0.7]);
+    legend('NACA 0012 target', 'Approximated Shape');
+    ax = gca;
+    ax.FontSize = 24;
+    drawnow;
+    hold off;
+    
     pause(0.01);
 end
 

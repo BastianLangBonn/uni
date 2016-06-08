@@ -47,15 +47,15 @@ name{3} = '9735';
 %% Run Experiments
 for experiment = 1:3
    clear bestFitness medianFitness bestSolution;
-   parfor run = 1:100
+   parfor run = 1:40
       r(run) = cmaes(evaluationFunction, 32, p(experiment));
       bestFitness(run,:) = r(run).bestFitness;
-      meanFitness(run,:) = r(run).meanFitness;
+      medianFitness(run,:) = r(run).medianFitness;
       bestSolution(:,run) = r(run).bestSolution;
       
    end
    p(experiment).meanBestFitness = mean(bestFitness,1);
-   p(experiment).meanMeanFitness = mean(meanFitness,1);
+   p(experiment).meanMedianFitness = median(medianFitness,1);
    [fitness, index] = sort(bestFitness(:,end),1);
    p(experiment).bestSolution = bestSolution(:,index(1));
 end
@@ -70,7 +70,7 @@ end
 legend(lineHandles,name,'Location','NorthWest')
 xlabel('Generations');ylabel('Mean Square Error');grid on;
 %set(gca,'XLim',[0 2500]); 
-title('Shape Matching')
+title('Error Progress')
 
 
 %% Visualization of Resulting Shapes

@@ -45,7 +45,7 @@ function [ result ] = cmaes( evaluationFunction, nParameters,...
 %% Sort Offspring by Fitness
         [fitness, index] = sort(fitness); % minimization
         bestFitness(generation) = fitness(1);
-        meanFitness(generation) = mean(fitness);
+        medianFitness(generation) = median(fitness);
 
 %% Check if Fitness is already good enough
         if fitness(1) < stopFitness
@@ -71,7 +71,7 @@ function [ result ] = cmaes( evaluationFunction, nParameters,...
     
 %% Return important information
     result.bestFitness = bestFitness;
-    result.meanFitness = meanFitness;
+    result.medianFitness = medianFitness;
     result.bestSolution = offspring(:,index(1));
 
 end

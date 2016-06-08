@@ -1,0 +1,22 @@
+%% Determine Mates
+% Given a population with its fitness and the selective pressure, this
+% function uses tournament selection to determine two sets of mates for
+% crossover.
+
+function [iMates] = tournamentSelect(population, selectivePressure)
+
+    nParents = 2*length(population);
+    iCompetitors = randi(length(population), nParents, 2*selectivePressure);
+    competitors = population(iCompetitors);
+    for i=1:size(competitors,1)
+        for j=1:size(competitors,2)
+            fitness(i,j) = competitors.fitness;
+        end
+        iMates(i,1) = max(fitness(i,1:selectivePressure));
+        iMates(i,2) = max(fitness(i,selectivePressure
+    end
+    [x iMates(:,1)] = argmax(fitness(:,1:selectivePressure),2);
+    [x iMates(:,2)] =...
+        max(fitness(selectivePressure+1:end,2));
+end
+
