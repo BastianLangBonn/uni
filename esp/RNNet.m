@@ -9,15 +9,21 @@
 
 function [a] = RNNet (wMat, input, activation)
 
-    activation(1) = 1; % bias
-    activation(2:length(input)+1) = input; % input state
+    %bias will never get changed, so no need to set it. Also bias is
+    %already included in input...
+    %activation(1) = 1; % bias
+    activation(1:length(input)) = input; % input state
         
     %% HINTS
     % Propagate signal through network one timestep    
     % Apply activation function to neurons (line by line)
+    activation(length(input)+1:end) = activation * wMat;
+    for i=length(input)+1:length(activation)
+        activation(i) = tanh(activation(i));
+    end
     
     % For demonstration purposes, the activation vector is filled with ones
     % Remember that in this case, the last value is the (only) output value
-    a = ones(size(activation)); % (so the output is a(end))
+    a = activation; % (so the output is a(end))
     
 end

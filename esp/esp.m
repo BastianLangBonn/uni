@@ -15,11 +15,12 @@ nOutgoingConnections    = nHiddenNodes + nOutputNodes;
 nIndividuals            = nNodesPerSubpopulation * nSubpopulations;
 nTrialsPerInd           = 20;
 nTrials                 = nTrialsPerInd * nNodesPerSubpopulation;
-maximumGenerations      = 250;
+maximumGenerations      = 2500;
 chanceCrossover         = 0.85;
 chanceMutation          = 0.1;
 selectivePressure       = 2; %number of individuals competing in tournament
 mutationRange           = 0.2; %sigma of gaussian perturbation
+targetFitness           = 1000;
 
 %% Initialize Subpopulations
 % Each Node will be represented by only its incoming connections. Its
@@ -32,9 +33,12 @@ for trial=1:nSubpopulations
             weightRange);
     end
 end
-
 %% Start Evolution Loop
-for generation = 1:maximumGenerations    
+generation = 1;
+bestOverallNetFitness = 0;
+while generation <= maximumGenerations &&...
+        bestOverallNetFitness < targetFitness
+    bestNetFitness(generation) = 0;
     for trial=1:nTrialsPerInd
         % Create one permutation for every subpopulation so that every 
         % individual will definetly get picked.        
@@ -48,18 +52,30 @@ for generation = 1:maximumGenerations
         weightMatrix = createWeightMatrizes(...
             population, order, nOutgoingConnections);
         for j = 1:length(weightMatrix)
-            %twoPole_test( wMat, @RNNet, targetFitness);
-            fitness =...
-                feval('twoPole_test', weightMatrix{j}.weights,@RNNet, 1000);
+            %Evaluate network
+            netFitness =...
+                feval('twoPole_test',...
+                weightMatrix{j}.weights,...
+                @RNNet,...
+                targetFitness);
+            
+            if netFitness > bestNetFitness(generation)
+                bestNetFitness(generation) = netFitness;
+                bestNet = weightMatrix{j}.weights;
+            end
+            if bestNetFitness(generation) > bestOverallNetFitness
+                bestOverallNetFitness = bestNetFitness(generation);
+            end
             % Update fitness values of participating nodes
             for k = 1:nSubpopulations
                 population(k,order(k,j)).fitness =...
-                    population(k,order(k,j)).fitness + fitness;
+                    population(k,order(k,j)).fitness + netFitness;
                 population(k,order(k,j)).trials =...
                     population(k,order(k,j)).trials + 1;
             end
         end        
     end
+    
     
     % Take average fitness over trials
     for i=1:nSubpopulations
@@ -68,13 +84,17 @@ for generation = 1:maximumGenerations
                 population(i,j).fitness / population(i,j).trials;
             fitness(j) = population(i,j).fitness;
         end
+        
+        [fitness, iBestFitness] = sort(fitness);
+        bestFitness(i,generation) = fitness(end);
+        medianFitness(i,generation) = median(fitness);
+
         % Select mates for this subpopulation
         mates = tournamentSelect(population(i,:), selectivePressure);
-        
+
         % Elitism
-        [bestFitness, iBestFitness] = sort(fitness);
         population(i,1) = population(i,iBestFitness(end));
-        
+
         % Perform Crossover and mutation on the rest
         for j = 2:size(mates,1)
             population(i,j) = crossover(mates(j,:), chanceCrossover);
@@ -82,9 +102,35 @@ for generation = 1:maximumGenerations
                 mutate(population(i,j), chanceMutation, mutationRange);
         end
     end
-    
-    feval('twoPole_test', weightMatrix{j}.weights,@RNNet, 1000,'vis');
-    
-    
-    
+     
+    generation = generation + 1;
 end
+%% Results
+% Visualize median and best fitness for the nodes of every
+% subpopulation
+figure(1);clf;hold on;
+colorSet = varycolor(4);
+for i=1:nSubpopulations
+    lineHandles(i) = plot(bestFitness(i,:),'-','LineWidth',2,'Color',colorSet(i,:));
+    plot(medianFitness(i,:),'--','Color',get(lineHandles(i),'Color'));
+    name{i} = sprintf('subpopulation %d',i);
+end
+
+legend(lineHandles,name,'Location','NorthWest')
+xlabel('Generations');ylabel('Time Steps');grid on;
+title('Subpopulations Fitness Progression')
+
+
+% Visualize best network fitness over generations
+figure(2);clf;hold on;
+plot(bestNetFitness);
+xlabel('Generations');ylabel('Time Steps');grid on;
+title('Best Network Fitness Progression')
+
+% Visualize network using biograph (First have to make matrix full ranked
+nRows = length(bestNet);
+addition = zeros(nRows, nRows - size(bestNet,2));
+fullRankMatrix = [addition, bestNet];
+view(biograph(fullRankMatrix));
+
+feval('twoPole_test', bestNet,@RNNet, 1000,'vis')
