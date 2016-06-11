@@ -42,9 +42,8 @@ function [ result ] = doEsp( topology,...
         weightRange);
     end
   end
-  
-  figure(1); clf; hold on;
   %% Start Evolution Loop
+  figure(1);clf;hold on;
   generation = 1;
   currentBestFitness = 0;
   while generation <= maximumGenerations &&...
@@ -64,12 +63,6 @@ function [ result ] = doEsp( topology,...
       p.wMat = weightMatrizes{trial};
       fitness(trial) = feval(evaluationFunction, p);
     end
-    
-    %% Identify Best Network
-    [fitness, iSortedFitness]   = sort(fitness);
-    bestNetFitness(generation)   = fitness(end);
-    medianNetFitness(generation) = median(fitness);
-    iBestRun = iSortedFitness(end);
 
     %% Assign Fitness to Nodes
     for trial = 1:nTrials
@@ -96,40 +89,44 @@ function [ result ] = doEsp( topology,...
         end
         nodeFitness(i,j) = population(i,j).fitness;
       end
-      
-      % Select mates for this subpopulation
-      mates = tournamentSelect(population(i,:), selectivePressure);
-      
-      % Elitism
-      % Keep Node that participated in best network for each subpopulation
-      population(i,1) = population(i,permutations(iBestRun,i));
-      population(i,1).trials = 0;
-      population(i,1).fitness = 0;
-
-      % Perform Crossover and mutation on the rest
-      for j = 2:size(mates,1)
-        population(i,j) = crossover(mates(j,:), chanceCrossover);
-        population(i,j) =...
-          mutate(population(i,j), chanceMutation, mutationRange);
-        population(i,j).trials = 0;
-        population(i,j).fitness = 0;
-      end
     end
     
     %% Get statistical node fitness information
     medianNodeFitness(:,generation) = median(nodeFitness,1);
     bestNodeFitness(:,generation) = max(nodeFitness,[],1);
+    
+    %% Identify Best Network and best Nodes
+    [fitness, iBestFitness]   = sort(fitness);
+    bestNetFitness(generation)   = fitness(end);
+    medianNetFitness(generation) = median(fitness);
+    
+    %% Select Mates for every Subpopulation
+    for i = 1:nSubpopulations
+      
+      % Elitism
+      % Keep Node that participated in best network for each subpopulation
+      offspring(i,1) = population(i,permutations(iBestFitness(end)));
+      
+      % Select mates for this subpopulation
+      mates = tournamentSelect(population(i,:), selectivePressure);
 
+      % Perform Crossover and mutation on the rest
+      for j = 2:size(mates,1)
+        offspring(i,j) = crossover(mates(j,:), chanceCrossover);
+        offspring(i,j) =...
+          mutate(offspring(i,j), chanceMutation, mutationRange);
+      end
+    end
+    populat
     currentBestFitness = bestNetFitness(generation);
-    bestNet(generation,:,:) = weightMatrizes{iBestRun};
+    bestNet(generation,:,:) = weightMatrizes{iBestFitness(end)};
     generation = generation + 1;
-    plot(bestNetFitness);
+    plot(generation,currentBestFitness,'b-');
     pause(0.01);
   end
   result.medianNetFitness = medianNetFitness;
   result.bestNetFitness = bestNetFitness;
   result.medianNodeFitness = medianNodeFitness;
   result.bestNodeFitness = bestNodeFitness;
-  result.bestNetwork = weightMatrizes{iBestRun};
 end
 

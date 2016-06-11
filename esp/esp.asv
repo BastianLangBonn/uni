@@ -103,7 +103,7 @@ while generation <= maximumGenerations &&...
                 mutate(population(i,j), chanceMutation, mutationRange);
         end
     end
-     plot(bestNetFitness);
+     plot
     generation = generation + 1;
 end
 %% Results

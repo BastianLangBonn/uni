@@ -18,9 +18,7 @@ function [a] = RNNet (wMat, input, activation)
     % Propagate signal through network one timestep    
     % Apply activation function to neurons (line by line)
     activation(length(input)+1:end) = activation * wMat;
-    for i=length(input)+1:length(activation)
-        activation(i) = tanh(activation(i));
-    end
+    activation(length(input)+1:end) = tanh(activation(length(input)+1:end));
     
     % For demonstration purposes, the activation vector is filled with ones
     % Remember that in this case, the last value is the (only) output value
