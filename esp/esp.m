@@ -37,9 +37,10 @@ figure(1);clf;hold on;
 %% Start Evolution Loop
 generation = 1;
 bestOverallNetFitness = 0;
+evaluations = 0;
 while generation <= maximumGenerations &&...
         bestOverallNetFitness < targetFitness
-    evaluations = 0;
+    
     bestNetFitness(generation) = 0;
     tic;
     for trial=1:nTrialsPerInd
@@ -70,7 +71,7 @@ while generation <= maximumGenerations &&...
             if bestNetFitness(generation) > bestOverallNetFitness
                 bestOverallNetFitness = bestNetFitness(generation);
             end
-            display(['Best Net Fitness: ' int2str(bestOverallNetFitness)]);
+            
             % Update fitness values of participating nodes
             for k = 1:nSubpopulations
                 population(k,order(j,k)).fitness =...
@@ -100,6 +101,8 @@ while generation <= maximumGenerations &&...
 
         % Elitism
         population(i,1) = population(i,iBestFitness(end));
+        population(i,1).fitness = 0;
+        population(i,1).trials = 0;
 
         % Perform Crossover and mutation on the rest
         for j = 2:size(mates,1)
@@ -112,6 +115,7 @@ while generation <= maximumGenerations &&...
     pause(0.01);
     generation = generation + 1;
     display(['Nr Evaluations: ' int2str(evaluations)]);
+    display(['Best Net Fitness: ' int2str(bestOverallNetFitness)]);
 end
 %% Results
 % Visualize median and best fitness for the nodes of every
