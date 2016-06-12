@@ -39,43 +39,48 @@ generation = 1;
 bestOverallNetFitness = 0;
 while generation <= maximumGenerations &&...
         bestOverallNetFitness < targetFitness
+    evaluations = 0;
     bestNetFitness(generation) = 0;
+    tic;
     for trial=1:nTrialsPerInd
         % Create one permutation for every subpopulation so that every 
         % individual will definetly get picked.        
-        order = zeros(nSubpopulations, nNodesPerSubpopulation);
+        order = zeros(nNodesPerSubpopulation, nSubpopulations);
         for j = 1:nSubpopulations
-            order(j,:) = randperm(nNodesPerSubpopulation);            
+            order(:,j) = randperm(nNodesPerSubpopulation);            
         end
         
         % Create one net for each individual according to order and
         % evaluate net on task.
         weightMatrix = createWeightMatrizes(...
-            population, order, nOutgoingConnections);
+            population, order);
         for j = 1:length(weightMatrix)
             %Evaluate network
             netFitness =...
                 feval('twoPole_test',...
-                weightMatrix{j}.weights,...
+                weightMatrix{j},...
                 @RNNet,...
                 targetFitness);
+            evaluations = evaluations + 1;
             
             if netFitness > bestNetFitness(generation)
                 bestNetFitness(generation) = netFitness;
-                bestNet = weightMatrix{j}.weights;
+                bestNet = weightMatrix{j};
             end
             if bestNetFitness(generation) > bestOverallNetFitness
                 bestOverallNetFitness = bestNetFitness(generation);
             end
+            display(['Best Net Fitness: ' int2str(bestOverallNetFitness)]);
             % Update fitness values of participating nodes
             for k = 1:nSubpopulations
-                population(k,order(k,j)).fitness =...
-                    population(k,order(k,j)).fitness + netFitness;
-                population(k,order(k,j)).trials =...
-                    population(k,order(k,j)).trials + 1;
+                population(k,order(j,k)).fitness =...
+                    population(k,order(j,k)).fitness + netFitness;
+                population(k,order(j,k)).trials =...
+                    population(k,order(j,k)).trials + 1;
             end
         end        
     end
+    toc
     
     
     % Take average fitness over trials
@@ -103,8 +108,10 @@ while generation <= maximumGenerations &&...
                 mutate(population(i,j), chanceMutation, mutationRange);
         end
     end
-     plot(bestNetFitness);
+    plot(bestNetFitness);
+    pause(0.01);
     generation = generation + 1;
+    display(['Nr Evaluations: ' int2str(evaluations)]);
 end
 %% Results
 % Visualize median and best fitness for the nodes of every
