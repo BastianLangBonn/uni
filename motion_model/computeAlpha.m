@@ -1,28 +1,28 @@
-function [alpha1,alpha2]=computeAlpha(v,w,sigma)
+data1 = analyzeMotionLog('./logs1/right.log');
+data2 = analyzeMotionLog('./logs2/right.log');
+data3 = analyzeMotionLog('./logs1/left.log');
+data4 = analyzeMotionLog('./logs2/left.log');
 
-iN = length(v);
-jN = length(w);
+%A.ALPHA = SIGMA
+Ar = abs([data1.v data1.omega 0 0 0 0;
+    0 0 data1.v data1.omega 0 0; 
+    0 0 0 0 data1.v data1.omega;
+    data2.v data2.omega 0 0 0 0;
+    0 0 data2.v data2.omega 0 0;
+    0 0 0 0 data2.v data2.omega]);
+SIGMAr = [data1.sigma1; data1.sigma2; data1.sigma3; data2.sigma1; data2.sigma2; data2.sigma3];
+ALPHAr = inv(Ar)*SIGMAr;
 
-sigmaK = 1;
-term1 = 0.0;
-term2 = 0.0;
-term3 = 0.0;
-term4 = 0.0;
-term5 = 0.0;
+Al = abs([data3.v data3.omega 0 0 0 0;
+    0 0 data3.v data3.omega 0 0; 
+    0 0 0 0 data3.v data3.omega;
+    data4.v data4.omega 0 0 0 0;
+    0 0 data4.v data4.omega 0 0;
+    0 0 0 0 data4.v data4.omega]);
+SIGMAl = [data3.sigma1; data3.sigma2; data3.sigma3; data4.sigma1; data4.sigma2; data4.sigma3];
+ALPHAl = pinv(Al)*SIGMAr;
 
-%compute terms for the alpha equations
-for i=1:iN
-    for j=1:jN
-        term1 = term1 + sigma(sigmaK)*w(j);
-        term2 = term2 + v(i)*w(j);
-        term3 = term3 + w(j)*w(j);
-        term4 = term4 + sigma(sigmaK)*v(i);
-        term5 = term5 + v(i)*v(i);
-    end
-    sigmaK = sigmaK + 1;
-end
-
-alpha1 = (term1*term2 - term3*term4)/(term2*term2 - term3*term5);
-
-alpha2 = (term4*term2 - term1*term5)/(term2*term2 - term3);
-
+A = vertcat(Ar,Al);
+SIGMA = vertcat(SIGMAr, SIGMAl);
+ALPHA = pinv(A)*SIGMA;
+display(ALPHA);
