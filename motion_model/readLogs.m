@@ -18,7 +18,7 @@ for iFile = 1:length(forwardFiles)
 end
 
 % Right turn
-read = importdata('./logs/right_turn.log',' ',0);
+read = importdata('./logs1/right.log',' ',0);
 right.time = read(:,1);
 right.x = read(:,2);
 right.y = read(:,3);
@@ -26,7 +26,7 @@ right.orientation = read(:,4);
 right.duration = right.time(end) - right.time(1);
 
 % left turn
-read = importdata('./logs/left_turn.log',' ',0);
+read = importdata('./logs2/left.log',' ',0);
 left.time = read(:,1);
 left.x = read(:,2);
 left.y = read(:,3);
