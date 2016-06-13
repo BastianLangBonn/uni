@@ -6,19 +6,19 @@ clear;
 %% Read all log files
 forwardFiles = dir('./logs/forward*.log');
 % Forward motion
-for iFile = 1:length(forwardFiles)
-    read = importdata(sprintf('./logs/%s',forwardFiles(iFile).name),...
-        ' ', 0);
-    forward(iFile).time = read(:,1);
-    forward(iFile).x = read(:,2);
-    forward(iFile).y = read(:,3);
-    forward(iFile).orientation = read(:,4);
-    forward(iFile).duration = forward(iFile).time(end)...
-        - forward(iFile).time(1);
-end
+% for iFile = 1:length(forwardFiles)
+%     read = importdata(sprintf('./logs/%s',forwardFiles(iFile).name),...
+%         ' ', 0);
+%     forward(iFile).time = read(:,1);
+%     forward(iFile).x = read(:,2);
+%     forward(iFile).y = read(:,3);
+%     forward(iFile).orientation = read(:,4);
+%     forward(iFile).duration = forward(iFile).time(end)...
+%         - forward(iFile).time(1);
+% end
 
 % Right turn
-read = importdata('./logs/right_turn.log',' ',0);
+read = importdata('./logs/right.log',' ',0);
 right.time = read(:,1);
 right.x = read(:,2);
 right.y = read(:,3);
@@ -26,7 +26,7 @@ right.orientation = read(:,4);
 right.duration = right.time(end) - right.time(1);
 
 % left turn
-read = importdata('./logs/left_turn.log',' ',0);
+read = importdata('./logs/left.log',' ',0);
 left.time = read(:,1);
 left.x = read(:,2);
 left.y = read(:,3);
@@ -35,27 +35,30 @@ left.duration = left.time(end) - left.time(1);
 
 %% Motion Vizualizations
 % Plot forward motion
-figure(1);clf;hold on;
-for i=1:length(forward)
-    plot(forward(i).x, forward(i).y);
-end
-title('Not Processed Forward Motion');
-xlabel('x');
-ylabel('y');
+% figure(1);clf;hold on;
+% for i=1:length(forward)
+%     plot(forward(i).x, forward(i).y);
+% end
+% title('Not Processed Forward Motion');
+% xlabel('x in mm');
+% ylabel('y in mm');
+% grid on;
 
 % Plot right turn
 figure(2);clf;hold on;
 plot(right.x, right.y);
 title('Not Processed Right Turn');
-xlabel('x');
-ylabel('y');
+xlabel('x in mm');
+ylabel('y in mm');
+grid on;
 
 % Plot left turn
 figure(3); clf; hold on;
 plot(left.x, left.y);
 title('Not Processed Left Turn');
-xlabel('x');
-ylabel('y');
+xlabel('x in mm');
+ylabel('y in mm');
+grid on;
 
 %% Split left turns into single experiments
 sequenceDuration = 2000;%round(left.duration/20);
@@ -102,8 +105,9 @@ for experiment = 1:length(leftExperiment)
     plot(leftExperiment(experiment).x, leftExperiment(experiment).y,'b-');
 end
 title('Processed Left Turns');
-xlabel('x');
-ylabel('y');
+xlabel('x in mm');
+ylabel('y in mm');
+grid on;
 
 %% Split right turns into single experiments
 index = 1;
@@ -150,8 +154,9 @@ for experiment = 1:length(rightExperiment)
     plot(rightExperiment(experiment).x, rightExperiment(experiment).y,'b-');
 end
 title('Processed Right Turns');
-xlabel('x');
-ylabel('y');
+xlabel('x in mm');
+ylabel('y in mm');
+grid on;
 
 %% Plot Forward Motion
 
@@ -215,8 +220,9 @@ for i = 1:length(forwardExperiment)
 end
 axis([-5 5 0 90]);
 title('Processed Forward Motions');
-xlabel('x');
-ylabel('y');
+xlabel('x in mm');
+ylabel('y in mm');
+grid on;
 
 
 
