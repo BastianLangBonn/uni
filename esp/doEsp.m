@@ -41,7 +41,7 @@ function [ result ] = doEsp( evaluationFunction, parameters )
     end
   end
   
-  figure(1); clf; hold on;
+%   figure(1); clf; hold on;
   %% Start Evolution Loop
   generation = 1;
   currentBestFitness = 0;
@@ -81,10 +81,11 @@ function [ result ] = doEsp( evaluationFunction, parameters )
 %       p = functionParameters;
 %       p.wMat = network{trial};
 %       fitness(trial) = feval(evaluationFunction, p);
-      fitness(trial) = feval('twoPole_test',...
-                network{trial},...
-                @RNNet,...
-                targetFitness);
+      fitness(trial) = feval(evaluationFunction, network{trial}, targetFitness);
+%       fitness(trial) = feval('twoPole_test',...
+%                 network{trial},...
+%                 @RNNet,...
+%                 targetFitness);
     end
 %     toc;
     
@@ -160,8 +161,8 @@ function [ result ] = doEsp( evaluationFunction, parameters )
 %     bestNet(generation,:,:) = network{iBestRun};
     population = offspring;
     generation = generation + 1;
-    plot(bestNetFitness);
-    pause(0.01);
+%     plot(bestNetFitness);
+%     pause(0.01);
   end
   result.medianNetFitness = medianNetFitness;
   result.bestNetFitness = bestNetFitness;
