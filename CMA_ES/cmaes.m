@@ -9,7 +9,7 @@ function [ result ] = cmaes( evaluationFunction, nParameters,...
     % step size
     sigma = 0.2; 
     % stop if fitness < stopfitness (minimization)
-    stopFitness = 1e-10; 
+    stopFitness = 1e-3; 
     % Stop after that many function evaluations
     maximumGenerations = 2500; 
 
@@ -24,7 +24,7 @@ function [ result ] = cmaes( evaluationFunction, nParameters,...
     cmu = 2 * (muEff-2+1/muEff) / ((nParameters+2)^2+2*muEff/2); 
     C = eye(nParameters); % covariance matrix
     
-    figure(2); clf; hold on;
+    figure(2); clf; 
     
     xMean = zeros(nParameters,1); % Initial mean is zero
     nEvaluations = 0;
@@ -70,8 +70,9 @@ function [ result ] = cmaes( evaluationFunction, nParameters,...
             + cmu/sigma^2 * Cmu; % plus rank mu update
         
         
-        plot(generation, fitness(1), 'r.');
-        plot(generation, median(fitness), 'b.');
+        semilogy(generation, fitness(1), 'r.');
+        hold on;
+        semilogy(generation, median(fitness), 'b.');
         pause(0.01);
     end
     

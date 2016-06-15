@@ -77,7 +77,7 @@ function [ result ] = doEsp( evaluationFunction, parameters )
 %     toc
     %% Evaluate Networks
     fitness = zeros(1,nTrials);
-    for trial=1:nTrials
+    parfor trial=1:nTrials
       tic
 %       p{trial} = parameters;
 %       p{trial}.weightMatrix = network{trial};
