@@ -1,0 +1,8 @@
+function [ fitness ] = evaluateNetwork( weightMatrix )
+  addpath('./../network_evaluation/','./);
+%EVALUATENETWORK Summary of this function goes here
+%   Detailed explanation goes here
+  
+
+end
+
