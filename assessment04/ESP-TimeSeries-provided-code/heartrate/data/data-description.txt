@@ -1,0 +1,6 @@
+
+Jede mat-Datei beinhaltet eine Cell mit Namen "tdata". Diese Cell besteht aus unterschiedlichen Trainingseinheiten an verschiedenen Tagen, aber von der gleichen Person. Jede Trainings-"Zelle" besteht aus der Zeit in Sekunden, der Herzfrequenz und der Wattleistung. Die 4. Spalte kann man ignorieren oder integrieren, dort ist ein aufkumulierter Belastungswert zu finden.
+
+Die einzelnen mat-Dateien sind von verschiedenen Personen, 3 zum Radfahren und einer zum Laufen (hier besteht die Belastung aus Geschwindigkeit statt Watt).
+
+Die Trainings sind allesamt Ergometer-Tests. 
