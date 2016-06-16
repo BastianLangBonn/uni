@@ -1,4 +1,7 @@
 function [offspring] = crossover(mates, chanceCrossover)
+% CROSSOVER This function performs a crossover between two mates by
+% randomly selecting weights from the two mates. If by chance no crossover
+% should take place, the fitter mate will be copied.
     if rand > chanceCrossover
         if mates(1).fitness > mates(2).fitness
             offspring = mates(1);

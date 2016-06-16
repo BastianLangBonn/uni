@@ -9,14 +9,10 @@
 
 function [a] = RNNet (wMat, input, activation)
 
-    %bias will never get changed, so no need to set it. Also bias is
-    %already included in input...
-    %activation(1) = 1; % bias
+    % Override with new input values
     activation(1:length(input)) = input; % input state
         
-    %% HINTS
-    % Propagate signal through network one timestep    
-    % Apply activation function to neurons (line by line)
+    % Only 
     activation(length(input)+1:end) = activation * wMat;
     activation(length(input)+1:end) = tanh(activation(length(input)+1:end));
     
