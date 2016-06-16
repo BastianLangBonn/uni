@@ -9,10 +9,10 @@
 
 function [a] = RNNet (wMat, input, activation)
 
-    % Override with new input values
+    % Override input elements with new input values
     activation(1:length(input)) = input; % input state
         
-    % Only 
+    % Compute net input and activation for only the relevant elements
     activation(length(input)+1:end) = activation * wMat;
     activation(length(input)+1:end) = tanh(activation(length(input)+1:end));
     

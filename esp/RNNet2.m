@@ -1,9 +1,6 @@
 function [ a ] = RNNet2( wMat, input, activation )
-%RNNET2 Summary of this function goes here
-%   Detailed explanation goes here
-
-    % Fix initial activation size
-    %if length(activation) > 
+% RNNET2 Computes the activation of the RNN, but uses only the three
+% non-velocity values of the input
     
     % Only take bias plus three non velocity values
     activation(1:4) = [input(1) input(2) input(4) input(6)];
