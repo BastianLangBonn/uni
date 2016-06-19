@@ -1,8 +1,8 @@
 %Read the log file
 %file = './logs1/right.log';
-function [data] = analyzeMotionLog(file)
+function [data] = analyzeMotionLog(file,startingFigure)
 read = importdata(file,' ',0);
-c = 400 % The number of log entries to be cropped at start and end
+c = 400; % The number of log entries to be cropped at start and end
 e = size(read,1) - c;
 data.time = read(c:e,1);
 data.x = read(c:e,2);
@@ -33,28 +33,28 @@ data.duration = data.time(end) - data.time(1);
 
 %Visualize the motion trajectory
 % Plot 
-figure(1);clf;hold on;
+figure(startingFigure+1);clf;hold on;
 plot(data.x, data.y);
 title('Motion Trajectory');
 xlabel('x in mm');
 ylabel('y in mm');
 grid on;
 
-figure(2);clf;hold on;
+figure(startingFigure+2);clf;hold on;
 plot(data.x);
 title('X vs Time');
 xlabel('Time step');
 ylabel('x in mm');
 grid on;
 
-figure(3);clf;hold on;
+figure(startingFigure+3);clf;hold on;
 plot(data.y);
 title('Y vs Time');
 xlabel('Time step');
 ylabel('y in mm');
 grid on;
 
-figure(4);clf;hold on;
+figure(startingFigure+4);clf;hold on;
 plot(data.orientation);
 title('Theta vs Time');
 xlabel('Time step');
@@ -71,7 +71,7 @@ data.gammaHat = double.empty(length(data.time)-1,0);
 data.deltaT = double.empty(length(data.time)-1,0);
 
 for i = 2:length(data.time)
-    x = data.x(i-1)
+    x = data.x(i-1);
     xNew = data.x(i);
     y = data.y(i-1);
     yNew = data.y(i);
@@ -93,7 +93,7 @@ for i = 2:length(data.time)
 end
 
 %Visualize the linear velocity
-figure(5);clf;hold on;
+figure(startingFigure+5);clf;hold on;
 plot(data.vHat);
 title('Linear velocity');
 xlabel('Time step');
@@ -101,7 +101,7 @@ ylabel('Linear velocity (m/s)');
 grid on;
 
 %Visualize the angular velocity
-figure(6);clf;hold on;
+figure(startingFigure+6);clf;hold on;
 grid on;
 plot(data.omegaHat);
 title('Angular velocity');
@@ -109,7 +109,7 @@ xlabel('Time step');
 ylabel('Angular velocity (rad/s)');
 
 %Visualize the gamma
-figure(7);clf;hold on;
+figure(startingFigure+7);clf;hold on;
 grid on;
 plot(data.gammaHat);
 title('Gamma');

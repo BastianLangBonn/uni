@@ -1,7 +1,7 @@
-data1 = analyzeMotionLog('./logs1/right.log');
-data2 = analyzeMotionLog('./logs2/right.log');
-data3 = analyzeMotionLog('./logs1/left.log');
-data4 = analyzeMotionLog('./logs2/left.log');
+data1 = analyzeMotionLog('./logs1/right.log',1);
+data2 = analyzeMotionLog('./logs2/right.log',9);
+data3 = analyzeMotionLog('./logs1/left.log',17);
+data4 = analyzeMotionLog('./logs2/left.log',25);
 
 %A.ALPHA = SIGMA
 Ar = abs([data1.v data1.omega 0 0 0 0;
