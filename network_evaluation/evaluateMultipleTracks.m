@@ -1,13 +1,10 @@
-function [ error ] = evaluateMultipleTracks( weightMatrix, data )
-%EVALUATEMULTIPLETRACKS Summary of this function goes here
-%   Detailed explanation goes here
-  for sample = 1:length(data)
-    input = [data(sample).command' data(sample).currentVelocity'...
-      data(sample).slope'];
-    input = normalizeInputData(input);
-    expectedOutput = [data(sample).resultingVelocity' data(sample).energy'];
-    expectedOutput = normalizeOutputData(expectedOutput);
-    error(sample) = evaluateTrack(weightMatrix, input, expectedOutput);
+function [ error ] = evaluateMultipleTracks( weightMatrix, tracks )
+%EVALUATEMULTIPLETRACKS Extracts data from the given set and evaluates the
+%given network on all of the tracks.
+
+  error = zeros(1,length(tracks));
+  for sample = 1:length(tracks) %gives the number of different samples
+    error(sample) = evaluateTrack(weightMatrix, tracks(sample));
   end
   error = mean(error.^2);
 

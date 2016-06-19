@@ -8,21 +8,8 @@ function [ result ] = simulateTrackTime( track, command )
     %% Read track information
     result.travelledDistance = track(:,1);
     result.elevation = track(:,2);
-    
-    %% Prepare Slope Lookup
-    % Compute and store the slope for any given distance-elevation-sample
-    result.slopeLookup = containers.Map()
-    for sample=1:length(result.travelledDistance)-1
-        slope = result.elevation(sample+1) - result.elevation(sample);
-        iMax = result.travelledDistance(sample+1);
-        index = result.travelledDistance(sample);
-        while index < iMax
-            result.slopeLookup(int2str(index)) = slope;                       
-            index = index + 1;
-        end
-    end
-    % Set last slope-value to 0 
-    result.slopeLookup(int2str(result.travelledDistance(end))) = 0;
+    result.slopeLookup = createSlopeLookup(result.travelledDistance, ...
+      result.elevation);
     
     %% Simulate track
     t = 0;
