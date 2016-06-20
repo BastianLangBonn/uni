@@ -68,6 +68,7 @@ figure(2); clf; hold on;
 pie([meanClassificationErrors, meanCorrectlyClassified],[0,1]);
 legend('Classification Errors', 'Correct Classifications','location','southeast');
 title('Mean Accuracy');
+set(gca,'visible','off');
 grid on;
 
 display(meanCorrectlyClassified/10000);
