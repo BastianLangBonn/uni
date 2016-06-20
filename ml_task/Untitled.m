@@ -12,3 +12,4 @@ for iImage = 1:length(images.data)
     title(Label{iImage});
     pause(0.1);
 end
+
