@@ -1,0 +1,87 @@
+Hallo Bastian,
+
+eigentlich wollte ich dir schon gestern Abend antworten, nur hat dann 
+der Mail-Server der Hochschule gestreikt.
+Das ich dir erst jetzt antworte ist ein wenig schief gelaufen. Ich bin 
+davon ausgegangen, dass der Tobias die schreibt, und er davon, dass ich 
+das tue.
+
+Das Velomobil ist abgesehen von dem Ant+ Protokoll und einem Bremssensor 
+fertig.
+
+Als kurze Zusammenfassung:
+-Platine und restliche Schaltung ist fertig (siehe schaltung.fzz, kann 
+mit dem Programm Fritzing geöffnet werden)
+-Die Stecker für die Stiftleisten zeigen mit den kleinen 
+Pfeilmarkierungen imer nach oben (für oben siehe schaltung.fzz)
+
+-Professor Asteroth wollte, dass erstmal nur ein Bremssensor angebracht 
+wird. Der zweite erst wenn sich der erste bewährt hat.
+-Bei dem Bremssignal hat sich ein Problem gezeigt: der Motorcontroller 
+reagiert erst nach 4 Sekunden
+     -Der Pi schaltet schnell genug ab also muss es am Motorcontroller 
+liegen
+     -In den Einstellungen des Motorcontrollers haben wir dazu nichts 
+gefunden
+     -Möglichweise könnte es helfen das Signal langsamer abzusenken, 
+vielleicht greift beim zu schnellen Abschalten eine Sicherheitsroutine.
+
+-Den Ant+ Code haben wir nicht auf dem Pi compiliert/ausgeführt 
+bekommen, deshalb konnten wir den auch noch nicht in unser Programm 
+einbinden. Möglicherweise liegt das am ARM-Pozessor
+-unsere Ideen fürs einbinden:
+     -einen Socket Client in C programmieren (ziemlich schwer aber 
+sauberste Lösung)
+     -eine Pipe Verbindung zu dem Python Programm programmieren (also 
+Prozess forken, Pipe einrichten, und im geklonten Prozess Python Skript 
+starten)
+-Was nicht funktioniert
+     -Ausgabe vom Python Skript in Datei schreiben und auslesen, da erst 
+wenn das Skript beendet ist (Endlosschleife), wäre der Inhalt der Datei 
+sichtbar
+
+-Probefahrt war abgesehen vom Geschwindigkeitseinlesen und dem 
+verzögerten Abschalten des Motors beim Bremsen erfolgreich.
+
+-der Code im Anhang ist nicht die fertige Version, die hat der Tobias. 
+Da sollten aber nur minimale Änderungen sein
+      -nur noch in der Main wird das PWM ab/- angeschaltet. Die Threads 
+legen nur noch Variablen fest die in der Main abgefragt werden
+-im Ordner quarqd findest du den Code von Ant. Das Python Skript 
+quarqd-test.py ist zum auslesen des Sockets
+     -0s ist für die Geschwindigkeit
+     -0p ist für die Leistung
+
+
+Bei Fragen zu dem Steuerungs-Code kannst du mich oder den Tobias fragen. 
+Ich kann aber nur abends da ich gerade ziemlich im Praxisprojekt 
+eingespannt bin und in St. Augustin bin ich bis Juni ertmal nicht mehr.
+Deshalb wenn dir von uns jemand vor Ort helfen soll, dann am besten der 
+Tobias. Für das Ant+ Protokoll wende dich am besten an den Max.
+
+Die Doku schicke ich dir die Tage, ich habe da gestern rein geschaut und 
+festgestelltn dass ich das noch verbessern muss.
+Ich schreib dem Tobias das er uns den aktuellen Code schicken soll. Hier 
+aber trotzdem seine Email-Adresse damit du den auch erreichen kannst:
+tobias.hansen@smail.inf.h-brs.de
+
+Ich hoffe ich konnte dir helfen.
+
+Einen schönen Abend
+Robin
+
+
+Am 04.04.2016 um 14:39 schrieb Bastian Lang:
+> Hallo Robin,
+>
+> kannst du mir bitte einen kurzen Status geben über die Bremssensoren 
+> und den Controller, an dem du gearbeitet hast? Laufen die Sensoren?
+>
+> Kannst du mir außerdem einmal den C-code schicken, den du mir beim 
+> letzten Treffen gezeigt hattest? Den für den Controller?
+>
+> Vielen Dank und viele Grüße,
+> Bastian
+>
+>
+

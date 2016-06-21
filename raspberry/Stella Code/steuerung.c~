@@ -1,0 +1,125 @@
+#include <wiringPi.h> 
+#include <softPwm.h> 
+#include <stdio.h> 
+#include <lcd.h> 
+#include <pthread.h>
+#include <unistd.h>
+
+
+#define DEBUG       //Wenn definiert gibt das Programm in der Konsole Debug-Informationen aus
+
+//#define BRAKE2    //Wenn definiert muss ein zweiter Bremssensor angeschlossen sein
+
+/****************************************************************************************************/
+/*  Konstanten										   	    */
+/****************************************************************************************************/
+
+/*  GPIO Belegung  */
+#define GPIO_PWM            8
+#define GPIO_MOTOR_SWITCH   0
+#define GPIO_BRAKE1	    1
+
+#ifdef BRAKE2
+#define GPIO_BRAKE2         2
+#endif
+
+#define GPIO_SPEED          3
+#define LCD_D0		    25
+#define LCD_D1		    24
+#define LCD_D2		    23
+#define LCD_D3		    22
+#define LCD_D4		    21
+#define LCD_D5		    14
+#define LCD_D6		    13
+#define LCD_D7		    12
+#define LCD_RS		    29	// Legt das Speicherregister fest
+#define LCD_STRB            28
+
+/*  Display Einstellungen  */
+#define LCD_ROWS            2
+#define LCD_COLUMNS         16
+#define LCD_BITS            8	// Legt fest wie viele Bits verwendet werden
+				// Nicht die Anzahl der unterstuetzten Bits
+
+/*  Motorcontroller  */
+#define PWM_RANGE           200
+
+
+/*  Fahrzeug  */
+#define WHEEL_LENGTH        1.445
+#define MAX_TEMPO           25      //Legt die maximale Geschwindigkeit in km/h fest
+
+/*  Delay  */
+#define DISPLAY_UPDATE      1000
+#define SENSOR_UPDATE       20
+#define SPEED_UPDATE        20
+
+
+
+/****************************************************************************************************/
+/*  Variablen											    */
+/****************************************************************************************************/
+
+
+float current_value = 0.2;		// Legt den HIGH Anteil vom PWM-Signal fest
+					// 0 <= current_value <= 1
+int actual_speed = 0;
+int lcd_handler;
+
+
+
+
+
+/****************************************************************************************************/
+/*  Setup											    */
+/****************************************************************************************************/
+
+int setup(){
+	
+	int res = 0;
+	wiringPiSetup();
+	res = softPwmCreate(GPIO_PWM, 0, PWM_RANGE);
+	if(res != 0){
+		#ifdef DEBUG
+		printf("PWM Create Error\n");
+		#endif
+		return res;
+	}
+	pinMode(GPIO_MOTOR_SWITCH, INPUT);
+	pinMode(GPIO_BRAKE1, INPUT);
+        #ifdef BRAKE2
+	pinMode(GPIO_BRAKE2, INPUT);
+        #endif
+	pinMode(GPIO_SPEED, INPUT);
+	
+	
+	return res;
+}
+
+/****************************************************************************************************/
+/*  Main / Geschwindigkeitsmessung								    */
+/****************************************************************************************************/
+
+int main(){
+	if(setup() != 0){
+		return -1;
+	}
+	
+	unsigned int now;
+	unsigned int lastpeak = micros();
+	
+	while(1){
+
+		
+		/*  Ein- und Ausschalten des PWM-Signals  */
+                        //Einschalten des PWM-Signals
+        printf("Writing speed: %d\n", (int)(current_value * PWM_RANGE));
+        softPwmWrite(GPIO_PWM, (int)(PWM_RANGE * current_value / 2));
+        sleep(1);
+        softPwmWrite(GPIO_PWM, (int)(PWM_RANGE * current_value));
+                
+                
+		delay(SPEED_UPDATE);
+	}
+	return 0;
+}
