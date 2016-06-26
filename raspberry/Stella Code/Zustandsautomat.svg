@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="25cm" height="23cm" viewBox="179 58 498 445" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <ellipse style="fill: #000000" cx="190" cy="110" rx="10" ry="10"/>
+  <g>
+    <rect style="fill: #ffffff" x="240" y="140" width="95" height="43" rx="20" ry="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke-linejoin: round; stroke: #000000" x="240" y="140" width="95" height="43" rx="20" ry="20"/>
+  </g>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="287.5" y="161.5">
+    <tspan x="287.5" y="161.5">0,0,0</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="480" y="140" width="95" height="43" rx="20" ry="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke-linejoin: round; stroke: #000000" x="480" y="140" width="95" height="43" rx="20" ry="20"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="240" y="340" width="95" height="43" rx="20" ry="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke-linejoin: round; stroke: #ff0000" x="240" y="340" width="95" height="43" rx="20" ry="20"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="480" y="340" width="95" height="43" rx="20" ry="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke-linejoin: round; stroke: #000000" x="480" y="340" width="95" height="43" rx="20" ry="20"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="360" y="60" width="95" height="43" rx="20" ry="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke-linejoin: round; stroke: #000000" x="360" y="60" width="95" height="43" rx="20" ry="20"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="360" y="260" width="95" height="43" rx="20" ry="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke-linejoin: round; stroke: #000000" x="360" y="260" width="95" height="43" rx="20" ry="20"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="580" y="60" width="95" height="43" rx="20" ry="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke-linejoin: round; stroke: #000000" x="580" y="60" width="95" height="43" rx="20" ry="20"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="580" y="260" width="95" height="43" rx="20" ry="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke-linejoin: round; stroke: #000000" x="580" y="260" width="95" height="43" rx="20" ry="20"/>
+  </g>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="287.5" y="361.5">
+    <tspan x="287.5" y="361.5">0,1,0</tspan>
+  </text>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="527.5" y="161.5">
+    <tspan x="527.5" y="161.5">0,0,1</tspan>
+  </text>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-linejoin: round; stroke: #000000" x1="201.003" y1="115.812" x2="244.915" y2="139.006"/>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="527.5" y="361.5">
+    <tspan x="527.5" y="361.5">0,1,1</tspan>
+  </text>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="407.5" y="81.5">
+    <tspan x="407.5" y="81.5">1,0,0</tspan>
+  </text>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="627.5" y="81.5">
+    <tspan x="627.5" y="81.5">1,0,1</tspan>
+  </text>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="407.5" y="281.5">
+    <tspan x="407.5" y="281.5">1,1,0</tspan>
+  </text>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="627.5" y="281.5">
+    <tspan x="627.5" y="281.5">1,1,1</tspan>
+  </text>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-linejoin: round; stroke: #000000" x1="335.898" y1="161.5" x2="479.102" y2="161.5"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-linejoin: round; stroke: #000000" x1="287.5" y1="183.985" x2="287.5" y2="339.015"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-linejoin: round; stroke: #000000" x1="321.265" y1="138.99" x2="373.735" y2="104.01"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-linejoin: round; stroke: #000000" x1="527.5" y1="183.985" x2="527.5" y2="339.015"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-linejoin: round; stroke: #000000" x1="555.637" y1="138.99" x2="599.363" y2="104.01"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-linejoin: round; stroke: #000000" x1="321.265" y1="338.99" x2="373.735" y2="304.01"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-linejoin: round; stroke: #000000" x1="335.898" y1="361.5" x2="479.102" y2="361.5"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-linejoin: round; stroke: #000000" x1="555.637" y1="338.99" x2="599.363" y2="304.01"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-linejoin: round; stroke: #000000" x1="455.974" y1="81.5" x2="579.026" y2="81.5"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-linejoin: round; stroke: #000000" x1="407.5" y1="103.985" x2="407.5" y2="259.015"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-linejoin: round; stroke: #000000" x1="627.5" y1="103.985" x2="627.5" y2="259.015"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-linejoin: round; stroke: #000000" x1="579.026" y1="281.5" x2="455.974" y2="281.5"/>
+  <g>
+    <polygon style="fill: #ffffff" points="180,420 517.1,420 529.1,432 529.1,502 180,502 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke-linejoin: round; stroke: #000000" points="180,420 517.1,420 529.1,432 529.1,502 180,502 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 1; stroke-linejoin: round; stroke: #000000" points="517.1,420 517.1,432 529.1,432 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="187" y="444.9">
+      <tspan x="187" y="444.9">[brake_on=x, motor_on=y, motor_limited=z]</tspan>
+      <tspan x="187" y="460.9"></tspan>
+      <tspan x="187" y="476.9">[0,1,0] ist der einzige Zustand bei dem ein</tspan>
+      <tspan x="187" y="492.9">PWM-Signal erzeugt werden darf</tspan>
+    </text>
+  </g>
+</svg>
