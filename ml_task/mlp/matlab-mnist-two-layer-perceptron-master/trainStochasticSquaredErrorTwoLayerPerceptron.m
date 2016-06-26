@@ -1,4 +1,4 @@
-function [hiddenWeights, outputWeights, error] = trainStochasticSquaredErrorTwoLayerPerceptron(activationFunction, dActivationFunction, numberOfHiddenUnits, inputValues, targetValues, epochs, batchSize, learningRate)
+function [hiddenWeights, outputWeights, error] = trainStochasticSquaredErrorTwoLayerPerceptron(activationFunction, dActivationFunction, numberOfHiddenUnits, inputValues, targetValues, epochs, batchSize, learningRate, p)
 % trainStochasticSquaredErrorTwoLayerPerceptron Creates a two-layer perceptron
 % and trains it on the MNIST dataset.
 %
@@ -35,9 +35,9 @@ function [hiddenWeights, outputWeights, error] = trainStochasticSquaredErrorTwoL
     
     n = zeros(batchSize);
     
-%     figure; hold on;
 
     for t = 1: epochs
+        display(['Epoch '  int2str(t)]);
         for k = 1: batchSize
             % Select which input vector to train on.
             n(k) = floor(rand(1)*trainingSetSize + 1);
@@ -69,9 +69,11 @@ function [hiddenWeights, outputWeights, error] = trainStochasticSquaredErrorTwoL
         end;
         error(t) = error(t)/batchSize;
         
-%         plot(t, error(t),'b.');
+        % Calculate test error - takes too long
+        p.hiddenWeights = hiddenWeights;
+        p.outputWeights = outputWeights;
+        
+        validateTwoLayerPerceptron(p);
+        
     end;
-%     title('Training Error over Epochs');
-%     xlabel('Epochs');
-%     ylabel('Mean Squared Error');
 end

@@ -34,13 +34,9 @@ validationParameters.activationFunction = activationFunction;
 validationParameters.testSet = inputValuesTest;
 validationParameters.testLabels = labelsTest;
 
-for run = 1:1%nExperiments
+for run = 1:nExperiments
   fprintf('Experiment nr %d with %d hidden units.\n',...
     run, numberOfHiddenUnits);
-   % Choose Test Samples
-  iSamples = randi(10000, 1, 100);
-  validationParameters.inputValues = validationParameters.testSet(:,iSamples);
-  validationParameters.labels = validationParameters.testLabels(iSamples);
   fprintf('Learning rate: %d.\n', learningRate);
   tic;
   [hiddenWeights, outputWeights, error(run,:)] =...
@@ -54,9 +50,9 @@ for run = 1:1%nExperiments
 
   validationParameters.hiddenWeights = hiddenWeights;
   validationParameters.outputWeights = outputWeights;
- 
-  validationParameters.inputValues = validationParameters.testSet;
-  validationParameters.labels = validationParameters.testLabels;  
+  
+  % Choose Test Samples
+  
   
   [correctlyClassified(run), classificationErrors(run)] =...
     validateTwoLayerPerceptron(validationParameters);

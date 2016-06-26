@@ -1,5 +1,5 @@
 function [correctlyClassified, classificationErrors, classificationMatrix, ...
-  class] = validateTwoLayerPerceptron(activationFunction, hiddenWeights, outputWeights, inputValues, labels)
+  class] = validateTwoLayerPerceptron(p)
 % validateTwoLayerPerceptron Validate the twolayer perceptron using the
 % validation set.
 %
@@ -15,18 +15,19 @@ function [correctlyClassified, classificationErrors, classificationMatrix, ...
 % classificationErrors           : Number of classification errors.
 % 
 
-    testSetSize = size(inputValues, 2);
+    testSetSize = size(p.inputValues, 2);
     classificationErrors = 0;
     correctlyClassified = 0;
     classificationMatrix = zeros(10,10);
     for n = 1: testSetSize
-        inputVector = inputValues(:, n);
-        outputVector = evaluateTwoLayerPerceptron(activationFunction, hiddenWeights, outputWeights, inputVector);
+%         display(['Validation ' int2str(n)]);
+        inputVector = p.inputValues(:, n);
+        outputVector = evaluateTwoLayerPerceptron(p.activationFunction, p.hiddenWeights, p.outputWeights, p.inputValues);
         
         class(n) = decisionRule(outputVector);
-        classificationMatrix(class(n),labels(n) + 1) = ...
-          classificationMatrix(class(n),labels(n) + 1) + 1;
-        if class(n) == labels(n) + 1
+        classificationMatrix(class(n),p.labels(n) + 1) = ...
+          classificationMatrix(class(n),p.labels(n) + 1) + 1;
+        if class(n) == p.labels(n) + 1
             correctlyClassified = correctlyClassified + 1;
         else
             classificationErrors = classificationErrors + 1;
