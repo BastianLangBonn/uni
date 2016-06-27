@@ -26,7 +26,7 @@ dActivationFunction = @dLogisticSigmoid;
 
 % Choose batch size and epochs. Remember there are 60k input values.
 batchSize = 100;
-epochs = 500;
+epochs = 1000;
 
 % Initialize experimental values
 nExperiments = 50;
@@ -34,16 +34,13 @@ validationParameters.activationFunction = activationFunction;
 validationParameters.testSet = inputValuesTest;
 validationParameters.testLabels = labelsTest;
 
-for run = 1:1%nExperiments
+for run = 1:nExperiments
   fprintf('Experiment nr %d with %d hidden units.\n',...
     run, numberOfHiddenUnits);
-   % Choose Test Samples
-  iSamples = randi(10000, 1, 100);
-  validationParameters.inputValues = validationParameters.testSet(:,iSamples);
-  validationParameters.labels = validationParameters.testLabels(iSamples);
+   
   fprintf('Learning rate: %d.\n', learningRate);
   tic;
-  [hiddenWeights, outputWeights, error(run,:)] =...
+  [hiddenWeights, outputWeights, trainError(run,:), testError(run,:)] =...
     trainStochasticSquaredErrorTwoLayerPerceptron(activationFunction,...
     dActivationFunction, numberOfHiddenUnits, inputValuesTraining, targetValues,...
     epochs, batchSize, learningRate, validationParameters);
@@ -65,14 +62,16 @@ end
 %% Analysis
 meanCorrectlyClassified = mean(correctlyClassified);
 meanClassificationErrors = mean(classificationErrors);
-meanError = mean(error,1);
+meanTrainError = mean(trainError,1);
+meanTestError = mean(testError,1);
 minClassificationErrors = min(classificationErrors);
 maxCorrectlyClassified = max(correctlyClassified);
 
 
 %% Results
 figure(1); clf; hold on;
-plot(meanError);
+plot(meanTrainError);
+plot(meanTestError);
 ylabel('Mean Squared Error');
 xlabel('Epochs');
 title('Mean Error Progression');
@@ -91,8 +90,7 @@ display(minClassificationErrors/10000);
 display(maxCorrectlyClassified/10000);
 
 [cc, ce, cMat, out ] =...
-    validateTwoLayerPerceptron(activationFunction, hiddenWeights,...
-    outputWeights, inputValuesTest, labelsTest);
+    validateTwoLayerPerceptron(validationParameters);
   
 figure(3); clf; hold on;
 pcolor(cMat);

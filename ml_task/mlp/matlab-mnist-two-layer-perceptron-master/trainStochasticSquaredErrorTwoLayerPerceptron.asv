@@ -73,16 +73,11 @@ function [hiddenWeights, outputWeights, error, testError] = trainStochasticSquar
         p.hiddenWeights = hiddenWeights;
         p.outputWeights = outputWeights;
         
-        % Choose Test Samples
-        iSamples = randi(10000, 1, 100);
-        p.inputValues = p.testSet(:,iSamples);
-        p.labels = p.testLabels(iSamples);
-        
         [cc, ce, cMat, out] = validateTwoLayerPerceptron(p);
         testError(t) = ce / size(p.inputValues,2);
         
-        plot(error,'b-');
-        plot(testError,'r-');
+        plot(error(t),'bx');
+        plot(testError(t));
         pause(0.01);
         
     end;
