@@ -125,7 +125,9 @@ On average the MLP was able to classify 91.91\% correctly. In the best run the p
 	\label{fig:error}
 \end{figure}
 
-In table \ref{tab:confusion} and figure \ref{fig:confusion} the confusion matrix of one of the nets can be seen. About 63 times an 8 was mistaken for a 10. About 40 times a 6 for a 9, a 10 for a 5 or a 6 for a 4.
+In table \ref{tab:confusion} and figure \ref{fig:confusion} the confusion matrix of one of the nets can be seen. Table \ref{tab:relative_confusion} shows the relative values with respect to the overall appearance of each digit and figure \ref{fig:log_confusion} shows the logarithmic confusion matrix, where more details can be seen.\\
+
+It can
 
 \begin{table}[H]
 \centering
@@ -147,11 +149,38 @@ classified\textbackslash real & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\ \hline\
 \end{tabular}
 \end{table}
 
+\begin{table}[H]
+\centering
+\caption{Relative Confusion Matrix}
+\label{tab:relative_confusion}
+\begin{tabular}{|l||llllllllll|}
+\hline
+classified\textbackslash real & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\ \hline\hline
+0 & 96.43 & 0 & 0.39 & 0.09 & 0.1 & 0.9 & 1.04 & 0.29 & 0.41 & 0.59 \\ \hline
+1 & 0 & 97.09 & 0 & 0 & 0.31 & 0.22 & 0.31 & 1.75 & 0.51 & 0.69 \\ \hline
+2 & 0.2 & 0.18 & 92.25 & 2.08 & 0.51 & 0.22 & 0.42 & 2.82 & 0.41 & 0 \\ \hline
+3 & 0.2 & 0.53 & 0.87 & 91.39 & 0 & 4.15 & 0 & 0.39 & 1.23 & 0.79 \\ \hline
+4 & 0 & 0.09 & 1.26 & 0.09 & 93.28 & 1.01 & 1.15 & 1.36 & 1.13 & 4.36 \\ \hline
+5 & 1.33 & 0.18 & 0.29 & 2.08 & 0 & 85.31 & 1.15 & 0.09 & 1.44 & 1.49 \\ \hline
+6 & 1.22 & 0.44 & 1.16 & 0.4 & 1.12 & 2.02 & 95.41 & 0 & 1.13 & 0.09 \\ \hline
+7 & 0.1 & 0.08 & 0.68 & 0.4 & 0.1 & 0.67 & 0 & 86.96 & 0.21 & 0.3 \\ \hline
+8 & 0.51 & 1.41 & 2.71 & 2.38 & 0.92 & 4.6 & 0.52 & 0.19 & 92.4 & 1.49 \\ \hline
+9 & 0 & 0 & 0.39 & 1.09 & 3.67 & 0.9 & 0 & 6.13 & 1.13 & 90.19 \\ \hline
+\end{tabular}
+\end{table}
+
 \begin{figure}[H]
 	\centering
-	\includegraphics[width = 0.6\linewidth]{./confusion.jpg}
+	\includegraphics[width = 0.6\linewidth]{./absConfusion.jpg}
 	\caption{Graphical Confusion Matrix of Classifications}
 	\label{fig:confusion}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.6\linewidth]{./logConfusion.jpg}
+	\caption{Graphical Logartihmic Confusion Matrix of Classifications}
+	\label{fig:log_confusion}
 \end{figure}
 
 \section{Comparison}
