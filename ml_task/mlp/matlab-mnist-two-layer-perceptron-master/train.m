@@ -94,12 +94,47 @@ display(maxCorrectlyClassified/10000);
   
 figure(3); clf; hold on;
 pcolor(cMat);
-colormap(winter);
+colormap(summer);
+colormap;
 xlabel('Real Digits');
 ylabel('Classified Digits');
 title('Confusion Map');
 
 display(cMat);
+nDigitAppearance = sum(cMat,1);
+for i = 1:size(cMat,2)
+  relativeCMat(:,i) = cMat(:,i) ./ nDigitAppearance(i);
+end
+display(relativeCMat);
+figure(4); clf; hold on;
+pcolor(relativeCMat);
+colormap(summer);
+colorbar;
+xlabel('Real Digits');
+ylabel('Classified Digits');
+title('Relative Confusion Map');
+
+logCMat = log(cMat);
+display(logCMat);
+
+figure(5); clf; hold on;
+pcolor(logCMat);
+colormap(summer);
+colorbar;
+xlabel('Real Digits');
+ylabel('Classified Digits');
+title('Logarithmic Confusion Map');
+
+imshow(relativeCMat, [], 'InitialMagnification', 1600);
+colorbar;
+axis on;
+% Set up figure properties:
+% Enlarge figure to full screen.
+set(gcf, 'Units', 'Normalized', 'OuterPosition', [0 0 1 1]);
+% Get rid of tool bar and pulldown menus that are along top of figure.
+set(gcf, 'Toolbar', 'none', 'Menu', 'none');
+% Give a name to the title bar.
+set(gcf, 'Name', 'Demo by ImageAnalyst', 'NumberTitle', 'Off')
 
 save trainingResults;
 
