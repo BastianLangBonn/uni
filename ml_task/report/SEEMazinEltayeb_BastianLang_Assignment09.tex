@@ -109,14 +109,11 @@ We trained MLP with this settings 50 times and computed its mean and best perfor
 \section{Results}
 \label{sec:results}
 
-On average the MLP was able to classify 91.91\% correctly. In the best run the performance was about 92.5\%. Figure \ref{fig:pie} visualizes the average performance of the network. The mean error progression while training can be seen in figure \ref{fig:error}. The gradient of the error curve in the figure suggests that continuing the training could possibly lead to an even smaller error. 
+On average the MLP was able to classify 91.91\% correctly with a standard deviation of 0.35. In the best run the performance was about 92.5\%. The mean error progression while training can be seen in figure \ref{fig:error}. The gradient of the error curve in the figure suggests that continuing the training could possibly lead to an even smaller error. 
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width = 0.6\linewidth]{./pieChart.jpg}
-	\caption{Pie Chart of the Quality of the Classification}
-	\label{fig:pie}
-\end{figure}
+
+
+
 
 \begin{figure}[H]
 	\centering
@@ -127,7 +124,7 @@ On average the MLP was able to classify 91.91\% correctly. In the best run the p
 
 In table \ref{tab:confusion} and figure \ref{fig:confusion} the confusion matrix of one of the nets can be seen. Table \ref{tab:relative_confusion} shows the relative values with respect to the overall appearance of each digit and figure \ref{fig:log_confusion} shows the logarithmic confusion matrix, where more details can be seen.\\
 
-It can
+The best recognition rate is for zeros and ones (more than 96\%). Five and seven have the worst results with a rate lower than 87\%. Some common misclassifications are 2 as 8 (2.71\%), 3 as 5 (2.08\%) or 8 (2.38\%), 4 as 9 (3.67\%), 5 as 3 (4.15\%) or 8 (4.6\%), 7 as 2 (2.82\%) or 9 (6.13\%) and 9 as 4 (4.36\%). 
 
 \begin{table}[H]
 \centering
