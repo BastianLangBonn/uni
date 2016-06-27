@@ -95,7 +95,7 @@ display(maxCorrectlyClassified/10000);
 figure(3); clf; hold on;
 pcolor(cMat);
 colormap(summer);
-colormap;
+colorbar;
 xlabel('Real Digits');
 ylabel('Classified Digits');
 title('Confusion Map');
