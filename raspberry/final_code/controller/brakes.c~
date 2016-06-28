@@ -43,7 +43,7 @@ int isBrakeActivated(){
     return 0;    
 }
 
-void handleBrakeActivations(int speed){
+int checkBrakes(int speed){
     int brakeRead = isBrakeActivated();
     int newActivation = getNewActivation(brakeRead, _currentBrakeActivation);
     
@@ -51,7 +51,10 @@ void handleBrakeActivations(int speed){
         #ifdef DEBUG
             printf("Brake Status has changed. Sending new Motor Command\n");
         #endif
-        _currentActivation = newActivation;
+        _currentBrakeActivation = newActivation;
         setMotorSpeed(_currentBrakeActivation * speed);
     }
+    return _currentBrakeActivation;
 }
+
+

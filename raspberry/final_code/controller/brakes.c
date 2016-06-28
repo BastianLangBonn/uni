@@ -2,8 +2,6 @@
 #include "constants.c"
 #include "motor.c"
 
-int _currentBrakeActivation = 0;
-
 /**
 * Gets the current status and the read on the brakes.
 * Returns the new brake status.
@@ -43,15 +41,18 @@ int isBrakeActivated(){
     return 0;    
 }
 
-void handleBrakeActivations(int speed){
+int checkBrakes(int currentBrakeActivation, int speed){
     int brakeRead = isBrakeActivated();
-    int newActivation = getNewActivation(brakeRead, _currentBrakeActivation);
+    int newActivation = getNewActivation(brakeRead, currentBrakeActivation);
     
-    if(newActivation != _currentBrakeActivation){
+    if(newActivation != currentBrakeActivation){
         #ifdef DEBUG
             printf("Brake Status has changed. Sending new Motor Command\n");
         #endif
-        _currentBrakeActivation = newActivation;
-        setMotorSpeed(_currentBrakeActivation * speed);
+        currentBrakeActivation = newActivation;
+        setMotorSpeed(currentBrakeActivation * speed);
     }
+    return currentBrakeActivation;
 }
+
+

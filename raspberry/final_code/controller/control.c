@@ -1,31 +1,15 @@
-//#include <wiringPi.h>
-//#include <softPwm.h>
 #include <stdio.h>
 #include <pthread.h>
 
 #include "setup.c"
 #include "brakes.c"
+#include "logger.c"
 
-/* VEHICLE CONSTANTS */
-#define WHEEL_LENGTH    1.445 // in m
-#define MAX_TEMPO       25 // Maximum velocity in km/h
-
-
-/* DELAY VALUES */
-#define SENSOR_UPDATE   20
-#define SPEED_UPDATE    20
-#define LOGGING_UPDATE  100
-
-/* MISC */
-#define BUFMAX          100
-
+/*************/
 /* VARIABLES */
-
-/*********/
-/* SETUP */
-/*********/
-
-
+/*************/
+int _currentSpeed = 0;
+int _currentBrakeActivation = 0;
 
 int main(){
     int result = setup();
@@ -35,7 +19,15 @@ int main(){
         #endif
         return result;
     }
-
     
-    
+    char filename[256];
+    char logMessage[256];
+    sprintf(filename, "/home/pi/AMT/log/log_%d.txt", micros());
+    while(1){
+        _currentBrakeActivation = checkBrakes(_currentBrakeActivation, _currentSpeed);        
+        
+        sprintf(logMessage, "timestamp: %d, brakes: %d, current speed:%d", micros(), _currentBrakeActivation, _currentSpeed);
+        writeToFile(logMessage, filename);
+        delay(SENSOR_UPDATE);
+    }    
 }
