@@ -9,6 +9,8 @@
 #endif
 
 #define DEBUG
+#define PWM_MINIMUM     5
+#define PWM_MAXIMUM     20
 #define PWM_RANGE       20
 #define SENSOR_UPDATE   20
 

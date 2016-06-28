@@ -4,12 +4,13 @@
 #include "setup.c"
 #include "brakes.c"
 #include "logger.c"
+#include "button.c"
 
 /*************/
 /* VARIABLES */
 /*************/
-int _currentSpeed = 0;
-int _currentBrakeActivation = 0;
+int currentPwmSignal = PWM_MINIMUM;
+int currentBrakeActivation = 0;
 
 int main(){
     int result = setup();
@@ -24,9 +25,9 @@ int main(){
     char logMessage[256];
     sprintf(filename, "/home/pi/AMT/log/log_%d.txt", micros());
     while(1){
-        _currentBrakeActivation = checkBrakes(_currentBrakeActivation, _currentSpeed);        
-        
-        sprintf(logMessage, "timestamp: %d, brakes: %d, current speed:%d", micros(), _currentBrakeActivation, _currentSpeed);
+        currentBrakeActivation = readBrakeSensors();        
+        currentPwmSignal = readButton(currentPwmSignal);
+        sprintf(logMessage, "timestamp: %d, brakes: %d, current pwm signal:%d", micros(), currentBrakeActivation, currentPwmSignal);
         writeToFile(logMessage, filename);
         delay(SENSOR_UPDATE);
     }    

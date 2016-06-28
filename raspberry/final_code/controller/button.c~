@@ -1,4 +1,15 @@
 #include <stdio.h>
 #include "constants.c"
 
+int currentPwmSignal = PWM_MINIMUM;
 
+int readButton(){
+    if(digitalRead(GPIO_BUTTON) == 1){
+        currentPwmSignal++;
+        if(currentPwmSignal > PWM_MAXIMUM){ 
+            currentPwmSignal = PWM_MINIMUM;
+        }
+	    delay(200); //Delay needed for button press
+	}
+    return currentPwmSignal;
+}
