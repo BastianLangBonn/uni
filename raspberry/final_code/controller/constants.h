@@ -29,5 +29,8 @@
 int currentBrakeActivation;
 int currentPwmSignal;
 float currentVelocity;
+float currentLatitude;
+float currentLongitude;
+float currentAltitude;
 
 char filename[256];

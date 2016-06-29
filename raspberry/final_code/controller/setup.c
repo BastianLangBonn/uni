@@ -7,6 +7,7 @@
 #include "brakes.c"
 #include "button.c"
 #include "hall.c"
+#include "gps.c"
 
 extern char filename[256];
 extern int currentPwmSignal;
@@ -40,7 +41,7 @@ int setup(){
 }
 
 int createThreads(){
-    pthread_t brakeThread, buttonThread, hallThread;
+    pthread_t brakeThread, buttonThread, hallThread, gpsThread;
     int res = 0;
 
 	// Create Brake Thread
@@ -66,6 +67,14 @@ int createThreads(){
 		return res;
 	}
 	logToConsole("Hall Thread Created");
+	
+	// Create GPS Thread
+	res = pthread_create(&gpsThread, NULL, gpsThreadPtr, NULL);
+	if(res != 0){
+	    logToConsole("GPS Thread Create Error");
+		return res;
+	}
+	logToConsole("GPS Thread Created");
 
 	return res;
 }
