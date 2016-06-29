@@ -4,10 +4,17 @@
 #include <netdb.h> 
 #include <unistd.h>
 #include <string.h>
+#include <stdio.h>
+
+#include <stdlib.h>
 
 #include "logger.h"
 #include "constants.h"
 #include "socket.c"
+
+extern float currentLongitude;
+extern float currentLatitude;
+extern float currentAltitude;
 
 void *gpsThreadPtr(void *arg){
     logToConsole("GPS thread started"); 
@@ -33,12 +40,20 @@ void *gpsThreadPtr(void *arg){
                             
             // Get data out of message
             latitude = strtok(buffer, ";");
+            sprintf(logMessage,"latitude: %.2f", latitude);
+            logToConsole(logMessage);
             latitude = strtok(NULL, ";");
+            sprintf(logMessage,"latitude: %.2f", latitude);
+            logToConsole(logMessage);
             longitude = strtok(NULL, ";");
+            sprintf(logMessage,"longitude: %.2f", longitude);
+            logToConsole(logMessage);
             
             latitude = strtok(latitude, "=");
             latitude = strtok(NULL, "=");
             currentLatitude = atof(latitude);
+            sprintf(logMessage,"latitude: %.2f", latitude);
+            logToConsole(logMessage);
             
             longitude = strtok(longitude, "=");
             longitude = strtok(NULL, "=");

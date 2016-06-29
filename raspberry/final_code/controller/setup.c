@@ -60,6 +60,7 @@ int createThreads(){
 	}
 	logToConsole("Button Thread Created");
 
+/*
     // Create Hall Thread
 	res = pthread_create(&hallThread, NULL, hallThreadPtr, NULL);
 	if(res != 0){
@@ -67,7 +68,7 @@ int createThreads(){
 		return res;
 	}
 	logToConsole("Hall Thread Created");
-	
+*/
 	// Create GPS Thread
 	res = pthread_create(&gpsThread, NULL, gpsThreadPtr, NULL);
 	if(res != 0){

@@ -8,7 +8,7 @@
     #define GPIO_BRAKE2
 #endif
 
-#define DEBUG
+//#define DEBUG
 #define PWM_MINIMUM     5
 #define PWM_MAXIMUM     20
 #define PWM_RANGE       20
@@ -29,8 +29,8 @@
 int currentBrakeActivation;
 int currentPwmSignal;
 float currentVelocity;
-float currentLatitude = 0.0;
-float currentLongitude = 0.0;
-float currentAltitude = 0.0;
+float currentLatitude;
+float currentLongitude;
+float currentAltitude;
 
 char filename[256];
