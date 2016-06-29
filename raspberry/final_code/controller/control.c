@@ -6,6 +6,7 @@
 #include "logger.h"
 #include "button.c"
 #include "constants.h"
+#include "hall.c"
 
 /*************/
 /* VARIABLES */
@@ -14,7 +15,7 @@ extern int currentPwmSignal;
 extern int currentBrakeActivation;
 
 int createThreads(){
-    pthread_t brakeThread, buttonThread;
+    pthread_t brakeThread, buttonThread, hallThread;
     int res = 0;
 
 	// Create Brake Thread
@@ -32,6 +33,14 @@ int createThreads(){
 		return res;
 	}
 	logToConsole("Button Thread Created");
+
+    // Create Hall Thread
+	res = pthread_create(&hallThread, NULL, hallThreadPtr, NULL);
+	if(res != 0){
+	    logToConsole("Hall Thread Create Error");
+		return res;
+	}
+	logToConsole("Hall Thread Created");
 
 	return res;
 }
