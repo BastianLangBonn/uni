@@ -9,10 +9,11 @@
 
 char logMessage[256];
 unsigned int _lastPeak;
-float _current_speed = 0;
+extern float currentVelocity;
 
 int createSockFd(int portno){
 	int sockfd;
+	currentVelocity = 0;
     struct sockaddr_in serv_addr;
     struct hostent *server;
     
@@ -63,11 +64,11 @@ void *hallThreadPtr(void *arg){
 			    // Char to Integer        
 			    rpm = atoi(tmp);
 			    // Compute speed out of rpm and wheel length in km/h
-			    _current_speed = rpm * WHEEL_LENGTH * 0.06;
+			    currentVelocity = rpm * WHEEL_LENGTH * 0.06;
 			    _lastPeak = micros();
 			    sprintf(logMessage, "rpm: %d", rpm);
 			    logToConsole(logMessage);
-			    sprintf(logMessage, "velocity: %.2f", _current_speed);
+			    sprintf(logMessage, "velocity: %.2f", currentVelocity);
 			    logToConsole(logMessage);
 			} else{
 			    logToConsole("String did not contain RPM");
