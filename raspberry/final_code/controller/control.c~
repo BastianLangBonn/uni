@@ -17,13 +17,13 @@ int main(){
     if(result != 0){
         sprintf(logMessage, "timestamp: %d, Error during setup: %d", micros(), result);
         logToConsole("Error during setup");
-        logToFile(logMessage, filename);
+        logToFile(logMessage);
         logToConsole(logMessage);
         return result;
     }    
     
     while(1){       
-        sprintf(logMessage, "timestamp: %d, brakes: %d, current pwm signal:%d, current velocity: %f", micros(), currentBrakeActivation, currentPwmSignal, currentVelocity);
+        sprintf(logMessage, "timestamp: %d, brakes: %d, current pwm signal:%d, current velocity: %f, current longitude: %.2f, current latitude: %.2f, current altitude: %.2f", micros(), currentBrakeActivation, currentPwmSignal, currentVelocity);
         logToFile(logMessage);
         logToConsole(logMessage);
         delay(SENSOR_UPDATE);

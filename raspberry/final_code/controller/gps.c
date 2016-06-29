@@ -10,10 +10,9 @@
 #include "socket.c"
 
 void *gpsThreadPtr(void *arg){
+    logToConsole("GPS thread started"); 
         
-    #ifdef DEBUG
-        printf("GPS thread started\n"); 
-    #endif
+    char logMessage[256];
     int sockfd, n;
     char *latitude, *longitude;        
     char buffer[256], tmp[256], *ptr;    
@@ -26,10 +25,11 @@ void *gpsThreadPtr(void *arg){
         ptr = NULL;
         n = read(sockfd,buffer,255);
         if (n < 0){
-            error("ERROR reading from socket");
+            logToConsole("ERROR reading from socket");
 		}
         if(n>0){
-            printf("Received GPS message: %s\n", buffer);
+            sprintf(logMessage, "Received GPS message: %s", buffer);
+            logToConsole(logMessage);
                             
             // Get data out of message
             latitude = strtok(buffer, ";");
@@ -43,13 +43,10 @@ void *gpsThreadPtr(void *arg){
             longitude = strtok(longitude, "=");
             longitude = strtok(NULL, "=");
             currentLongitude = atof(longitude);
-            #ifdef DEBUG
-                printf("GPS THREAD: extracted position:%.2fN;%.2fE\n", currentLatitude, currentLongitude); 
-            #endif
+            sprintf(logMessage,"GPS THREAD: extracted position:%.2fN;%.2fE", currentLatitude, currentLongitude);
+            logToConsole(logMessage); 
         }
 		delay(SENSOR_UPDATE); //Verhindert busy-waiting
     }
-    #ifdef DEBUG
-        printf("GPS thread terminated\n"); 
-    #endif
+    logToConsole("GPS thread terminated"); 
 }
