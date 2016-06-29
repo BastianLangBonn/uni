@@ -2,11 +2,11 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h> 
+#include "logger.c"
+#include "constants.c"
 
 void readHallSensor(){
-    #ifdef DEBUG
-        printf("ANT+ Thread started\n"); 
-    #endif
+    logToConsole("Hall Thread started"); 
 	int sockfd, n;   
     char buffer[256], tmp[256], *ptr;
     int t=0, rpm;
@@ -35,21 +35,15 @@ void readHallSensor(){
 			    // Compute speed out of rpm and wheel length in km/h
 			    _current_speed = rpm * WHEEL_LENGTH * 0.06;
 			    _lastPeak = micros();
-			    #ifdef DEBUG
-				    printf("rpm: %d\n", rpm);
-				    printf("velocity: %.2f\n", _current_speed);
-			    #endif
+			    logToConsole("rpm: %d", rpm);
+			    logToConsole("velocity: %.2f", _current_speed);
 			} else{
-			    #ifdef DEBUG
-				    printf("String did not contain RPM\n");
-			    #endif			    
+			    logToConsole("String did not contain RPM\n");
 			}
         }
 		delay(SENSOR_UPDATE); //Verhindert busy-waiting
     }
     	
-	#ifdef DEBUG
-        printf("ANT+ Thread Ended\n"); 
-    #endif
+    logToConsole("ANT+ Thread Ended\n"); 
 }
 

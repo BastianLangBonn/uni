@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "constants.c"
 
+
 /**
 * Reads the GPIO-PINs and returns if at least one of them indicates an 
 * activated brake.

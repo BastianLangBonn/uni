@@ -1,6 +1,6 @@
 #include <stdio.h> 
 
-void writeToFile(char* text, char filename[256]){
+void logToFile(char* text, char filename[256]){
     /* Open file to append, create if not existent*/
     FILE *f = fopen(filename, "a");
     if (f == NULL){
@@ -15,4 +15,10 @@ void writeToFile(char* text, char filename[256]){
     fprintf(f, "%s\n", text);
 
     fclose(f);
+}
+
+void logToConsole(char* text){
+    #ifdef DEBUG
+	    printf("%s\n", text);
+	#endif
 }

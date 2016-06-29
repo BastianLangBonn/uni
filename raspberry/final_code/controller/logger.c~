@@ -1,4 +1,6 @@
-void writeToFile(char* text, char filename[256]){
+#include <stdio.h> 
+
+void logText(char* text, char filename[256]){
     /* Open file to append, create if not existent*/
     FILE *f = fopen(filename, "a");
     if (f == NULL){
