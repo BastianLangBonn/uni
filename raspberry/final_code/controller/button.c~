@@ -1,15 +1,22 @@
 #include <stdio.h>
-#include "constants.c"
+#include "constants.h"
 
-int currentPwmSignal = PWM_MINIMUM;
+extern int currentPwmSignal;
 
-int readButton(){
+void *buttonThreadPtr(void *arg){
+    while(1){
+	    currentPwmSignal = readButton(currentPwmSignal);	
+	    delay(SENSOR_UPDATE); //no busy-waiting	
+    }
+}
+
+int readButton(int pwmSignal){
     if(digitalRead(GPIO_BUTTON) == 1){
-        currentPwmSignal++;
-        if(currentPwmSignal > PWM_MAXIMUM){ 
-            currentPwmSignal = PWM_MINIMUM;
+        pwmSignal++;
+        if(pwmSignal > PWM_MAXIMUM){ 
+            pwmSignal = PWM_MINIMUM;
         }
 	    delay(200); //Delay needed for button press
 	}
-    return currentPwmSignal;
+    return pwmSignal;
 }

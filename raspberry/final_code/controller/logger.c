@@ -1,4 +1,6 @@
 #include <stdio.h> 
+#include "constants.h"
+#include "logger.h"
 
 void logToFile(char* text, char filename[256]){
     /* Open file to append, create if not existent*/

@@ -3,30 +3,15 @@
 
 #include "setup.c"
 #include "brakes.c"
-#include "logger.c"
+#include "logger.h"
 #include "button.c"
+#include "constants.h"
 
 /*************/
 /* VARIABLES */
 /*************/
-int currentPwmSignal = PWM_MINIMUM;
-int currentBrakeActivation = 0;
-
-void *buttonThreadPtr(void *arg){
-    while(1){
-	    currentPwmSignal = readButton(currentPwmSignal);	
-	    delay(SENSOR_UPDATE); //no busy-waiting	
-    }
-    logToConsole("Button Thread ended\n"); 
-}
-
-void *brakeThreadPtr(void *arg){
-    while(1){
-	    currentBrakeActivation = readBrakeSensors();	
-	    delay(SENSOR_UPDATE); //no busy-waiting	
-    }
-    logToConsole("Brake Thread ended"); 
-}
+extern int currentPwmSignal;
+extern int currentBrakeActivation;
 
 int createThreads(){
     pthread_t brakeThread, buttonThread;
@@ -55,6 +40,8 @@ int main(){
     char logMessage[256];
     char filename[256];
     sprintf(filename, "/home/pi/AMT/log/log_%d.txt", micros());
+    currentPwmSignal = PWM_MINIMUM;
+    currentBrakeActivation = 0;
 
     int result = setup();
     if(result != 0){
@@ -64,6 +51,8 @@ int main(){
         logToConsole(logMessage);
         return result;
     }
+    
+    createThreads();
     
     while(1){       
         sprintf(logMessage, "timestamp: %d, brakes: %d, current pwm signal:%d", micros(), currentBrakeActivation, currentPwmSignal);

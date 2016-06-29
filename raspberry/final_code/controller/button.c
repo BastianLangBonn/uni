@@ -1,5 +1,16 @@
 #include <stdio.h>
-#include "constants.c"
+#include "constants.h"
+
+extern int currentPwmSignal;
+
+void *buttonThreadPtr(void *arg){
+    logToConsole("Button Thread Started");
+    while(1){
+	    currentPwmSignal = readButton(currentPwmSignal);	
+	    delay(SENSOR_UPDATE); //no busy-waiting	
+    }
+    logToConsole("Button Thread Ended");
+}
 
 int readButton(int pwmSignal){
     if(digitalRead(GPIO_BUTTON) == 1){

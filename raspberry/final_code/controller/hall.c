@@ -3,7 +3,7 @@
 #include <netinet/in.h>
 #include <netdb.h> 
 #include "logger.c"
-#include "constants.c"
+#include "constants.h"
 
 void readHallSensor(){
     logToConsole("Hall Thread started"); 

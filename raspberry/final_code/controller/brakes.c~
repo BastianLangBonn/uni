@@ -1,18 +1,16 @@
 #include <stdio.h>
-#include "constants.c"
+#include "constants.h"
+#include "logger.h"
 
-int currentBrakeActivation = 0;
+extern int currentBrakeActivation;
 
 void *brakeThreadPtr(void *arg){
     while(1){
 	    currentBrakeActivation = readBrakeSensors();	
 	    delay(SENSOR_UPDATE); //no busy-waiting	
-    }
-    #ifdef DEBUG
-        printf("Brake Thread ended\n"); 
-    #endif
+    } 
+    logToConsole("Brake Thread Ended");
 }
-
 
 /**
 * Reads the GPIO-PINs and returns if at least one of them indicates an 

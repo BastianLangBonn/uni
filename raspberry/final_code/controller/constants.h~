@@ -27,3 +27,4 @@
 #define BUFMAX          100
 
 int currentBrakeActivation = 0;
+int currentPwmSignal = PWM_MINIMUM;

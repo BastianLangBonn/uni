@@ -25,3 +25,6 @@
 
 /* MISC */
 #define BUFMAX          100
+
+int currentBrakeActivation;
+int currentPwmSignal;
