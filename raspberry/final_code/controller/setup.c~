@@ -4,6 +4,9 @@
 #include <pthread.h>
 #include "constants.h"
 #include "logger.h"
+#include "brakes.c"
+#include "button.c"
+#include "hall.c"
 
 int setup(){
     logToConsole("SETUP STARTED");
@@ -25,7 +28,7 @@ int setup(){
     #ifdef BRAKE2
         pinMode(GPIO_BRAKE2, INPUT);
     #endif
-    return 0;
+    return createThreads();
 }
 
 int createThreads(){

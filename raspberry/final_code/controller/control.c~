@@ -1,12 +1,8 @@
 #include <stdio.h>
-#include <pthread.h>
 
 #include "setup.c"
-#include "brakes.c"
 #include "logger.h"
-#include "button.c"
 #include "constants.h"
-#include "hall.c"
 
 /*************/
 /* VARIABLES */
@@ -14,14 +10,8 @@
 extern int currentPwmSignal;
 extern int currentBrakeActivation;
 
-
-
 int main(){
-    char logMessage[256];
-    char filename[256];
-    sprintf(filename, "/home/pi/AMT/log/log_%d.txt", micros());
-    currentPwmSignal = PWM_MINIMUM;
-    currentBrakeActivation = 0;
+    char logMessage[256];    
 
     int result = setup();
     if(result != 0){
@@ -30,13 +20,11 @@ int main(){
         logToFile(logMessage, filename);
         logToConsole(logMessage);
         return result;
-    }
-    
-    createThreads();
+    }    
     
     while(1){       
         sprintf(logMessage, "timestamp: %d, brakes: %d, current pwm signal:%d, current velocity: %f", micros(), currentBrakeActivation, currentPwmSignal, currentVelocity);
-        logToFile(logMessage, filename);
+        logToFile(logMessage);
         logToConsole(logMessage);
         delay(SENSOR_UPDATE);
     }    

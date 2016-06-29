@@ -8,8 +8,16 @@
 #include "button.c"
 #include "hall.c"
 
+extern char filename[256];
+extern int currentPwmSignal;
+extern int currentBrakeActivation;
+
 int setup(){
     logToConsole("SETUP STARTED");
+    
+    sprintf(filename, "/home/pi/AMT/log/log_%d.txt", micros());
+    currentPwmSignal = PWM_MINIMUM;
+    currentBrakeActivation = 0;
     
     // Setting up wiringPi
     if(wiringPiSetup() == -1){
@@ -28,7 +36,7 @@ int setup(){
     #ifdef BRAKE2
         pinMode(GPIO_BRAKE2, INPUT);
     #endif
-    return 0;
+    return createThreads();
 }
 
 int createThreads(){

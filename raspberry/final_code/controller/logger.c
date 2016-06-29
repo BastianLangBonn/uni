@@ -2,7 +2,9 @@
 #include "constants.h"
 #include "logger.h"
 
-void logToFile(char* text, char filename[256]){
+extern char filename[256];
+
+void logToFile(char* text){
     /* Open file to append, create if not existent*/
     FILE *f = fopen(filename, "a");
     if (f == NULL){

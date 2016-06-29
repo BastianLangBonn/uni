@@ -28,4 +28,4 @@
 
 int currentBrakeActivation;
 int currentPwmSignal;
-float currentSpeed;
+float currentVelocity;

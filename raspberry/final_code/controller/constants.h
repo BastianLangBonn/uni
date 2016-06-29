@@ -29,3 +29,5 @@
 int currentBrakeActivation;
 int currentPwmSignal;
 float currentVelocity;
+
+char filename[256];
