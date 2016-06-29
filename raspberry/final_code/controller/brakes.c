@@ -1,13 +1,22 @@
 #include <stdio.h>
 #include "constants.h"
 #include "logger.h"
+#include "motor.h"
 
 extern int currentBrakeActivation;
 
 void *brakeThreadPtr(void *arg){
     logToConsole("Brake Thread Started");
+    int newBrakeActivation;
     while(1){
-	    currentBrakeActivation = readBrakeSensors();	
+	    newBrakeActivation = readBrakeSensors();
+	    if(newBrakeActivation != currentBrakeActivation){
+	        if(newBrakeActivation == 1){
+                notifyBrakeActivation();
+            }
+            currentBrakeActivation = newBrakeActivation;	
+	    }
+	    
 	    delay(SENSOR_UPDATE); //no busy-waiting	
     } 
     logToConsole("Brake Thread Ended");

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "constants.h"
+#include "motor.h"
 
 extern int currentPwmSignal;
 
@@ -18,6 +19,7 @@ int readButton(int pwmSignal){
         if(pwmSignal > PWM_MAXIMUM){ 
             pwmSignal = PWM_MINIMUM;
         }
+        notifyPwmSignalChange();
 	    delay(200); //Delay needed for button press
 	}
     return pwmSignal;

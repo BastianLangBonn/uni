@@ -8,10 +8,12 @@
 
 #include "logger.h"
 #include "constants.h"
+#include "motor.h"
 
 char logMessage[256];
-unsigned int _lastPeak;
+unsigned int lastPeak;
 extern float currentVelocity;
+extern int withinLimit; 
 
 void *hallThreadPtr(void *arg){
     logToConsole("Hall Thread started"); 
@@ -43,11 +45,18 @@ void *hallThreadPtr(void *arg){
 			    rpm = atoi(tmp);
 			    // Compute speed out of rpm and wheel length in km/h
 			    currentVelocity = rpm * WHEEL_LENGTH * 0.06;
-			    _lastPeak = micros();
+			    lastPeak = micros();
 			    sprintf(logMessage, "rpm: %d", rpm);
 			    logToConsole(logMessage);
 			    sprintf(logMessage, "velocity: %.2f", currentVelocity);
 			    logToConsole(logMessage);
+			    if(currentVelocity > MAX_TEMPO && withinLimit == 1){
+			        withinLimit = 0;
+			        notifyLimitReached();
+			    } else if(currentVelocity < MAX_TEMPO && withinLimit == 0){
+			        withinLimit = 1;
+			        notifyLimitLeft();
+			    }
 			} else{
 			    logToConsole("String did not contain RPM");
 			}

@@ -28,6 +28,7 @@
 
 int currentBrakeActivation;
 int currentPwmSignal;
+int withinLimit;
 float currentVelocity;
 float currentLatitude;
 float currentLongitude;
