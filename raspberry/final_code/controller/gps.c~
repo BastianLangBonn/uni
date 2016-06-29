@@ -6,7 +6,6 @@
 #include <string.h>
 #include <stdio.h>
 
-#include <pthread.h>
 #include <stdlib.h>
 
 #include "logger.h"
@@ -22,7 +21,7 @@ void *gpsThreadPtr(void *arg){
         
     char logMessage[256];
     int sockfd, n;
-    char *latitude, *longitude;        
+    char *latitude, *longitude; *altitude;       
     char buffer[256], tmp[256], *ptr;    
         
     memset(buffer, 0, 256);
@@ -41,24 +40,22 @@ void *gpsThreadPtr(void *arg){
                             
             // Get data out of message
             latitude = strtok(buffer, ";");
-            sprintf(logMessage,"latitude: %.2f", latitude);
-            logToConsole(logMessage);
             latitude = strtok(NULL, ";");
-            sprintf(logMessage,"latitude: %.2f", latitude);
-            logToConsole(logMessage);
             longitude = strtok(NULL, ";");
-            sprintf(logMessage,"longitude: %.2f", longitude);
-            logToConsole(logMessage);
+            altitude = strtok(NULL, ";");
             
             latitude = strtok(latitude, "=");
             latitude = strtok(NULL, "=");
             currentLatitude = atof(latitude);
-            sprintf(logMessage,"latitude: %.2f", latitude);
-            logToConsole(logMessage);
             
             longitude = strtok(longitude, "=");
             longitude = strtok(NULL, "=");
             currentLongitude = atof(longitude);
+            
+            altitude = strtok(altitude, "=");
+            altitude = strtok(NULL, "=");
+            currentAltitude = atof(altitude);
+            
             sprintf(logMessage,"GPS THREAD: extracted position:%.2fN;%.2fE", currentLatitude, currentLongitude);
             logToConsole(logMessage); 
         }

@@ -2,10 +2,11 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h> 
-#include "logger.h"
-#include "constants.h"
 #include <unistd.h>
 #include <string.h>
+
+#include "logger.h"
+#include "constants.h"
 
 char logMessage[256];
 unsigned int _lastPeak;

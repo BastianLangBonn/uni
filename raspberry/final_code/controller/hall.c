@@ -4,6 +4,7 @@
 #include <netdb.h> 
 #include <unistd.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "logger.h"
 #include "constants.h"
