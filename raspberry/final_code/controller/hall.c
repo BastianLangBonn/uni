@@ -87,7 +87,7 @@ void *hallThreadPtr(void *arg){
         if (n < 0) 
             logToConsole("ERROR reading from socket");
         if(n>0){
-            sprintf(logMessage, "Received ATN+ message: %s",buffer);
+            sprintf(logMessage, "Received ANT+ message: %s",buffer);
             logToConsole(logMessage);
 			if(strstr(buffer, "RPM=")){
 			    handleRpmMessage(buffer, tmp);

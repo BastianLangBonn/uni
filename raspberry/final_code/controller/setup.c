@@ -67,8 +67,7 @@ int createThreads(){
 		return res;
 	}
 	logToConsole("Hall Thread Created");
-	
-	/*
+
 	// Create GPS Thread
 	res = pthread_create(&gpsThread, NULL, gpsThreadPtr, NULL);
 	if(res != 0){
@@ -76,6 +75,6 @@ int createThreads(){
 		return res;
 	}
 	logToConsole("GPS Thread Created");
-    */
+    
 	return res;
 }

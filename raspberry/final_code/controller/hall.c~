@@ -91,11 +91,11 @@ void *hallThreadPtr(void *arg){
             logToConsole(logMessage);
 			if(strstr(buffer, "RPM=")){
 			    handleRpmMessage(buffer, tmp);
-			} /*else if(strstr(buffer, "Nm=")){
+			} else if(strstr(buffer, "Nm=")){
 			    handleTorqueMessage(buffer, tmp);
 			} else if(strstr(buffer, "watts=")){ 
 			    handlePowerMessage(buffer, tmp);
-			}*/else{
+			}else{
 			    logToConsole("String did not contain any relevant information");
 			}
         }

@@ -21,7 +21,7 @@ void *gpsThreadPtr(void *arg){
         
     char logMessage[256];
     int sockfd, n;
-    char *latitude, *longitude; *altitude;       
+    char *latitude, *longitude, *altitude;       
     char buffer[256], tmp[256], *ptr;    
         
     memset(buffer, 0, 256);

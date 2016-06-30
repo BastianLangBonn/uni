@@ -56,7 +56,7 @@ void *gpsThreadPtr(void *arg){
             altitude = strtok(NULL, "=");
             currentAltitude = atof(altitude);
             
-            sprintf(logMessage,"GPS THREAD: extracted position:%.2fN;%.2fE", currentLatitude, currentLongitude);
+            sprintf(logMessage,"GPS THREAD: extracted position:%.2fN;%.2fE;height:%.2f", currentLatitude, currentLongitude, currentAltitude);
             logToConsole(logMessage); 
         }
 		delay(SENSOR_UPDATE); //Verhindert busy-waiting

@@ -11,6 +11,7 @@ import serial
 # Function to connect to ant+ and send received data to connected
 # host
 def submitAntData(connection):
+        print >>sys.stderr, 'connection started'
         s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         host="localhost"
@@ -19,9 +20,9 @@ def submitAntData(connection):
         s.connect(( host, port ))
 
         s.send('X-set-channel: 0s\n')
-        s.send('X-set-channel: 1p\n')
+        s.send('X-set-channel: 0p\n')
         path = '/home/pi/AMT/out'
-        filename = '{}/ant_out_{}'.format(path,time.time());
+        filename = '{}/ant_out_{}.txt'.format(path,time.time());
         f = open(filename, 'w')
         
         # Prevent files from getting too big
