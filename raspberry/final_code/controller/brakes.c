@@ -13,6 +13,8 @@ void *brakeThreadPtr(void *arg){
 	    if(newBrakeActivation != currentBrakeActivation){
 	        if(newBrakeActivation == 1){
                 notifyBrakeActivation();
+            }else{
+                notifyBrakeDeactivation();
             }
             currentBrakeActivation = newBrakeActivation;	
 	    }

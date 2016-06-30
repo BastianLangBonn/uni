@@ -12,11 +12,17 @@ extern int withinLimit;
 char logMessage[256];
 
 void decelerate(){
-    softPwmWrite(GPIO_PWM, PWM_MINIMUM+2);
-    delay(10);
+    /*softPwmWrite(GPIO_PWM, PWM_MINIMUM+2);
+    sprintf(logMessage, "Decelerating, setting signal to %d", PWM_MINIMUM+2);
+    logToConsole(logMessage);
+    delay(10);*/
     softPwmWrite(GPIO_PWM, PWM_MINIMUM+1);
+    sprintf(logMessage, "Decelerating, setting signal to %d", PWM_MINIMUM+1);
+    logToConsole(logMessage);
     delay(10);
     softPwmWrite(GPIO_PWM, PWM_MINIMUM);
+    sprintf(logMessage, "Decelerating, setting signal to %d", PWM_MINIMUM);
+    logToConsole(logMessage);
 }
 
 void notifyBrakeActivation(){
@@ -29,6 +35,10 @@ void notifyBrakeActivation(){
     logToConsole(logMessage);
 }
 
+void notifyBrakeDeactivation(){
+    logToConsole("Brake Deactivated");
+}
+
 void notifyLimitReached(){
     decelerate();
     logToConsole("Speed Limit Reached, Turning Off Motor");
@@ -36,7 +46,7 @@ void notifyLimitReached(){
 
 void notifyLimitLeft(){
     if(currentBrakeActivation == 1){
-        // Do nothing
+        logToConsole("Left Limit, but brake activated");
         return;
     }
     softPwmWrite(GPIO_PWM, currentPwmSignal);
@@ -45,14 +55,17 @@ void notifyLimitLeft(){
 
 void notifyPwmSignalChange(){
     if(currentBrakeActivation == 1){
-        // Do nothing
+        currentPwmSignal = PWM_MINIMUM;
+        logToConsole("Signal changed, but brake active -> No change");
         return;
     }
     if(currentPwmSignal == PWM_MINIMUM){
-        decelerate;
-        logToConsole("Pwm signal set to 0, decelerating");
+        decelerate();
+        sprintf(logMessage, "Pwm signal set to minimum of %d, decelerating", currentPwmSignal);
+        logToConsole(logMessage);
     } else{
         softPwmWrite(GPIO_PWM, currentPwmSignal);
-        logToConsole("Pwm signal has changed, adapting motor speed");
+        sprintf(logMessage, "Pwm signal has changed to %d, adapting motor speed", currentPwmSignal);
+        logToConsole(logMessage);
     }
 }
