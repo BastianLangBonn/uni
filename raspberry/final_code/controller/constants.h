@@ -33,5 +33,7 @@ float currentVelocity;
 float currentLatitude;
 float currentLongitude;
 float currentAltitude;
+float currentTorque;
+float currentPower;
 
 char filename[256];

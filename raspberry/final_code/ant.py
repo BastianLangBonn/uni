@@ -19,6 +19,7 @@ def submitAntData(connection):
         s.connect(( host, port ))
 
         s.send('X-set-channel: 0s\n')
+        s.send('X-set-channel: 1p\n')
         path = '/home/pi/AMT/out'
         filename = '{}/ant_out_{}'.format(path,time.time());
         f = open(filename, 'w')

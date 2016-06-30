@@ -19,6 +19,7 @@ def submitAntData(connection):
         s.connect(( host, port ))
 
         s.send('X-set-channel: 0s\n')
+        s.send('X-set-channel: 1p\n')
         path = '/home/pi/AMT/out'
         filename = '{}/ant_out_{}'.format(path,time.time());
         f = open(filename, 'w')
@@ -32,6 +33,8 @@ def submitAntData(connection):
             data=s.recv(1000000)
             connection.sendall(data);
             print >>sys.stderr, 'sending data: %s' % data  
+            f.write('{}\n'.format(data));
+            nLines += 1;
             if nLines > 1000000:
                 f.close();
                 filename = '{}/ant_out_{}_{}'.format(path, nFiles, time.time());
