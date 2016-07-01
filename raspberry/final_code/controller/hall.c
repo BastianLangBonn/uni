@@ -45,10 +45,11 @@ void handleRpmMessage(char buffer[256], char tmp[256]){
 }
 
 void handleTorqueMessage(char buffer[256], char tmp[256]){
+    logToConsole("Handling Torque Message");
     int rpm, t;
     ptr = strstr(buffer, "Nm=");
     // Remove leading "RPM='"        
-    ptr=ptr+sizeof(*ptr)*5;
+    ptr=ptr+sizeof(*ptr)*4;
     t = strcspn(ptr, "'");
     // Remove trailing "'"    
     strncpy(tmp, ptr, t); 
@@ -62,7 +63,7 @@ void handlePowerMessage(char buffer[256], char tmp[256]){
     int rpm, t;
     ptr = strstr(buffer, "watts=");
     // Remove leading "RPM='"        
-    ptr=ptr+sizeof(*ptr)*5;
+    ptr=ptr+sizeof(*ptr)*7;
     t = strcspn(ptr, "'");
     // Remove trailing "'"    
     strncpy(tmp, ptr, t); 

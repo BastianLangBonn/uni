@@ -45,6 +45,7 @@ void handleRpmMessage(char buffer[256], char tmp[256]){
 }
 
 void handleTorqueMessage(char buffer[256], char tmp[256]){
+    logToConsole("Handling Torque Message");
     int rpm, t;
     ptr = strstr(buffer, "Nm=");
     // Remove leading "RPM='"        
@@ -87,7 +88,7 @@ void *hallThreadPtr(void *arg){
         if (n < 0) 
             logToConsole("ERROR reading from socket");
         if(n>0){
-            sprintf(logMessage, "Received ATN+ message: %s",buffer);
+            sprintf(logMessage, "Received ANT+ message: %s",buffer);
             logToConsole(logMessage);
 			if(strstr(buffer, "RPM=")){
 			    handleRpmMessage(buffer, tmp);
