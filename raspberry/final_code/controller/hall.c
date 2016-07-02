@@ -54,21 +54,21 @@ void handleTorqueMessage(char buffer[256], char tmp[256]){
     // Remove trailing "'"    
     strncpy(tmp, ptr, t); 
     // Char to Integer        
-    currentTorque = atoi(tmp);
+    currentTorque = atof(tmp);
     sprintf(logMessage, "torque: %.2fnM", currentTorque);
     logToConsole(logMessage);
 }
 
 void handlePowerMessage(char buffer[256], char tmp[256]){
-    int rpm, t;
+    int t;
     ptr = strstr(buffer, "watts=");
-    // Remove leading "RPM='"        
+    // Remove leading "watts='"  -> factor 7       
     ptr=ptr+sizeof(*ptr)*7;
     t = strcspn(ptr, "'");
     // Remove trailing "'"    
     strncpy(tmp, ptr, t); 
     // Char to Integer        
-    currentPower = atoi(tmp);
+    currentPower = atof(tmp);
     sprintf(logMessage, "torque: %.2fwatts", currentPower);
     logToConsole(logMessage);
 }

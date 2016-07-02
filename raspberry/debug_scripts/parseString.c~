@@ -3,26 +3,35 @@
 #include <stdlib.h>
 
 
-
 void handleTorqueMessage(char buffer[256] ){
     char tmp[256];
     char *ptr;
     int t;
     float currentTorque;
-    printf("Text: %s\n", buffer);
-    //char tmp[256];
-    //logToConsole("Handling Torque Message");
-    //int rpm, t;
-    ptr = strstr(buffer, "watts=");
-    printf("1st strstr: %s\n", ptr);
-    ptr=ptr+sizeof(*ptr)*7;
-    printf("2nd strstr: %s\n", ptr);
+    ptr = strstr(buffer, "Nm=");
+    printf("Ptr: %s", ptr);
+    ptr=ptr+sizeof(*ptr)*4;
+    printf("Ptr: %s", ptr);
     t = strcspn(ptr, "'");
     printf("t: %d\n", t);
-    strncpy(tmp, ptr, t); 
-    printf("tmp:%s\n", tmp);
+    strncpy(tmp, ptr, t);
+    printf("tmp: %s\n", tmp); 
     currentTorque = atof(tmp);
-    printf("torque: %.2f\n", currentTorque);
+    printf("torque: %.2f\nnM", currentTorque);
+    
+}
+
+void handlePowerMessage(char buffer[256] ){
+    char tmp[256];
+    char *ptr;
+    int t;
+    float currentPower;
+    ptr = strstr(buffer, "watts=");
+    ptr=ptr+sizeof(*ptr)*7;
+    t = strcspn(ptr, "'");
+    strncpy(tmp, ptr, t); 
+    currentPower = atof(tmp);
+    printf("power: %.2f\nwatts", currentPower);
     
 }
 
@@ -45,8 +54,12 @@ int main(){
 /*
     char message[] = "<Speed id='51624p' timestamp='12345' RPM='397.22' />";
     handleRpmMessage(message);
-*/
+
     char message[] = "<Power id='51624p' timestamp='12345' watts='0.22' />";
+    handleTorqueMessage(message);
+    */
+    
+    char message[] = "<Torque id='51624p' timestamp='12345' Nm='299.22' />";
     handleTorqueMessage(message);
 
 }
