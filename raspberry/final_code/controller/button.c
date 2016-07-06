@@ -19,6 +19,7 @@ void readButton(){
 
 void *buttonThreadPtr(void *arg){
     logToConsole("Button Thread Started");
+    notifyPwmSignalChange();
     while(1){
 	    readButton();	
 	    delay(SENSOR_UPDATE); //no busy-waiting	

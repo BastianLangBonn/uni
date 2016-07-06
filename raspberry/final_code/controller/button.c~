@@ -5,6 +5,7 @@
 extern int currentPwmSignal;
 
 void readButton(){
+    int pwmSignal = currentPwmSignal;
     if(digitalRead(GPIO_BUTTON) == 1){
         pwmSignal++;
         if(pwmSignal > PWM_MAXIMUM){ 
@@ -17,7 +18,7 @@ void readButton(){
 }
 
 void *buttonThreadPtr(void *arg){
-    logToConsole("Button Thread Started");
+    logToConsole("Button Thread Started, setting signal to minimum");
     while(1){
 	    readButton();	
 	    delay(SENSOR_UPDATE); //no busy-waiting	
