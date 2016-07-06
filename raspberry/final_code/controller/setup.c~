@@ -2,6 +2,7 @@
 #include <wiringPi.h>
 #include <softPwm.h>
 #include <pthread.h>
+#include <time.h>
 #include "constants.h"
 #include "logger.h"
 #include "brakes.c"
@@ -16,7 +17,7 @@ extern int currentBrakeActivation;
 int setup(){
     logToConsole("SETUP STARTED");
     
-    sprintf(filename, "/home/pi/AMT/log/log_%d.txt", micros());
+    sprintf(filename, "/home/pi/AMT/log/log_%d.txt", (int)time(NULL));
     currentPwmSignal = PWM_MINIMUM;
     currentBrakeActivation = 0;
     
@@ -68,7 +69,6 @@ int createThreads(){
 	}
 	logToConsole("Hall Thread Created");
 
-/*
 	// Create GPS Thread
 	res = pthread_create(&gpsThread, NULL, gpsThreadPtr, NULL);
 	if(res != 0){
@@ -76,7 +76,6 @@ int createThreads(){
 		return res;
 	}
 	logToConsole("GPS Thread Created");
-  */
     
 	return res;
 }

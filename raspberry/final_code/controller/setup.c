@@ -16,7 +16,7 @@ extern int currentBrakeActivation;
 int setup(){
     logToConsole("SETUP STARTED");
     
-    sprintf(filename, "/home/pi/AMT/log/log_%d.txt", micros());
+    sprintf(filename, "/home/pi/AMT/log/log_%d.txt", (int)time(NULL));
     currentPwmSignal = PWM_MINIMUM;
     currentBrakeActivation = 0;
     

@@ -48,14 +48,14 @@ void handleTorqueMessage(char buffer[256], char tmp[256]){
     logToConsole("Handling Torque Message");
     int rpm, t;
     ptr = strstr(buffer, "Nm=");
-    // Remove leading "RPM='"        
+    // Remove leading "Nm='" -> factor 4        
     ptr=ptr+sizeof(*ptr)*4;
     t = strcspn(ptr, "'");
     // Remove trailing "'"    
     strncpy(tmp, ptr, t); 
     // Char to Integer        
     currentTorque = atof(tmp);
-    sprintf(logMessage, "torque: %.2fnM", currentTorque);
+    sprintf(logMessage, "torque: %.2fNm", currentTorque);
     logToConsole(logMessage);
 }
 
@@ -69,7 +69,7 @@ void handlePowerMessage(char buffer[256], char tmp[256]){
     strncpy(tmp, ptr, t); 
     // Char to Integer        
     currentPower = atof(tmp);
-    sprintf(logMessage, "torque: %.2fwatts", currentPower);
+    sprintf(logMessage, "power: %.2fwatts", currentPower);
     logToConsole(logMessage);
 }
 
@@ -91,10 +91,13 @@ void *hallThreadPtr(void *arg){
             sprintf(logMessage, "Received ANT+ message: %s",buffer);
             logToConsole(logMessage);
 			if(strstr(buffer, "RPM=")){
+			    logToConsole("Speed message received");
 			    handleRpmMessage(buffer, tmp);
-			} else if(strstr(buffer, "Nm=")){
+			} else if(strstr(buffer, "Torque")){
+			    logToConsole("Torque message received");
 			    handleTorqueMessage(buffer, tmp);
 			} else if(strstr(buffer, "watts=")){ 
+			    logToConsole("Power message received");
 			    handlePowerMessage(buffer, tmp);
 			}else{
 			    logToConsole("String did not contain any relevant information");
