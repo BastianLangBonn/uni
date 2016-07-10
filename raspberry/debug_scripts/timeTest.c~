@@ -1,0 +1,9 @@
+/* localtime example */
+#include <stdio.h>
+
+int main ()
+{
+  fprintf(stdout, "%lu\n", (unsigned long)time(NULL)); 
+
+  return 0;
+}

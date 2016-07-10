@@ -1,0 +1,5 @@
+<SensorFound id='0s' device_number='0' type='Speed (searching)' ant_channel='0' messages_received='0' messages_dropped='0' drop_percent='0'/>
+<SensorFound id='0p' device_number='0' type='Power (searching)' ant_channel='1' messages_received='0' messages_dropped='0' drop_percent='0'/>
+
+<Error message="Unknown request"/>
+

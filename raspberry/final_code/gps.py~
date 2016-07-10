@@ -141,7 +141,7 @@ def submitSensoryData(path, connection):
                     print >>sys.stderr, 'sending data...'
 
                     #connection.sendall('{}\n'.format(input))
-                    connection.sendall('time:{};latitude:{};longitude:{}\n'.format(dataTime, latitude, longitude))
+                    connection.sendall('time={};latitude={};longitude={};height={}\n'.format(dataTime, latitude, longitude, height))
                     #time.sleep(1)
 
                     f.write('{}\n'.format(input));

@@ -11,6 +11,7 @@ port=8168
 s.connect(( host, port ))
 
 s.send('X-set-channel: 0p\n')
+s.send('X-set-channel: 1s\n')
 
 while True:
     data=s.recv(1000000)
