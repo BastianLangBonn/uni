@@ -1,0 +1,20 @@
+<Power id='51624p' timestamp='1467311874.33' watts='211.72' />
+
+<Torque id='51624p' timestamp='1467311874.33' Nm='140.29' />
+<Cadence id='51624p' timestamp='1467311874.33' RPM='14.41' />
+
+<Power id='51624p' timestamp='1467311875.34' watts='145.07' />
+
+<Torque id='51624p' timestamp='1467311875.34' Nm='28.24' />
+<Cadence id='51624p' timestamp='1467311875.34' RPM='49.06' />
+
+<Power id='51624p' timestamp='1467311875.34' watts='177.12' />
+
+<Torque id='51624p' timestamp='1467311875.34' Nm='26.94' />
+<Cadence id='51624p' timestamp='1467311875.34' RPM='62.79' />
+
+<Power id='51624p' timestamp='1467311877.34' watts='183.20' />
+
+<Torque id='51624p' timestamp='1467311877.34' Nm='26.26' />
+<Cadence id='51624p' timestamp='1467311877.34' RPM='66.63' />
+

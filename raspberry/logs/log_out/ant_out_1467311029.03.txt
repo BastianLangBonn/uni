@@ -1,0 +1,21 @@
+<Speed id='5178s' timestamp='1467311037.05' RPM='0.00' />
+
+<Speed id='5178s' timestamp='1467311037.05' RPM='75.00' />
+
+<Speed id='5178s' timestamp='1467311037.05' RPM='73.00' />
+
+<Speed id='5178s' timestamp='1467311039.06' RPM='72.00' />
+
+<Speed id='5178s' timestamp='1467311040.06' RPM='71.00' />
+
+<Speed id='5178s' timestamp='1467311041.06' RPM='70.00' />
+<Speed id='5178s' timestamp='1467311041.06' RPM='70.00' />
+
+<Speed id='5178s' timestamp='1467311042.06' RPM='69.00' />
+
+<Speed id='5178s' timestamp='1467311043.06' RPM='68.00' />
+
+<Speed id='5178s' timestamp='1467311044.07' RPM='67.00' />
+
+<SensorLost id='1p' device_number='1' type='Power' timeout='30.0' ant_channel='1'/>
+
