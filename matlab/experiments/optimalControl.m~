@@ -3,12 +3,24 @@ runs = 2;
 experiment_folder = datestr(now,30);
 mkdir(experiment_folder);
 elite = 0;
+%% Track
+p.tracks = loadTracks();
 
+%% Compute average time
+for i=1:length(p.tracks)
+    p.tracks(i).desiredTime = p.tracks(i).distance(end) / 5.5;
+    [t,x,v,w, fail] = simulateTrackWithCommand(p.tracks(i), 1.0);
+    p.tracks(i).maximumPower = w(end);
+    if fail
+       disp(p.tracks(i).name); 
+    end
+end
+
+i = randperm(length(p.tracks);
 
 %% Experimentes
 for curRun=1:runs
     clearvars -except runs experiment_folder curRun
-    
     NEAT;
     [fitness, time, location, speed, energy, command] = evaluateOnTrack(elite(end), p);
     

@@ -24,7 +24,7 @@ function [t, x, v, w, fail] = simulateTrackWithCommand(track, command)
         state = computeNextTimeStep(state);
         
         if state(3) < 1.0
-            disp(['Movement of ', num2str(state(3)), ' is too slow']);
+            disp(['Movement of ',  too slow');
             fail = true;
             break;
         end

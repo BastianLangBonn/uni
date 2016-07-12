@@ -7,12 +7,12 @@ function [ fitness, time, location, speed, energy, command ] = evaluateOnTrack( 
     wMat = individual.pheno.wMat;
     aMat = individual.pheno.aMat;
     track = p.track;
-    slope = p.slope;
-    desiredTime = p.desiredTime;
+    slope = p.track.slope;
+    desiredTime = p.track.desiredTime;
     
     energy = 0;
     location = 0;
-    speed = 1.5;
+    speed = 0.15;
     command = 0;
     time = 0;
     fail = false;
@@ -95,7 +95,7 @@ function [ fitness, time, location, speed, energy, command ] = evaluateOnTrack( 
         %disp(command(end));
        % disp(energy(end));
         %disp(p.maximumPower);
-        fitness = p.maximumPower - energy(end); 
+        fitness = p.track.maximumPower - energy(end); 
     end
 
 

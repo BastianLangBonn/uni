@@ -28,8 +28,8 @@ if strcmp(func2str(p.fitFun), 'running_test_2')
 end
 
 %% Optimal Control
-if strcmp(func2str(p.fitFun), 'evaluateOnTrack')
-    [fitness, energy, power, speed, command] = p.fitFun(ind, p);
+if strcmp(func2str(p.fitFun), 'evaluateOnTrackSet')
+    [fitness] = p.fitFun(ind, p);
     ind.fitness = fitness;
 end
 

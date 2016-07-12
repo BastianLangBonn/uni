@@ -2,7 +2,7 @@ function p = optimalControlParams
 %% Running Params
 p = NEAT_defaultParams;
 activationFunctions;
-p.parallel = false;
+p.parallel = true;
 p.startPlot = 3;
 
 %% Algorithm Hyperparameters
@@ -28,7 +28,7 @@ p.weightCap =       2.00;
 p.mutWeightRange =  0.50;
 
 %% Fitness Function
-p.fitFun = @evaluateOnTrackSet;
+p.fitFun = @evaluateOnTrack;
 p.ftp = 168;
 p.sampleInd.fitness = 0;
 p.peakthreshold = 20;
@@ -47,7 +47,6 @@ p.activations = [p.activations,1];
 
 p.recurrent = false;
 p.display_elite = true;
-
 %% Track
 p.tracks = loadTracks();
 
@@ -56,12 +55,8 @@ for i=1:length(p.tracks)
     p.tracks(i).desiredTime = p.tracks(i).distance(end) / 5.5;
     [t,x,v,w, fail] = simulateTrackWithCommand(p.tracks(i), 1.0);
     p.tracks(i).maximumPower = w(end);
-    if fail
-       disp(p.tracks(i).name); 
-    end
+    disp(fail);
+    figure(i);clf;hold on;
+    plot(v,'b-');
+    plot(p.tracks(i).elevation);
 end
-
-indizes = randperm(length(p.tracks));
-p.iTrain = indizes(1:end-5);
-p.iTest = indizes(end-4:end);
-

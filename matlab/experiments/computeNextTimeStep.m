@@ -10,8 +10,8 @@ function [state] = computeNextTimeStep(state)
   % 5: command
   % 6: slope
   
-  tChange = 0.1;
-  xChange = 0.1 * state(3);
+  tChange = 1;
+  xChange = state(3);
   Fu = maxPower * state(5) / state(3);
   vChange = (Fu - drag(state(3), state(6))) / 90;
   wChange = Fu * state(3);
