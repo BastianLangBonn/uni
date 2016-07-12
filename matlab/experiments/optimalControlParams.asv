@@ -2,12 +2,12 @@ function p = optimalControlParams
 %% Running Params
 p = NEAT_defaultParams;
 activationFunctions;
-p.parallel = true;
-p.startPlot = 3;
+p.parallel = false;
+p.startPlot = 1001;
 
 %% Algorithm Hyperparameters
 p.maxGen = p.startPlot-1;
-p.popSize= 15;
+p.popSize= 150;
 
 %% Speciation
 p.specType   = 'kmeans';
@@ -49,16 +49,15 @@ p.recurrent = false;
 p.display_elite = true;
 %% Track
 meters = 8192;
-elevation = 0.01*rand(meters,1);
+track = 0.01*rand(meters,1);
 x = 1:1:meters;
-%hills = 3*(sin(x/136)+1) + 2*(sin(x/333)+1) + 3*(sin(x/500)+1) + 3*(cos(x/300)+1) + 0.1*(cos(x/200)+1);
-p.track.elevation = elevation';%+hills;
-p.track.distance = x;
-p.slope = (p.track.elevation(2:end)-p.track.elevation(1:end-1));
+hills = 3*(sin(x/136)+1) + 2*(sin(x/333)+1) + 3*(sin(x/500)+1) + 3*(cos(x/300)+1) + 0.1*(cos(x/200)+1);
+p.track = track'+hills;
+p.slope = (p.track(2:end)-p.track(1:end-1));
 p.slope(:,end+1) = p.slope(:,end);
 
 %% Compute average time
 desiredTime = meters / 5.5;
 p.desiredTime = desiredTime;
-[t,x,v,w] = simulateTrackWithCommand(p.track, 1.0);
- p.maximumPower = w(end);
+[] = simulateTrackWithCommand(track, 1.0);
+ p.maximumPower

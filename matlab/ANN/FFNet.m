@@ -14,7 +14,7 @@
 function output = FFNet (wMat, aMat, input, p)
 
     numNodes = length(wMat);
-    a = [input, zeros(size(input,1),numNodes-p.inputs-1)];
+    a = [input, zeros(size(input,1),numNodes-p.inputs)];
     
     for i=p.inputs+2:numNodes % skip input and bias
         % get activation for next node in network

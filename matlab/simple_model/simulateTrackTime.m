@@ -14,7 +14,7 @@ function [ result ] = simulateTrackTime( track, command )
     %% Simulate track
     t = 0;
     x = 0;
-    v = 1;
+    v = 1.5;
     W = 0;
     counter = 1;
     while x <= result.travelledDistance(end)
