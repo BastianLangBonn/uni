@@ -74,19 +74,15 @@ function [ fitness, time, location, speed, energy, command ] = evaluateOnTrack( 
         % Use command and state to compute state for next timestep
         state = computeNextTimeStep(state);
         
-        % Check new state
-        if state(1) > desiredTime
+        %% Check new state
+        % Fail if evaluation is taking too long
+        if state(1) > 2*desiredTime
             fail = true;
             disp('Took too long');
             break;
         end
         
-        %if floor(state(2))+1 == pos
-        %    disp('Not moving!');
-        %    fail = true;
-        %    break;
-        %end;
-        
+        % Fail if velocity is getting too low
         if state(3) < 1.0
            disp('Moving too slow');
            fail = true;
@@ -104,10 +100,13 @@ function [ fitness, time, location, speed, energy, command ] = evaluateOnTrack( 
     if fail
         fitness = eps; 
     else
-        %disp(command(end));
-       % disp(energy(end));
-        %disp(p.maximumPower);
-        fitness = p.track.maximumPower - energy(end); 
+        excessTime = time(end) - desiredTime;
+        if excessTime < 0
+            timePenalty = 0;
+        else
+            timePenalty = excessTime^2;
+        end
+        fitness = p.track.maximumPower - energy(end) - timePenalty; 
     end
 
 
