@@ -64,4 +64,5 @@ end
 indizes = randperm(length(p.tracks));
 p.iTrain = indizes(1:end-5);
 p.iTest = indizes(end-4:end);
+p.isTraining = true;
 
