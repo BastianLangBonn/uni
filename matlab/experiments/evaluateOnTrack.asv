@@ -46,17 +46,11 @@ function [ fitness, time, location, speed, energy, command ] = evaluateOnTrack( 
         MaximumInterestingSpeed = 14;
         scaledSpeed = state(3) / MaximumInterestingSpeed; 
         if scaledSpeed > 1.0
-            scaledSpeed = 1.0;
+            scaledSpeed = 1.0
         end
             
         scaledAverageVelocity = desiredVelocity / MaximumInterestingSpeed;
-        if scaledAverageVelocity > 1.0
-            scaledAverageVelocity = 1.0;
-        end
-        
-        maximumInterestingElevation = 12;
-        scaledElevations = elevations / maximumInterestingElevation;
-        scaledElevations(scaledElevations > 1.0) = 1.0;
+        scaledElevations = tanh(elevations);
         
         input = [scaledSpeed, scaledAverageVelocity, scaledElevations]; 
         
