@@ -1,0 +1,9 @@
+<SensorDrop id='51624p' device_number='51624' type='Power' timeout='2.0' ant_channel='2'/>
+
+<Power id='51624p' timestamp='1468514704.23' watts='129.41' />
+
+<Torque id='51624p' timestamp='1468514704.23' Nm='95.91' />
+<Cadence id='51624p' timestamp='1468514704.23' RPM='12.89' />
+
+<SensorDrop id='51624p' device_number='51624' type='Power' timeout='2.0' ant_channel='2'/>
+

@@ -1,0 +1,6 @@
+<SensorFound id='0p' device_number='0' type='Power (searching)' ant_channel='3' messages_received='1131' messages_dropped='98' drop_percent='8'/>
+
+<SensorLost id='0p' device_number='0' type='Power' timeout='30.0' ant_channel='3'/>
+
+<SensorLost id='0s' device_number='0' type='Speed' timeout='30.0' ant_channel='1'/>
+

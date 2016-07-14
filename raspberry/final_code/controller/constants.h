@@ -19,8 +19,8 @@
 #define MAX_TEMPO       25 // Maximum velocity in km/h
 
 /* DELAY VALUES */
-#define SENSOR_UPDATE   100//20
-#define SPEED_UPDATE    100//20
+#define SENSOR_UPDATE   20
+#define SPEED_UPDATE    20
 #define LOGGING_UPDATE  100
 
 /* MISC */
@@ -37,10 +37,10 @@ double currentTorque;
 double currentPower;
 
 /* Mutexes */
-pthread_mutex_t brakeMutex;
-pthread_mutex_t pwmMutex;
-pthread_mutex_t limitMutex;
-pthread_mutex_t gpsMutex;
-//pthread_mutex_t antMutex;
+//pthread_mutex_t brakeMutex;
+//pthread_mutex_t pwmMutex;
+//pthread_mutex_t limitMutex;
+//pthread_mutex_t gpsMutex;
+pthread_mutex_t antMutex;
 
 char filename[256];
