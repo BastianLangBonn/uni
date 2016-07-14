@@ -1,0 +1,49 @@
+<Speed id='5178s' timestamp='1468515951.78' RPM='1.00' />
+
+<Speed id='5178s' timestamp='1468515951.78' RPM='106.00' />
+
+<Speed id='5178s' timestamp='1468515952.78' RPM='105.00' />
+
+<Speed id='5178s' timestamp='1468515952.78' RPM='103.00' />
+
+<Speed id='5178s' timestamp='1468515953.79' RPM='102.00' />
+
+<Speed id='5178s' timestamp='1468515954.79' RPM='101.00' />
+
+<Speed id='5178s' timestamp='1468515954.79' RPM='100.00' />
+
+<Speed id='5178s' timestamp='1468515955.79' RPM='99.00' />
+
+<Speed id='5178s' timestamp='1468515955.79' RPM='98.00' />
+
+<Speed id='5178s' timestamp='1468515956.80' RPM='97.00' />
+
+<Speed id='5178s' timestamp='1468515957.80' RPM='96.00' />
+
+<Speed id='5178s' timestamp='1468515958.80' RPM='95.00' />
+
+<Speed id='5178s' timestamp='1468515959.81' RPM='94.00' />
+<Speed id='5178s' timestamp='1468515959.81' RPM='93.00' />
+
+<Speed id='5178s' timestamp='1468515960.81' RPM='91.00' />
+
+<Speed id='5178s' timestamp='1468515961.81' RPM='90.00' />
+
+<Speed id='5178s' timestamp='1468515969.83' RPM='7.00' />
+
+<Speed id='5178s' timestamp='1468515969.83' RPM='121.00' />
+
+<Speed id='5178s' timestamp='1468515970.83' RPM='120.00' />
+
+<Speed id='5178s' timestamp='1468515971.84' RPM='117.00' />
+
+<Speed id='5178s' timestamp='1468515971.84' RPM='116.00' />
+
+<Speed id='5178s' timestamp='1468515972.84' RPM='115.00' />
+
+<Speed id='5178s' timestamp='1468515973.84' RPM='114.00' />
+
+<Speed id='5178s' timestamp='1468515973.84' RPM='113.00' />
+
+<Speed id='5178s' timestamp='1468515974.84' RPM='112.00' />
+

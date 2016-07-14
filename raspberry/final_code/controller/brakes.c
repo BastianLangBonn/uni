@@ -10,6 +10,7 @@ void *brakeThreadPtr(void *arg){
     int newBrakeActivation;
     while(1){
 	    newBrakeActivation = readBrakeSensors();
+	    //pthread_mutex_lock(&brakeMutex);
 	    if(newBrakeActivation != currentBrakeActivation){
 	        if(newBrakeActivation == 1){
                 notifyBrakeActivation();
@@ -18,6 +19,7 @@ void *brakeThreadPtr(void *arg){
             }
             currentBrakeActivation = newBrakeActivation;	
 	    }
+	    //pthread_mutex_unlock(&brakeMutex);
 	    
 	    delay(SENSOR_UPDATE); //no busy-waiting	
     } 

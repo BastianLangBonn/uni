@@ -1,3 +1,4 @@
+#include <pthread.h>
 /* GPIO SETUP */
 #define GPIO_PWM    8
 #define GPIO_BUTTON 0
@@ -12,7 +13,6 @@
 #define PWM_MINIMUM     7
 #define PWM_MAXIMUM     19
 #define PWM_RANGE       20
-#define SENSOR_UPDATE   20
 
 /* VEHICLE CONSTANTS */
 #define WHEEL_LENGTH    1.445 // in m
@@ -35,5 +35,12 @@ double currentLongitude;
 double currentAltitude;
 double currentTorque;
 double currentPower;
+
+/* Mutexes */
+//pthread_mutex_t brakeMutex;
+//pthread_mutex_t pwmMutex;
+//pthread_mutex_t limitMutex;
+//pthread_mutex_t gpsMutex;
+pthread_mutex_t antMutex;
 
 char filename[256];

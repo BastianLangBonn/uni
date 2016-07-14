@@ -1,0 +1,83 @@
+<SensorFound id='51624p' device_number='51624' type='Power' ant_channel='2' messages_received='2475' messages_dropped='143' drop_percent='5'/>
+
+<SensorFound id='51624p' device_number='51624' type='Power' ant_channel='2' messages_received='2475' messages_dropped='143' drop_percent='5'/>
+
+<SensorFound id='51624p' device_number='51624' type='Power' ant_channel='2' messages_received='2475' messages_dropped='143' drop_percent='5'/>
+
+<SensorFound id='51624p' device_number='51624' type='Power' ant_channel='2' messages_received='2476' messages_dropped='143' drop_percent='5'/>
+
+<Power id='51624p' timestamp='1468511999.75' watts='85.96' />
+
+<Torque id='51624p' timestamp='1468511999.75' Nm='26.49' />
+<Cadence id='51624p' timestamp='1468511999.75' RPM='30.99' />
+<SensorStale id='51624p' device_number='51624' type='Power' timeout='2.0' ant_channel='2'/>
+
+<Power id='51624p' timestamp='1468512003.76' watts='42.59' />
+
+<Torque id='51624p' timestamp='1468512003.76' Nm='29.24' />
+<Cadence id='51624p' timestamp='1468512003.76' RPM='13.91' />
+
+<Power id='51624p' timestamp='1468512005.77' watts='95.35' />
+
+<Torque id='51624p' timestamp='1468512005.77' Nm='26.88' />
+<Cadence id='51624p' timestamp='1468512005.77' RPM='33.88' />
+
+<Power id='51624p' timestamp='1468512007.77' watts='99.15' />
+
+<Torque id='51624p' timestamp='1468512007.77' Nm='26.49' />
+<Cadence id='51624p' timestamp='1468512007.77' RPM='35.75' />
+
+<Power id='51624p' timestamp='1468512019.80' watts='74.93' />
+
+<Torque id='51624p' timestamp='1468512019.80' Nm='57.95' />
+<Cadence id='51624p' timestamp='1468512019.80' RPM='12.35' />
+
+<Power id='51624p' timestamp='1468512021.81' watts='89.95' />
+
+<Torque id='51624p' timestamp='1468512021.81' Nm='27.13' />
+<Cadence id='51624p' timestamp='1468512021.81' RPM='31.65' />
+
+<Power id='51624p' timestamp='1468512023.82' watts='97.31' />
+
+<Torque id='51624p' timestamp='1468512023.82' Nm='26.45' />
+<Cadence id='51624p' timestamp='1468512023.82' RPM='35.14' />
+
+<Power id='51624p' timestamp='1468512025.83' watts='90.23' />
+
+<Torque id='51624p' timestamp='1468512025.83' Nm='25.43' />
+<Cadence id='51624p' timestamp='1468512025.83' RPM='33.88' />
+
+<Power id='51624p' timestamp='1468512026.83' watts='92.19' />
+
+<Torque id='51624p' timestamp='1468512026.83' Nm='26.29' />
+<Cadence id='51624p' timestamp='1468512026.83' RPM='33.49' />
+
+<Speed id='5178s' timestamp='1468512036.86' RPM='1.00' />
+
+<Speed id='5178s' timestamp='1468512037.86' RPM='74.00' />
+
+<Speed id='5178s' timestamp='1468512038.87' RPM='81.00' />
+
+<Speed id='5178s' timestamp='1468512038.87' RPM='86.00' />
+
+<Speed id='5178s' timestamp='1468512039.87' RPM='85.00' />
+
+<Speed id='5178s' timestamp='1468512040.87' RPM='84.00' />
+
+<Speed id='5178s' timestamp='1468512040.87' RPM='83.00' />
+
+<Speed id='5178s' timestamp='1468512042.88' RPM='82.00' />
+
+<Speed id='5178s' timestamp='1468512042.88' RPM='81.00' />
+
+<Speed id='5178s' timestamp='1468512043.88' RPM='80.00' />
+
+<Speed id='5178s' timestamp='1468512044.88' RPM='78.00' />
+
+<Speed id='5178s' timestamp='1468512044.88' RPM='76.00' />
+<Speed id='5178s' timestamp='1468512044.88' RPM='75.00' />
+
+<Speed id='5178s' timestamp='1468512046.89' RPM='68.00' />
+
+<Speed id='5178s' timestamp='1468512046.89' RPM='58.00' />
+

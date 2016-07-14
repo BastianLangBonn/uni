@@ -1,0 +1,46 @@
+<SensorFound id='0s' device_number='0' type='Speed (searching)' ant_channel='1' messages_received='2077' messages_dropped='325' drop_percent='15'/>
+
+<Speed id='5178s' timestamp='1468516158.49' RPM='5.00' />
+
+<Speed id='5178s' timestamp='1468516159.49' RPM='96.00' />
+
+<Speed id='5178s' timestamp='1468516159.49' RPM='101.00' />
+
+<Speed id='5178s' timestamp='1468516160.49' RPM='101.00' />
+
+<Speed id='5178s' timestamp='1468516161.50' RPM='100.00' />
+
+<Speed id='5178s' timestamp='1468516161.50' RPM='98.00' />
+
+<Speed id='5178s' timestamp='1468516162.50' RPM='97.00' />
+
+<Speed id='5178s' timestamp='1468516162.50' RPM='97.00' />
+
+<Speed id='5178s' timestamp='1468516163.50' RPM='96.00' />
+
+<Speed id='5178s' timestamp='1468516164.50' RPM='95.00' />
+
+<SensorLost id='51624p' device_number='51624' type='Power' timeout='30.0' ant_channel='2'/>
+
+<Speed id='5178s' timestamp='1468516164.50' RPM='94.00' />
+
+<Speed id='5178s' timestamp='1468516171.52' RPM='9.00' />
+
+<Speed id='5178s' timestamp='1468516172.52' RPM='99.00' />
+
+<Speed id='5178s' timestamp='1468516173.52' RPM='97.00' />
+
+<Speed id='5178s' timestamp='1468516173.52' RPM='96.00' />
+
+<Speed id='5178s' timestamp='1468516174.52' RPM='95.00' />
+
+<Speed id='5178s' timestamp='1468516175.52' RPM='94.00' />
+
+<Speed id='5178s' timestamp='1468516176.53' RPM='93.00' />
+
+<Speed id='5178s' timestamp='1468516177.53' RPM='91.00' />
+
+<Speed id='5178s' timestamp='1468516177.53' RPM='90.00' />
+
+<Speed id='5178s' timestamp='1468516178.53' RPM='89.00' />
+

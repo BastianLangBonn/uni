@@ -1,0 +1,53 @@
+<SensorFound id='0s' device_number='0' type='Speed (searching)' ant_channel='1' messages_received='2077' messages_dropped='325' drop_percent='15'/>
+
+<Power id='51624p' timestamp='1468514543.42' watts='181.27' />
+
+<Torque id='51624p' timestamp='1468514543.42' Nm='134.12' />
+<Cadence id='51624p' timestamp='1468514543.42' RPM='12.91' />
+
+<Power id='51624p' timestamp='1468514545.43' watts='85.32' />
+
+<Torque id='51624p' timestamp='1468514545.43' Nm='27.40' />
+<Cadence id='51624p' timestamp='1468514545.43' RPM='29.74' />
+
+<Power id='51624p' timestamp='1468514547.43' watts='98.47' />
+
+<Torque id='51624p' timestamp='1468514547.43' Nm='26.14' />
+<Cadence id='51624p' timestamp='1468514547.43' RPM='35.97' />
+<SensorLost id='0s' device_number='0' type='Speed' timeout='30.0' ant_channel='1'/>
+
+<Power id='51624p' timestamp='1468514567.48' watts='124.68' />
+
+<Torque id='51624p' timestamp='1468514567.48' Nm='95.33' />
+<Cadence id='51624p' timestamp='1468514567.48' RPM='12.49' />
+
+<Power id='51624p' timestamp='1468514569.49' watts='82.45' />
+
+<Torque id='51624p' timestamp='1468514569.49' Nm='27.35' />
+<Cadence id='51624p' timestamp='1468514569.49' RPM='28.78' />
+
+<Power id='51624p' timestamp='1468514571.50' watts='95.22' />
+
+<Torque id='51624p' timestamp='1468514571.50' Nm='26.04' />
+<Cadence id='51624p' timestamp='1468514571.50' RPM='34.92' />
+
+<Power id='51624p' timestamp='1468514571.50' watts='105.32' />
+
+<Torque id='51624p' timestamp='1468514571.50' Nm='26.66' />
+
+<Cadence id='51624p' timestamp='1468514571.50' RPM='37.72' />
+
+<Speed id='5178s' timestamp='1468514586.54' RPM='1.00' />
+
+<Speed id='5178s' timestamp='1468514586.54' RPM='103.00' />
+
+<Speed id='5178s' timestamp='1468514587.54' RPM='102.00' />
+
+<Speed id='5178s' timestamp='1468514588.55' RPM='101.00' />
+
+<Speed id='5178s' timestamp='1468514588.55' RPM='93.00' />
+
+<SensorDrop id='51624p' device_number='51624' type='Power' timeout='2.0' ant_channel='2'/>
+
+<SensorDrop id='51624p' device_number='51624' type='Power' timeout='2.0' ant_channel='2'/>
+

@@ -32,13 +32,14 @@ void *gpsThreadPtr(void *arg){
         ptr = NULL;
         n = read(sockfd,buffer,255);
         if (n < 0){
-            logToConsole("ERROR reading from socket");
+            logToConsole("ERROR reading from GPS socket");
 		}
         if(n>0){
             sprintf(logMessage, "Received GPS message: %s", buffer);
             logToConsole(logMessage);
                             
             // Get data out of message
+            //pthread_mutex_lock(&gpsMutex);
             latitude = strtok(buffer, ";");
             latitude = strtok(NULL, ";");
             longitude = strtok(NULL, ";");
@@ -57,6 +58,7 @@ void *gpsThreadPtr(void *arg){
             currentAltitude = atof(altitude);
             
             sprintf(logMessage,"GPS THREAD: extracted position:%.4fN;%.4lfE;height:%.2lf", currentLatitude, currentLongitude, currentAltitude);
+            //pthread_mutex_unlock(&gpsMutex);
             logToConsole(logMessage); 
         }
 		delay(SENSOR_UPDATE); //Verhindert busy-waiting
