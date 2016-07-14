@@ -11,15 +11,16 @@
 #include "motor.h"
 
 char logMessage[256];
-unsigned int lastPeak;
-extern float currentVelocity;
-extern float currentPower;
-extern float currentTorque;
+extern double currentVelocity;
+extern double currentPower;
+extern double currentTorque;
 extern int withinLimit; 
 char *ptr;
 
-void handleRpmMessage(char buffer[256], char tmp[256]){
+void handleRpmMessage(char buffer[256]){
     int rpm, t;
+    char tmp[256];
+    memset(tmp,0,sizeof(buffer));
     ptr = strstr(buffer, "RPM=");
     // Remove leading "RPM='"        
     ptr=ptr+sizeof(*ptr)*5;
@@ -30,10 +31,9 @@ void handleRpmMessage(char buffer[256], char tmp[256]){
     rpm = atoi(tmp);
     // Compute speed out of rpm and wheel length in km/h
     currentVelocity = rpm * WHEEL_LENGTH * 0.06;
-    lastPeak = micros();
     sprintf(logMessage, "rpm: %d", rpm);
     logToConsole(logMessage);
-    sprintf(logMessage, "velocity: %.2f", currentVelocity);
+    sprintf(logMessage, "velocity: %.2lf", currentVelocity);
     logToConsole(logMessage);
     if(currentVelocity > MAX_TEMPO && withinLimit == 1){
         withinLimit = 0;
@@ -44,9 +44,11 @@ void handleRpmMessage(char buffer[256], char tmp[256]){
     }
 }
 
-void handleTorqueMessage(char buffer[256], char tmp[256]){
+void handleTorqueMessage(char buffer[256]){
     logToConsole("Handling Torque Message");
     int rpm, t;
+    char tmp[256];
+    memset(tmp,0,sizeof(buffer));
     ptr = strstr(buffer, "Nm=");
     // Remove leading "Nm='" -> factor 4        
     ptr=ptr+sizeof(*ptr)*4;
@@ -55,12 +57,14 @@ void handleTorqueMessage(char buffer[256], char tmp[256]){
     strncpy(tmp, ptr, t); 
     // Char to Integer        
     currentTorque = atof(tmp);
-    sprintf(logMessage, "torque: %.2fNm", currentTorque);
+    sprintf(logMessage, "torque: %.2lfNm", currentTorque);
     logToConsole(logMessage);
 }
 
-void handlePowerMessage(char buffer[256], char tmp[256]){
+void handlePowerMessage(char buffer[256]){
     int t;
+    char tmp[256];
+    memset(tmp,0,sizeof(buffer));
     ptr = strstr(buffer, "watts=");
     // Remove leading "watts='"  -> factor 7       
     ptr=ptr+sizeof(*ptr)*7;
@@ -69,20 +73,20 @@ void handlePowerMessage(char buffer[256], char tmp[256]){
     strncpy(tmp, ptr, t); 
     // Char to Integer        
     currentPower = atof(tmp);
-    sprintf(logMessage, "power: %.2fwatts", currentPower);
+    sprintf(logMessage, "power: %.2lfwatts", currentPower);
     logToConsole(logMessage);
 }
 
 void *hallThreadPtr(void *arg){
     logToConsole("Hall Thread started"); 
 	int sockfd, n;   
-    char buffer[256], tmp[256];
+    char buffer[256];
     int t=0, rpm;
     sockfd = createSockFd(2301);
 	memset(buffer, 0, 256);
     while(1){
         memset(buffer,0,256);
-        memset(tmp,0,sizeof(buffer));
+        
         ptr = NULL;
         n = read(sockfd,buffer,255);
         if (n < 0) 
@@ -92,13 +96,13 @@ void *hallThreadPtr(void *arg){
             logToConsole(logMessage);
 			if(strstr(buffer, "RPM=")){
 			    logToConsole("Speed message received");
-			    handleRpmMessage(buffer, tmp);
+			    handleRpmMessage(buffer);
 			} else if(strstr(buffer, "Torque")){
 			    logToConsole("Torque message received");
-			    handleTorqueMessage(buffer, tmp);
+			    handleTorqueMessage(buffer);
 			} else if(strstr(buffer, "watts=")){ 
 			    logToConsole("Power message received");
-			    handlePowerMessage(buffer, tmp);
+			    handlePowerMessage(buffer);
 			}else{
 			    logToConsole("String did not contain any relevant information");
 			}

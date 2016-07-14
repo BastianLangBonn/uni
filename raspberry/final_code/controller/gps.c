@@ -12,9 +12,9 @@
 #include "constants.h"
 #include "socket.c"
 
-extern float currentLongitude;
-extern float currentLatitude;
-extern float currentAltitude;
+extern double currentLongitude;
+extern double currentLatitude;
+extern double currentAltitude;
 
 void *gpsThreadPtr(void *arg){
     logToConsole("GPS thread started"); 
@@ -56,7 +56,7 @@ void *gpsThreadPtr(void *arg){
             altitude = strtok(NULL, "=");
             currentAltitude = atof(altitude);
             
-            sprintf(logMessage,"GPS THREAD: extracted position:%.2fN;%.2fE;height:%.2f", currentLatitude, currentLongitude, currentAltitude);
+            sprintf(logMessage,"GPS THREAD: extracted position:%.4fN;%.4lfE;height:%.2lf", currentLatitude, currentLongitude, currentAltitude);
             logToConsole(logMessage); 
         }
 		delay(SENSOR_UPDATE); //Verhindert busy-waiting
