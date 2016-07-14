@@ -1,5 +1,5 @@
 addpath(genpath('../Utilities'),genpath('../NEAT'),genpath('../ANN'));
-runs = 2;
+runs = 50;
 experiment_folder = datestr(now,30);
 mkdir(experiment_folder);
 elite = 0;
