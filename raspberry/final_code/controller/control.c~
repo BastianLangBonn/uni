@@ -19,6 +19,7 @@ int main(){
     while(1){  
         pthread_mutex_lock(&velocityMutex);     
         sprintf(logMessage, "timestamp: %d, brakes: %d, current pwm signal:%d, current velocity: %lf, current longitude: %.4lf, current latitude: %.4lf, current altitude: %.2lf, currentPower: %.2lf, currentTorque: %.2lf", (int)time(NULL), currentBrakeActivation, currentPwmSignal, currentVelocity, currentLongitude, currentLatitude, currentAltitude, currentPower, currentTorque);
+        pthread_mutex_unlock(&velocityMutex);
         logToFile(logMessage);
         //logToConsole(logMessage);
         delay(LOGGING_UPDATE);

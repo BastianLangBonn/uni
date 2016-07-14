@@ -45,20 +45,26 @@ void notifyLimitReached(){
 }
 
 void notifyLimitLeft(){
+    pthread_mutex_lock(&brakeMutex);
     if(currentBrakeActivation == 1){
+        pthread_mutex_unlock(&brakeMutex);
         logToConsole("Left Limit, but brake activated");
         return;
     }
+    pthread_mutex_unlock(&brakeMutex);
     softPwmWrite(GPIO_PWM, currentPwmSignal);
     logToConsole("No longer exceeding speed limit, turning motor back on");
 }
 
 void notifyPwmSignalChange(){
+    pthread_mutex_lock(&brakeMutex);
     if(currentBrakeActivation == 1){
+        pthread_mutex_unlock(&brakeMutex);
         currentPwmSignal = PWM_MINIMUM;
         logToConsole("Signal changed, but brake active -> No change");
         return;
     }
+    pthread_mutex_lock(&brakeMutex);
     if(currentPwmSignal == PWM_MINIMUM){
         decelerate();
         sprintf(logMessage, "Pwm signal set to minimum of %d, decelerating", currentPwmSignal);
