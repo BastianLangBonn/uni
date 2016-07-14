@@ -40,5 +40,6 @@ double currentPower;
 /* Mutexes */
 pthread_mutex_t velocityMutex;
 pthread_mutex_t brakeMutex;
+pthread_mutex_t pwmMutex;
 
 char filename[256];
