@@ -42,5 +42,6 @@ pthread_mutex_t velocityMutex;
 pthread_mutex_t brakeMutex;
 pthread_mutex_t pwmMutex;
 pthread_mutex_t limitMutex;
+pthread_mutex_t latitudeMutex;
 
 char filename[256];

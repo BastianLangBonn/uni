@@ -41,5 +41,6 @@ double currentPower;
 pthread_mutex_t velocityMutex;
 pthread_mutex_t brakeMutex;
 pthread_mutex_t pwmMutex;
+pthread_mutex_t limitMutex;
 
 char filename[256];
