@@ -17,7 +17,7 @@ int main(){
     }    
     
     while(1){       
-        sprintf(logMessage, "timestamp: %d, brakes: %d, current pwm signal:%d, current velocity: %f, current longitude: %.2f, current latitude: %.2f, current altitude: %.2f, currentPower: %.2f, currentTorque: %.2f", (int)time(NULL), currentBrakeActivation, currentPwmSignal, currentVelocity, currentLongitude, currentLatitude, currentAltitude, currentPower, currentTorque);
+        sprintf(logMessage, "timestamp: %d, brakes: %d, current pwm signal:%d, current velocity: %lf, current longitude: %.4lf, current latitude: %.4lf, current altitude: %.2lf, currentPower: %.2lf, currentTorque: %.2lf", (int)time(NULL), currentBrakeActivation, currentPwmSignal, currentVelocity, currentLongitude, currentLatitude, currentAltitude, currentPower, currentTorque);
         logToFile(logMessage);
         //logToConsole(logMessage);
         delay(SENSOR_UPDATE);

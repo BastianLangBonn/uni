@@ -29,11 +29,11 @@
 int currentBrakeActivation;
 int currentPwmSignal;
 int withinLimit;
-float currentVelocity;
-float currentLatitude;
-float currentLongitude;
-float currentAltitude;
-float currentTorque;
-float currentPower;
+double currentVelocity;
+double currentLatitude;
+double currentLongitude;
+double currentAltitude;
+double currentTorque;
+double currentPower;
 
 char filename[256];
