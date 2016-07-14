@@ -1,0 +1,39 @@
+<Speed id='5178s' timestamp='1468511276.56' RPM='1.00' />
+
+<Speed id='5178s' timestamp='1468511276.56' RPM='84.00' />
+
+<Speed id='5178s' timestamp='1468511277.56' RPM='82.00' />
+
+<Speed id='5178s' timestamp='1468511278.56' RPM='81.00' />
+
+<Speed id='5178s' timestamp='1468511278.56' RPM='80.00' />
+
+<Speed id='5178s' timestamp='1468511279.56' RPM='80.00' />
+
+<Speed id='5178s' timestamp='1468511280.56' RPM='79.00' />
+
+<SensorFound id='51624p' device_number='51624' type='Power' ant_channel='2' messages_received='1049' messages_dropped='87' drop_percent='8'/>
+
+<SensorFound id='51624p' device_number='51624' type='Power' ant_channel='2' messages_received='1049' messages_dropped='87' drop_percent='8'/>
+
+<SensorFound id='51624p' device_number='51624' type='Power' ant_channel='2' messages_received='1049' messages_dropped='87' drop_percent='8'/>
+
+<SensorFound id='51624p' device_number='51624' type='Power' ant_channel='2' messages_received='1049' messages_dropped='87' drop_percent='8'/>
+<SensorFound id='51624p' device_number='51624' type='Power' ant_channel='2' messages_received='1049' messages_dropped='87' drop_percent='8'/>
+<SensorFound id='51624p' device_number='51624' type='Power' ant_channel='2' messages_received='1050' messages_dropped='87' drop_percent='8'/>
+
+<SensorFound id='51624p' device_number='51624' type='Power' ant_channel='2' messages_received='1050' messages_dropped='87' drop_percent='8'/>
+<SensorStale id='51624p' device_number='51624' type='Power' timeout='2.0' ant_channel='2'/>
+
+<Power id='51624p' timestamp='1468511292.59' watts='90.31' />
+<Torque id='51624p' timestamp='1468511292.59' Nm='25.33' />
+<Cadence id='51624p' timestamp='1468511292.59' RPM='34.04' />
+
+<Power id='51624p' timestamp='1468511293.60' watts='99.00' />
+<Torque id='51624p' timestamp='1468511293.60' Nm='26.24' />
+<Cadence id='51624p' timestamp='1468511293.60' RPM='36.04' />
+
+<Power id='51624p' timestamp='1468511294.60' watts='87.56' />
+<Torque id='51624p' timestamp='1468511294.60' Nm='25.16' />
+<Cadence id='51624p' timestamp='1468511294.60' RPM='33.23' />
+

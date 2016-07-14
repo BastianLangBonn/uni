@@ -35,10 +35,8 @@ void handleRpmMessage(char buffer[256]){
     pthread_mutex_lock(&antMutex);
     currentVelocity = rpm * WHEEL_LENGTH * 0.06;    
     sprintf(logMessage, "velocity: %.2lf", currentVelocity);
-    pthread_mutex_unlock(&antMutex);
     logToConsole(logMessage);
     pthread_mutex_lock(&limitMutex);
-    pthread_mutex_lock(&antMutex);
     if(currentVelocity > MAX_TEMPO && withinLimit == 1){
         pthread_mutex_unlock(&antMutex);
         withinLimit = 0;
@@ -50,7 +48,6 @@ void handleRpmMessage(char buffer[256]){
         pthread_mutex_unlock(&limitMutex);
         notifyLimitLeft();
     }
-    pthread_mutex_unlock(&velocityMutex);
 }
 
 void handleTorqueMessage(char buffer[256]){
@@ -107,13 +104,13 @@ void *hallThreadPtr(void *arg){
         if(n>0){
             sprintf(logMessage, "Received ANT+ message: %s",buffer);
             logToConsole(logMessage);
-			if(strstr(buffer, "RPM=")){
+			if(strstr(buffer, "<Speed")){
 			    logToConsole("Speed message received");
 			    handleRpmMessage(buffer);
-			} else if(strstr(buffer, "Torque")){
+			} else if(strstr(buffer, "<Torque")){
 			    logToConsole("Torque message received");
 			    handleTorqueMessage(buffer);
-			} else if(strstr(buffer, "watts=")){ 
+			} else if(strstr(buffer, "<Power")){ 
 			    logToConsole("Power message received");
 			    handlePowerMessage(buffer);
 			}else{

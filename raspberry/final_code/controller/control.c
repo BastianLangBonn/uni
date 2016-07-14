@@ -17,7 +17,7 @@ int main(){
     }    
     
     while(1){   
-        pthread_mutex_lock(&antMutex);
+        //pthread_mutex_lock(&antMutex);
         pthread_mutex_lock(&brakeMutex);   
         pthread_mutex_lock(&pwmMutex);
         pthread_mutex_lock(&gpsMutex);
@@ -25,7 +25,7 @@ int main(){
         pthread_mutex_unlock(&gpsMutex);
         pthread_mutex_unlock(&pwmMutex);
         pthread_mutex_unlock(&brakeMutex);
-        pthread_mutex_unlock(&antMutex);
+        //pthread_mutex_unlock(&antMutex);
         
         logToFile(logMessage);
         //logToConsole(logMessage);

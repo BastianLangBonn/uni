@@ -32,20 +32,18 @@ void handleRpmMessage(char buffer[256]){
     // Compute speed out of rpm and wheel length in km/h
     sprintf(logMessage, "rpm: %d", rpm);
     logToConsole(logMessage);
-    pthread_mutex_lock(&antMutex);
+    //pthread_mutex_lock(&antMutex);
     currentVelocity = rpm * WHEEL_LENGTH * 0.06;    
     sprintf(logMessage, "velocity: %.2lf", currentVelocity);
-    pthread_mutex_unlock(&antMutex);
     logToConsole(logMessage);
     pthread_mutex_lock(&limitMutex);
-    pthread_mutex_lock(&antMutex);
     if(currentVelocity > MAX_TEMPO && withinLimit == 1){
-        pthread_mutex_unlock(&antMutex);
+        //pthread_mutex_unlock(&antMutex);
         withinLimit = 0;
         pthread_mutex_unlock(&limitMutex);
         notifyLimitReached();
     } else if(currentVelocity < MAX_TEMPO && withinLimit == 0){
-        pthread_mutex_unlock(&antMutex);
+        //pthread_mutex_unlock(&antMutex);
         withinLimit = 1;
         pthread_mutex_unlock(&limitMutex);
         notifyLimitLeft();
@@ -64,10 +62,10 @@ void handleTorqueMessage(char buffer[256]){
     // Remove trailing "'"    
     strncpy(tmp, ptr, t); 
     // Char to Integer    
-    pthread_mutex_lock(&antMutex);    
+    //pthread_mutex_lock(&antMutex);    
     currentTorque = atof(tmp);
     sprintf(logMessage, "torque: %.2lfNm", currentTorque);
-    pthread_mutex_unlock(&antMutex);
+    //pthread_mutex_unlock(&antMutex);
     logToConsole(logMessage);
 }
 
@@ -82,10 +80,10 @@ void handlePowerMessage(char buffer[256]){
     // Remove trailing "'"    
     strncpy(tmp, ptr, t); 
     // Char to Integer  
-    pthread_mutex_lock(&antMutex);      
+    //pthread_mutex_lock(&antMutex);      
     currentPower = atof(tmp);
     sprintf(logMessage, "power: %.2lfwatts", currentPower);
-    pthread_mutex_unlock(&antMutex);
+    //pthread_mutex_unlock(&antMutex);
     logToConsole(logMessage);
 }
 
@@ -106,13 +104,13 @@ void *hallThreadPtr(void *arg){
         if(n>0){
             sprintf(logMessage, "Received ANT+ message: %s",buffer);
             logToConsole(logMessage);
-			if(strstr(buffer, "RPM=")){
+			if(strstr(buffer, "<Speed")){
 			    logToConsole("Speed message received");
 			    handleRpmMessage(buffer);
-			} else if(strstr(buffer, "Torque")){
+			} else if(strstr(buffer, "<Torque")){
 			    logToConsole("Torque message received");
 			    handleTorqueMessage(buffer);
-			} else if(strstr(buffer, "watts=")){ 
+			} else if(strstr(buffer, "<Power")){ 
 			    logToConsole("Power message received");
 			    handlePowerMessage(buffer);
 			}else{

@@ -1,0 +1,24 @@
+<SensorFound id='0p' device_number='0' type='Power (searching)' ant_channel='3' messages_received='1131' messages_dropped='98' drop_percent='8'/>
+
+<SensorLost id='0p' device_number='0' type='Power' timeout='30.0' ant_channel='3'/>
+
+<Speed id='5178s' timestamp='1468512851.95' RPM='5.00' />
+
+<Speed id='5178s' timestamp='1468512851.95' RPM='114.00' />
+
+<Speed id='5178s' timestamp='1468512852.96' RPM='112.00' />
+
+<Speed id='5178s' timestamp='1468512853.96' RPM='111.00' />
+
+<SensorDrop id='51624p' device_number='51624' type='Power' timeout='2.0' ant_channel='2'/>
+<Speed id='5178s' timestamp='1468512853.96' RPM='110.00' />
+
+<Speed id='5178s' timestamp='1468512853.96' RPM='109.00' />
+<Speed id='5178s' timestamp='1468512853.96' RPM='108.00' />
+
+<Speed id='5178s' timestamp='1468512855.96' RPM='107.00' />
+
+<Speed id='5178s' timestamp='1468512855.96' RPM='106.00' />
+
+<Speed id='5178s' timestamp='1468512856.97' RPM='106.00' />
+
