@@ -1,11 +1,12 @@
-data = csvread('./log_copy/processed_log_1467803198.txt');
+clear;
+trackFiles = dir('./log_copy/processed*.txt');
 
-tooHigh = data(:,8) > 100000;
-data(tooHigh,8) = 0;
+for file = 1:length(trackFiles)
+    data = csvread(sprintf('./log_copy/%s',trackFiles(file).name));
+%     trackData = importdata(sprintf('./tracks/%s',trackName), ';', 0);
 
-figure(1); clf;
-plot(data(10000:20000,3));
-figure(2); clf;
-plot(data(10000:20000,4));
-figure(3); clf;
-plot( data(10000:20000,8));
+    maxima{file} = max(data,[],1);
+    figure(file);clf;
+    semilogy(maxima{file});
+
+end
