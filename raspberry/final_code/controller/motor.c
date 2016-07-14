@@ -8,7 +8,6 @@
 
 extern int currentBrakeActivation;
 extern int currentPwmSignal;
-extern int withinLimit;
 char logMessage[256];
 
 void decelerate(){

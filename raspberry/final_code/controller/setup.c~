@@ -18,6 +18,7 @@ int setup(){
     
     pthread_mutex_init(&velocityMutex, NULL);
     pthread_mutex_init(&brakeMutex, NULL);
+    pthread_mutex_init(&pwmMutex, NULL);
     
     sprintf(filename, "/home/pi/AMT/log/log_%d.txt", (int)time(NULL));
     currentPwmSignal = PWM_MINIMUM;

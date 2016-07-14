@@ -71,6 +71,7 @@ void notifyPwmSignalChange(){
         return;
     }
     pthread_mutex_unlock(&brakeMutex);
+    pthread_mutex_lock(&pwmMutex);
     if(currentPwmSignal == PWM_MINIMUM){
         decelerate();
         sprintf(logMessage, "Pwm signal set to minimum of %d, decelerating", currentPwmSignal);
@@ -80,4 +81,5 @@ void notifyPwmSignalChange(){
         sprintf(logMessage, "Pwm signal has changed to %d, adapting motor speed", currentPwmSignal);
         logToConsole(logMessage);
     }
+    pthread_mutex_unlock(&pwmMutex);
 }

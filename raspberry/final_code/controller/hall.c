@@ -36,11 +36,14 @@ void handleRpmMessage(char buffer[256]){
     logToConsole(logMessage);
     sprintf(logMessage, "velocity: %.2lf", currentVelocity);
     logToConsole(logMessage);
+    pthread_mutex_lock(&limitMutex);
     if(currentVelocity > MAX_TEMPO && withinLimit == 1){
         withinLimit = 0;
+        pthread_mutex_unlock(&limitMutex);
         notifyLimitReached();
     } else if(currentVelocity < MAX_TEMPO && withinLimit == 0){
         withinLimit = 1;
+        pthread_mutex_unlock(&limitMutex);
         notifyLimitLeft();
     }
     pthread_mutex_unlock(&velocityMutex);
