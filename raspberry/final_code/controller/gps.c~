@@ -39,6 +39,7 @@ void *gpsThreadPtr(void *arg){
             logToConsole(logMessage);
                             
             // Get data out of message
+            pthread_mutex_lock(&latitudeMutex);
             latitude = strtok(buffer, ";");
             latitude = strtok(NULL, ";");
             longitude = strtok(NULL, ";");
@@ -57,6 +58,7 @@ void *gpsThreadPtr(void *arg){
             currentAltitude = atof(altitude);
             
             sprintf(logMessage,"GPS THREAD: extracted position:%.4fN;%.4lfE;height:%.2lf", currentLatitude, currentLongitude, currentAltitude);
+            pthread_mutex_unlock(&latitudeMutex);
             logToConsole(logMessage); 
         }
 		delay(SENSOR_UPDATE); //Verhindert busy-waiting
