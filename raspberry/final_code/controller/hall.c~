@@ -11,9 +11,9 @@
 #include "motor.h"
 
 char logMessage[256];
-extern float currentVelocity;
-extern float currentPower;
-extern float currentTorque;
+extern double currentVelocity;
+extern double currentPower;
+extern double currentTorque;
 extern int withinLimit; 
 char *ptr;
 

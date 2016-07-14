@@ -1,3 +1,4 @@
+#include <pthread.h>
 /* GPIO SETUP */
 #define GPIO_PWM    8
 #define GPIO_BUTTON 0
@@ -35,5 +36,9 @@ double currentLongitude;
 double currentAltitude;
 double currentTorque;
 double currentPower;
+
+/* Mutexes */
+pthread_mutex_t velocityMutex;
+pthread_mutex_t brakeMutex;
 
 char filename[256];

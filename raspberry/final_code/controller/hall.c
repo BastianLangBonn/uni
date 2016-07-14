@@ -30,6 +30,7 @@ void handleRpmMessage(char buffer[256]){
     // Char to Integer        
     rpm = atoi(tmp);
     // Compute speed out of rpm and wheel length in km/h
+    pthread_mutex_lock(&velocityMutex);
     currentVelocity = rpm * WHEEL_LENGTH * 0.06;
     sprintf(logMessage, "rpm: %d", rpm);
     logToConsole(logMessage);
@@ -42,6 +43,7 @@ void handleRpmMessage(char buffer[256]){
         withinLimit = 1;
         notifyLimitLeft();
     }
+    pthread_mutex_unlock(&velocityMutex);
 }
 
 void handleTorqueMessage(char buffer[256]){

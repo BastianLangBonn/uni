@@ -12,9 +12,12 @@
 extern char filename[256];
 extern int currentPwmSignal;
 extern int currentBrakeActivation;
+extern pthread_mutex_t velocityMutex;
 
 int setup(){
     logToConsole("SETUP STARTED");
+    
+    pthread_mutex_init(&velocityMutex, NULL);
     
     sprintf(filename, "/home/pi/AMT/log/log_%d.txt", (int)time(NULL));
     currentPwmSignal = PWM_MINIMUM;
