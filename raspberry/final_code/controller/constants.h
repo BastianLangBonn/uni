@@ -38,10 +38,10 @@ double currentTorque;
 double currentPower;
 
 /* Mutexes */
-pthread_mutex_t velocityMutex;
 pthread_mutex_t brakeMutex;
 pthread_mutex_t pwmMutex;
 pthread_mutex_t limitMutex;
 pthread_mutex_t gpsMutex;
+pthread_mutex_t antMutex;
 
 char filename[256];

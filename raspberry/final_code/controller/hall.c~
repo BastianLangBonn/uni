@@ -30,18 +30,22 @@ void handleRpmMessage(char buffer[256]){
     // Char to Integer        
     rpm = atoi(tmp);
     // Compute speed out of rpm and wheel length in km/h
-    pthread_mutex_lock(&velocityMutex);
-    currentVelocity = rpm * WHEEL_LENGTH * 0.06;
     sprintf(logMessage, "rpm: %d", rpm);
     logToConsole(logMessage);
+    pthread_mutex_lock(&antMutex);
+    currentVelocity = rpm * WHEEL_LENGTH * 0.06;    
     sprintf(logMessage, "velocity: %.2lf", currentVelocity);
+    pthread_mutex_unlock(&antMutex);
     logToConsole(logMessage);
     pthread_mutex_lock(&limitMutex);
+    pthread_mutex_lock(&antMutex);
     if(currentVelocity > MAX_TEMPO && withinLimit == 1){
+        pthread_mutex_unlock(&antMutex);
         withinLimit = 0;
         pthread_mutex_unlock(&limitMutex);
         notifyLimitReached();
     } else if(currentVelocity < MAX_TEMPO && withinLimit == 0){
+        pthread_mutex_unlock(&antMutex);
         withinLimit = 1;
         pthread_mutex_unlock(&limitMutex);
         notifyLimitLeft();
@@ -60,9 +64,11 @@ void handleTorqueMessage(char buffer[256]){
     t = strcspn(ptr, "'");
     // Remove trailing "'"    
     strncpy(tmp, ptr, t); 
-    // Char to Integer        
+    // Char to Integer    
+    pthread_mutex_lock(&antMutex);    
     currentTorque = atof(tmp);
     sprintf(logMessage, "torque: %.2lfNm", currentTorque);
+    pthread_mutex_unlock(&antMutex);
     logToConsole(logMessage);
 }
 
@@ -76,9 +82,11 @@ void handlePowerMessage(char buffer[256]){
     t = strcspn(ptr, "'");
     // Remove trailing "'"    
     strncpy(tmp, ptr, t); 
-    // Char to Integer        
+    // Char to Integer  
+    pthread_mutex_lock(&antMutex);      
     currentPower = atof(tmp);
     sprintf(logMessage, "power: %.2lfwatts", currentPower);
+    pthread_mutex_unlock(&antMutex);
     logToConsole(logMessage);
 }
 
