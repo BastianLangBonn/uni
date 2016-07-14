@@ -42,7 +42,6 @@ pthread_mutex_t velocityMutex;
 pthread_mutex_t brakeMutex;
 pthread_mutex_t pwmMutex;
 pthread_mutex_t limitMutex;
-pthread_mutex_t latitudeMutex;
-pthread_mutex_t longitudeMutex;
+pthread_mutex_t gpsMutex;
 
 char filename[256];
