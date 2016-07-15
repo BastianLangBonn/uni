@@ -7,7 +7,7 @@ p.startPlot = 501;
 
 %% Algorithm Hyperparameters
 p.maxGen = p.startPlot-1;
-p.popSize= 15;
+p.popSize= 150;
 
 %% Speciation
 p.specType   = 'kmeans';
