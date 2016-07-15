@@ -2,7 +2,7 @@ function p = optimalControlParams
 %% Running Params
 p = NEAT_defaultParams;
 activationFunctions;
-p.parallel = false;
+p.parallel = true;
 p.startPlot = 501;
 
 %% Algorithm Hyperparameters

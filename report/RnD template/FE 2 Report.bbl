@@ -1,0 +1,8 @@
+\begin{thebibliography}{Nam03}
+
+\bibitem[Nam03]{art1}
+Author Name.
+\newblock Book title.
+\newblock {\em Lecture Notes in Autonomous System}, 1001:900--921, 2003.
+
+\end{thebibliography}
