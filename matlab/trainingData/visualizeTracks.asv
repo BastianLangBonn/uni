@@ -1,0 +1,17 @@
+%% Load Tracks
+clear;
+addpath('./../experiments');
+files = dir('./tracks/T*.csv');
+
+
+%% Plot Tracks
+for i=1:length(files)
+    name = files.name;
+    track = importdata([files(i).name, ';');
+    figure(i);clf;hold on;
+    plot(tracks(i).distance, tracks(i).elevation);
+    xlabel('distance in m');
+    ylabel('elevation in m');
+%    axis([0 tracks(i).distance(end) 0 max(tracks(i).elevation)]);
+    %axis([8090 8110 0 max(tracks(i).elevation)]);
+end

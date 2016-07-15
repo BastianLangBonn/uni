@@ -6,6 +6,7 @@ function [ track ] = loadTracks()
     trackFiles = dir('./tracks/*.csv');
     
     for i = 1:length(trackFiles)
+        clearvars extendedDistance extendedElevation
         trackName = trackFiles(i).name;
         trackData = importdata(sprintf('./tracks/%s',trackName), ';', 0);
         distance = trackData(:,1);
@@ -13,7 +14,7 @@ function [ track ] = loadTracks()
         
         % Fill gaps in distance
         iCounter = 1;
-        for iDistance = 2:length(distance)            
+        for iDistance = 2:length(distance)             
             iStart = distance(iDistance -1);
             iEnd = distance(iDistance);
             startElevation = elevation(iDistance-1);
@@ -35,6 +36,7 @@ function [ track ] = loadTracks()
         slope(:,end+1) = slope(:,end);
         track(i).slope = slope;
         track(i).name = trackName;
+%         plot(track(i).elevation);
     end
 
 end
