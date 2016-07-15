@@ -1,0 +1,17 @@
+{Index exceeds matrix dimensions.
+
+Error in cmdKmeans_speciation (line 85)
+    startMat = indCoords(randRows([1:p.targetSpec]),:);
+
+Error in speciate (line 21)
+    cmdKmeans_speciation;
+
+Error in Speciation (line 7)
+    [species, pop] = speciate(pop, p, species);
+
+Error in NEAT (line 84)
+    Speciation;
+
+Error in optimalControl (line 11)
+    NEAT;
+} 
