@@ -22,7 +22,7 @@ for curRun=1:runs
     end
     
     save(strcat(experiment_folder, '/vars', num2str(curRun), '.mat'));
-    saveas(runfigure,strcat(experiment_folder, '/progress', num2str(curRun), '.jpg'));
+    saveas(runFigure,strcat(experiment_folder, '/progress', num2str(curRun), '.jpg'));
     close all;
 %     tour = [time',location',energy',speed',command'];
 % 

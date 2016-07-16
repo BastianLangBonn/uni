@@ -6,7 +6,7 @@ p.parallel = true;
 p.startPlot = 4;
 
 %% Algorithm Hyperparameters
-p.maxGen = 500;%p.startPlot-1;
+p.maxGen = 150;%p.startPlot-1;
 p.popSize= 60;
 
 %% Speciation
