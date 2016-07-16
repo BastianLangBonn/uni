@@ -7,15 +7,15 @@ p.startPlot = 500;
 
 %% Algorithm Hyperparameters
 p.maxGen = p.startPlot-1;
-p.popSize= 60;
+p.popSize= 50;
 
 %% Speciation
 p.specType   = 'kmeans';
 p.excess     = 1.0;
 p.disjoint   = 1.0;
 p.weightDif  = 0.5;
-p.targetSpec = 3;       % for kmeans speciation
-p.dropOffAge = 25;      % gens for species to not improve before dieing
+p.targetSpec = 2;       % for kmeans speciation
+p.dropOffAge = 15;      % gens for species to not improve before dieing
 
 %% Recombination
 p.crossoverProb =   0.75;

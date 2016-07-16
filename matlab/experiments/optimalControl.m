@@ -1,5 +1,5 @@
 addpath(genpath('../Utilities'),genpath('../NEAT'),genpath('../ANN'));
-runs = 5;
+runs = 50;
 experiment_folder = datestr(now,30);
 mkdir(experiment_folder);
 elite = 0;
@@ -8,12 +8,12 @@ elite = 0;
 %% Experimentes
 for curRun=1:runs
     clearvars -except runs experiment_folder curRun
-    try
+%     try
         NEAT;
-    catch ME
-        disp('restart');
-        continue;
-    end
+%     catch ME
+%         disp('restart');
+%         %continue;
+%     end
         
     p.isTraining = false;
     for i=1:length(elite)
