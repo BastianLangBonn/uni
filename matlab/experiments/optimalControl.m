@@ -4,13 +4,13 @@ experiment_folder = datestr(now,30);
 mkdir(experiment_folder);
 elite = 0;
 
-
 %% Experimentes
 for curRun=1:runs
     clearvars -except runs experiment_folder curRun
     try
         NEAT;
     catch ME
+        gen = gen -1;
         disp('restart');
         %continue;
     end
@@ -21,8 +21,9 @@ for curRun=1:runs
         fitnessTest(i) = elite(i).fitness;
     end
     
-    
-    
+    save(strcat(experiment_folder, '/vars', num2str(curRun), '.mat'));
+    saveas(runfigure,strcat(experiment_folder, '/progress', num2str(curRun), '.jpg'));
+    close all;
 %     tour = [time',location',energy',speed',command'];
 % 
 %     csvwrite(strcat(experiment_folder,'/track',num2str(curRun),'.csv'),[1:length(p.track.distance);p.track.elevation]);

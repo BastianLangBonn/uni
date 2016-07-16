@@ -67,4 +67,3 @@ legend('Recombination','Speciation','Expression','Evaluation','Location','NorthW
 set(compTimeGraph,'XLim',[2,gen])
 xlabel('');ylabel('Seconds');
 title('Computation Time','FontSize',12);
-
