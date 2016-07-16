@@ -8,12 +8,12 @@ elite = 0;
 %% Experimentes
 for curRun=1:runs
     clearvars -except runs experiment_folder curRun
-%     try
+    try
         NEAT;
-%     catch ME
-%         disp('restart');
-%         %continue;
-%     end
+    catch ME
+        disp('restart');
+        %continue;
+    end
         
     p.isTraining = false;
     for i=1:length(elite)
