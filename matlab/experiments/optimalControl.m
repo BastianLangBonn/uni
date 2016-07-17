@@ -22,8 +22,8 @@ for curRun=1:runs
     end
     
     save(strcat(experiment_folder, '/vars', num2str(curRun), '.mat'));
-    saveas(runFigure,strcat(experiment_folder, '/progress', num2str(curRun), '.jpg'));
-    close all;
+%     saveas(runFigure,strcat(experiment_folder, '/progress', num2str(curRun), '.jpg'));
+%     close all;
 %     tour = [time',location',energy',speed',command'];
 % 
 %     csvwrite(strcat(experiment_folder,'/track',num2str(curRun),'.csv'),[1:length(p.track.distance);p.track.elevation]);
