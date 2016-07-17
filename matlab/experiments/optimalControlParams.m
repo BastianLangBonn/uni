@@ -3,10 +3,10 @@ function p = optimalControlParams
 p = NEAT_defaultParams;
 activationFunctions;
 p.parallel = true;
-p.startPlot = 4;
+p.startPlot = 151;
 
 %% Algorithm Hyperparameters
-p.maxGen = 150;%p.startPlot-1;
+p.maxGen = p.startPlot-1;
 p.popSize= 60;
 
 %% Speciation
