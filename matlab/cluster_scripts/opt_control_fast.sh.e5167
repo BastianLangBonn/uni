@@ -1,0 +1,6 @@
+{Undefined function or variable 'runFigure'.
+
+Error in optimalControl (line 25)
+    saveas(runFigure,strcat(experiment_folder, '/progress', num2str(curRun),
+    '.jpg'));
+} 
