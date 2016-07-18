@@ -3,7 +3,7 @@ function p = optimalControlParams
 p = NEAT_defaultParams;
 activationFunctions;
 p.parallel = true;
-p.startPlot = 151;
+p.startPlot = 41;
 
 %% Algorithm Hyperparameters
 p.maxGen = p.startPlot-1;
