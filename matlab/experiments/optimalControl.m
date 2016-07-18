@@ -17,8 +17,9 @@ for curRun=1:runs
         
     p.isTraining = false;
     for i=1:length(elite)
-        fitnessTraining(i) = evaluateOnTrackSet(elite(i), p);
-        fitnessTest(i) = elite(i).fitness;
+        fitnessTraining(i) = elite(i).fitness;
+        fitnessTest(i) = evaluateOnTrackSet(elite(i), p);
+        
     end
     
     save(strcat(experiment_folder, '/vars', num2str(curRun), '.mat'));
