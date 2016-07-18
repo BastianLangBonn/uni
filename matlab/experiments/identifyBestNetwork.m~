@@ -22,5 +22,10 @@ end
 bestExperiment = directories(iOverallMaxFitness).name;
 bestRun = iMaxExperimentFitness(iOverallMaxFitness);
 
-aMat = importdata(strcat('./', bestExperiment, '/aMat', num2str(bestRun), '.csv'),';');
-wMat = importdata(strcat('./', bestExperiment, '/wMat', num2str(bestRun), '.csv'),';');
+% Mixup while saving matrixes ...
+wMat = importdata(strcat('./', bestExperiment, '/aMat', num2str(bestRun), '.csv'),',');
+aMat = importdata(strcat('./', bestExperiment, '/wMat', num2str(bestRun), '.csv'),',');
+
+ind.pheno.wMat = wMat;
+ind.pheno.aMat = a
+evaluateOnTrackSet(
