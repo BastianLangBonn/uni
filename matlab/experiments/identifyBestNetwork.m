@@ -30,4 +30,5 @@ aMat = importdata(strcat('./', bestExperiment, '/wMat', num2str(bestRun), '.csv'
 ind.pheno.wMat = wMat;
 ind.pheno.aMat = aMat;
 var = load(strcat('./', bestExperiment, '/vars' , num2str(bestRun), '.mat'));
-evaluateOnTrackSet(ind, var.p);
+
+simulateSolutionOnTracks(ind, var.p);

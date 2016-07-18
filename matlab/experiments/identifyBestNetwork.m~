@@ -1,4 +1,5 @@
 clear;
+addpath('./../ANN');
 directories = dir('./2016*T*');
 for i=1:length(directories)
     regex = strcat('./',directories(i).name, '/', 'fitness*');
@@ -8,7 +9,7 @@ for i=1:length(directories)
         data = importdata(strcat('./',directories(i).name, '/', files(j).name),',');
         trainFitness(j,:) = data(1,:);
         testFitness(j,:) = data(2,:);
-        overallFitness(j,:) = trainFitness(j,:) + testFitness(j,:);
+        overallFitness(j,:) = testFitness(j,:);% + trainFitness(j,:);
         [maxRunFitness(j),iMaxRunFitness(j)] = max(overallFitness(j,:), [], 2);
     end
     [maxExperimentFitness(i), iMaxExperimentFitness(i)] = ...
@@ -27,5 +28,6 @@ wMat = importdata(strcat('./', bestExperiment, '/aMat', num2str(bestRun), '.csv'
 aMat = importdata(strcat('./', bestExperiment, '/wMat', num2str(bestRun), '.csv'),',');
 
 ind.pheno.wMat = wMat;
-ind.pheno.aMat = a
-evaluateOnTrackSet(
+ind.pheno.aMat = aMat;
+var = load(strcat('./', bestExperiment, '/vars' , num2str(bestRun), '.mat'));
+l

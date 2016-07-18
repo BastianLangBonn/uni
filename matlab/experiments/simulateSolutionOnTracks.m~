@@ -11,17 +11,10 @@ for i=1:length(p.tracks)
     title('Command over time');
     xlabel('Command');
     ylabel('Time in s');
-
+    gri
     subplot(2,2,2);
     plot(speed{i});
-    title('Velocity over time');
-    xlabel('Velocity in m/s');
-    ylabel('Time in s');
-  
     subplot(2,2,3);
-    plot(energy{i});
-    title('Energy Usage over time');
-    xlabel('Energy Usage in Watt');
-    ylabel('Time in s');
+    semilogy(energy{i});
 
 end
