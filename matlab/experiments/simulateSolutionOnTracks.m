@@ -23,5 +23,12 @@ for i=1:length(p.tracks)
     title('Energy Usage over time');
     xlabel('Energy Usage in Watt');
     ylabel('Time in s');
+    
+    subplot(2,2,4);
+    plot(p.track.elevation);
+    title('Track Heightprofile');
+    xlabel('Distance in m');
+    ylabel('Elevation in m');
+    axis([0 p.track.distance(end) 0 70]);
 
 end
