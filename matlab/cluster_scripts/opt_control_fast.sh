@@ -1,7 +1,7 @@
 #!/bin/sh
 #PBS -q hpc
 #PBS -l nodes=1:ppn=32
-#PBS -l walltime=1:00:00
+#PBS -l walltime=10:00:00
 #PBS -l vmem=32gb
 
 # change to submit directory (with executable)
