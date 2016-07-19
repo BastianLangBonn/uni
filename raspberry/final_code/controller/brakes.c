@@ -1,28 +1,4 @@
-#include <stdio.h>
-#include "constants.h"
 #include "logger.h"
-#include "motor.h"
-
-int isBrakeActivated;
-
-void *brakeThreadPtr(void *arg){
-    logToConsole("Brake Thread Started");
-    int newBrakeActivation;
-    while(1){
-	    newBrakeActivation = readBrakeSensors();
-	    if(newBrakeActivation != isBrakeActivated){
-	        if(newBrakeActivation == 1){
-                notifyBrakeActivation();
-            }else{
-                notifyBrakeDeactivation();
-            }
-            isBrakeActivated = newBrakeActivation;	
-	    }	    
-	    readButton();	
-	    delay(SENSOR_UPDATE); //no busy-waiting	
-    } 
-    logToConsole("Brake Thread Ended");
-}
 
 /**
 * Reads the GPIO-PINs and returns if at least one of them indicates an 
@@ -31,21 +7,17 @@ void *brakeThreadPtr(void *arg){
 int readBrakeSensors(){
 
     if(digitalRead(GPIO_BRAKE1) == 0){
+        logToConsole("Brake Activated");
         return 1;
     }
     
     #ifdef BRAKE2	
         if(digitalRead(GPIO_BRAKE2) == 0){
+            logToConsole("Brake Activated");
             return 1;
         }   
     #endif
     
+    //logToConsole("Brake Loose");    
     return 0;    
-}
-
-void readButton(){
-    if(digitalRead(GPIO_BUTTON) == 1){
-        notifyPwmSignalChange();
-        delay(200); //Delay needed for button press
-    }
 }

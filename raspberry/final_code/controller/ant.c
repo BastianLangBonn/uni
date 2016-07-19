@@ -5,19 +5,21 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "logger.h"
 #include "constants.h"
 #include "motor.h"
 #include "socket.c"
+#include "ant.h"
 
 char logMessage[256];
-double currentVelocity;
-double currentPower;
-double currentTorque;
+extern double currentVelocity;
+extern double currentPower;
+extern double currentTorque;
 int isWithinLimit; 
 char *ptr;
-int lastPeak;
+int lastPeak, sockfd;
 
 void handleRpmMessage(char buffer[256]){
     int rpm, t;
@@ -38,14 +40,6 @@ void handleRpmMessage(char buffer[256]){
     currentVelocity = rpm * WHEEL_LENGTH * 0.06;    
     sprintf(logMessage, "timestamp: %d, velocity: %.2lf",(int)time(NULL), currentVelocity);
     logToConsole(logMessage);
-    logToFile(speedLog, logMessage);
-    if(currentVelocity > MAX_TEMPO && isWithinLimit == 1){
-        isWithinLimit = 0;
-        notifyLimitReached();
-    } else if(currentVelocity < MAX_TEMPO && isWithinLimit == 0){
-        isWithinLimit = 1;
-        notifyLimitLeft();
-    }
 }
 
 void handleTorqueMessage(char buffer[256]){
@@ -85,60 +79,51 @@ void handleSensorDrop(char buffer[256]){
     if(strstr(buffer, "type='Speed'")){
         logToConsole("Speed Dropped");
         currentVelocity = 0.0;
-    } /*else if(strstr(buffer, "type='Power'")){
+    } else if(strstr(buffer, "type='Power'")){
         logToConsole("Power Dropped");
         currentTorque = 0.0;
         currentPower = 0.0;
-    } */else{
+    } else{
         logToConsole("Not important sensor dropped");
     }
 }
 
-void *hallThreadPtr(void *arg){
-    logToConsole("ANT Thread started"); 
-	int sockfd, n;   
-    char buffer[256];
-    int t=0, rpm;
-    int currentPeak;
-    lastPeak = millis();
-    currentVelocity = 0.0;
-    isWithinLimit = 1;
+void initializeAntConnection(){
     sockfd = createSockFd(2301);
-	memset(buffer, 0, 256);
-    while(1){
-        currentPeak = millis();
-        if(currentPeak - lastPeak > 2000){
-            logToConsole("Speed Timed Out");
-            currentVelocity = 0.0;
-        }
-        memset(buffer,0,256);
-        ptr = NULL;
-        n = read(sockfd,buffer,255);
-        if (n < 0) 
-            logToConsole("ERROR reading from ANT socket");
-        if(n>0){
-            sprintf(logMessage, "Received ANT+ message: %s",buffer);
-            logToConsole(logMessage);
-			if(strstr(buffer, "<Speed")){
-			    logToConsole("Speed message received");
-			    handleRpmMessage(buffer);
-			} /*else if(strstr(buffer, "<Torque")){
-			    logToConsole("Torque message received");
-			    handleTorqueMessage(buffer);
-			} else if(strstr(buffer, "<Power")){ 
-			    logToConsole("Power message received");
-			    handlePowerMessage(buffer);
-			} */else if(strstr(buffer, "<SensorDrop")){
-			    logToConsole("Sensor dropped");
-			    handleSensorDrop(buffer);
-			} else{
-			    logToConsole("String did not contain any relevant information");
-			}
-        }
-		delay(SPEED_UPDATE); //Verhindert busy-waiting
-    }    	
-    logToConsole("ANT+ Thread Ended"); 
+    lastPeak = millis();
 }
 
-
-
+void receiveAntMessage(){
+    char buffer[256];
+    int n;
+    int currentPeak = millis();
+    if(currentPeak - lastPeak > 2000){
+        logToConsole("Speed Timed Out");
+        currentVelocity = 0.0;
+    }
+    lastPeak = currentPeak;
+    memset(buffer,0,256);
+    ptr = NULL;
+    n = read(sockfd,buffer,255);
+    if (n < 0) 
+        logToConsole("ERROR reading from ANT socket");
+    if(n>0){
+        sprintf(logMessage, "Received ANT+ message: %s",buffer);
+        logToConsole(logMessage);
+		if(strstr(buffer, "<Speed")){
+		    logToConsole("Speed message received");
+		    handleRpmMessage(buffer);
+		} else if(strstr(buffer, "<Torque")){
+		    logToConsole("Torque message received");
+		    handleTorqueMessage(buffer);
+		} else if(strstr(buffer, "<Power")){ 
+		    logToConsole("Power message received");
+		    handlePowerMessage(buffer);
+		} else if(strstr(buffer, "<SensorDrop")){
+		    logToConsole("Sensor dropped");
+		    handleSensorDrop(buffer);
+		} else{
+		    logToConsole("String did not contain any relevant information");
+		}
+	}
+}

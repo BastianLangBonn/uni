@@ -1,26 +1,32 @@
 /* Method that sets up all needed pins */
 #include <wiringPi.h>
 #include <softPwm.h>
-#include <pthread.h>
 #include "constants.h"
 #include "logger.h"
-#include "sensors.c"
-#include "hall.c"
+#include "ant.h"
+#include "motor.h"
 
-extern char debugLog[256], pwmLog[256], sensorLog[256];
+
+extern char debugLog[256], dataLog[256];
+extern int currentPwmSignal;
+extern double currentVelocity, currentPower, currentTorque;
 
 int setup(){
     char logMessage[256];
     logToConsole("SETUP STARTED");
     int currentTime = (int)time(NULL);
-    sprintf(pwmLog, "/home/pi/AMT/log/%d_pwm.txt", currentTime);
+    sprintf(dataLog, "/home/pi/AMT/log/%d_data.txt", currentTime);
     sprintf(debugLog, "/home/pi/AMT/log/%d_debug.txt", currentTime);
-    sprintf(sensorLog, "/home/pi/AMT/log/%d_sensor.txt", currentTime);
-    sprintf(speedLog, "/home/pi/AMT/log/%d_speed.txt", currentTime);
+    
+    // Global Variable Initialization 
+    currentPwmSignal = PWM_MINIMUM;
+    currentVelocity = 0.0;
+    currentPower = 0.0;
+    currentTorque = 0.0;
     
     // Write Headers
-    sprintf(logMessage, "timestamp, velocity");
-    logToFile(speedLog, logMessage);
+    sprintf(logMessage, "timestamp, brakes, pwmSignal, velocity, power, torque");
+    logToFile(dataLog, logMessage);
         
     // Setting up wiringPi
     if(wiringPiSetup() == -1){
@@ -40,33 +46,8 @@ int setup(){
         pinMode(GPIO_BRAKE2, INPUT);
     #endif
     
+    initializeAntConnection();
     initializeMotor();
     
-    return createThreads();
-}
-
-int createThreads(){
-    pthread_t sensorThread, buttonThread, hallThread; 
-    int res = 0;
-
-	// Create Sensor Thread
-	res = pthread_create(&sensorThread, NULL, sensorThreadPtr, NULL);
-	if(res != 0){
-	    logToConsole("Sensor Thread Create Error");
-		return res;
-	}
-	logToConsole("Sensor Thread Created");
-	
-
-
-    // Create Hall Thread
-	res = pthread_create(&hallThread, NULL, hallThreadPtr, NULL);
-	if(res != 0){
-	    logToConsole("Hall Thread Create Error");
-		return res;
-	}
-	logToConsole("Hall Thread Created");
-
-    
-	return res;
+    return 0;
 }

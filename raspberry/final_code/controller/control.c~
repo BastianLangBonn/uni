@@ -3,9 +3,18 @@
 #include "setup.c"
 #include "logger.h"
 #include "constants.h"
+#include "button.c"
+#include "brakes.c"
+#include "ant.h"
+#include "motor.h"
+
+extern int currentPwmSignal;
+extern double currentVelocity;
 
 int main(){
-    char logMessage[256];    
+    char logMessage[256];
+    int isButtonPressed, isBrakeActivated;
+    int limitReached = 0;    
 
     int result = setup();
     if(result != 0){
@@ -15,11 +24,42 @@ int main(){
     }    
     
     while(1){ 
-        /*  
-        sprintf(logMessage, "timestamp: %d, brakes: %d, current pwm signal:%d, current velocity: %lf, current longitude: %.4lf, current latitude: %.4lf, current altitude: %.2lf, currentPower: %.2lf, currentTorque: %.2lf", (int)time(NULL), currentBrakeActivation, currentPwmSignal, currentVelocity, currentLongitude, currentLatitude, currentAltitude, currentPower, currentTorque);        
-        logToFile(logMessage);
-        //logToConsole(logMessage);
-        */
+        // Read Button
+        isButtonPressed = readButton();
+               
+        // Read Brakes
+        isBrakeActivated = readBrakeSensors();
+        
+        // Read Ant Sensor
+        receiveAntMessage();
+        
+        // Update PWM Signal
+        if(isButtonPressed && !isBrakeActivated){
+            if(currentPwmSignal < PWM_MAXIMUM){
+                currentPwmSignal++;
+            }
+        }
+        
+        if(isBrakeActivated){
+            if(currentPwmSignal > PWM_MINIMUM){
+                decelerate();
+                currentPwmSignal = PWM_MINIMUM;
+            }
+        }
+        
+        if(currentVelocity > MAX_TEMPO && !limitReached){
+            limitReached = 1;
+            decelerate();
+        } else if (currentVelocity <= MAX_TEMPO && limitReached){
+            limitReached = 0;
+            setSpeed(currentPwmSignal);
+        } else if(!limitReached){
+            setSpeed(currentPwmSignal);
+        }
+        
+        // Log Data timestamp, brakes, pwmSignal, velocity, power, torque
+        sprintf(logMessage, "%d, %d, %d, %.2lf, %.2lf, %.2lf", (int)time(NULL), isBrakeActivated, currentPwmSignal, currentVelocity, currentPower, currentTorque);
+        
         delay(LOGGING_UPDATE);
     }    
 }

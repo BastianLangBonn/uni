@@ -1,21 +1,11 @@
 #include <stdio.h>
-#include "constants.h"
-#include "motor.h"
+#include "logger.h"
 
-void readButton(){
+int readButton(){
     if(digitalRead(GPIO_BUTTON) == 1){
-        notifyPwmSignalChange();
+        logToConsole("Button Pressed");
 	    delay(200); //Delay needed for button press
+	    return 1;
 	}
+	return 0;
 }
-
-void *buttonThreadPtr(void *arg){
-    logToConsole("Button Thread Started");
-    while(1){
-	    readButton();	
-	    delay(SENSOR_UPDATE); //no busy-waiting	
-    }
-    logToConsole("Button Thread Ended");
-}
-
-
