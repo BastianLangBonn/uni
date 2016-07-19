@@ -27,7 +27,7 @@ void decelerate(){
 void notifyBrakeActivation(){
     // Reset pwm signal if pwm signal > minimum
     //pthread_mutex_lock(&pwmMutex);
-    int isNotableCommand = currentPwmSignal > PWM_MINIMUM;
+    int isNotableCommand = (currentPwmSignal > PWM_MINIMUM);
     //pthread_mutex_unlock(&pwmMutex);
     if(isNotableCommand){
         decelerate();
@@ -74,7 +74,7 @@ void notifyPwmSignalChange(){
         return;
     }
     //pthread_mutex_lock(&pwmMutex);
-    int isMinimalSignal = currentPwmSignal == PWM_MINIMUM;
+    int isMinimalSignal = (currentPwmSignal == PWM_MINIMUM);
     if(isMinimalSignal){
         decelerate();
         sprintf(logMessage, "Pwm signal set to minimum of %d, decelerating", currentPwmSignal);
