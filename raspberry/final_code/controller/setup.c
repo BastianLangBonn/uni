@@ -13,7 +13,7 @@ extern double currentVelocity, currentPower, currentTorque;
 
 int setup(){
     char logMessage[256];
-    logToConsole("SETUP STARTED");
+    //logToConsole("SETUP STARTED");
     int currentTime = (int)time(NULL);
     sprintf(dataLog, "/home/pi/AMT/log/%d_data.txt", currentTime);
     sprintf(debugLog, "/home/pi/AMT/log/%d_debug.txt", currentTime);

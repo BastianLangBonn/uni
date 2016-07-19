@@ -29,7 +29,7 @@ void logToConsole(char* text){
     #ifdef DEBUG
 	    printf("%s\n", text);
 	#endif
-	//char logMessage[256];
-	//sprintf(logMessage, "timestamp: %d, message: %s", (int)time(NULL), text);
-	//logToFile(debugLog, logMessage);
+	char logMessage[256];
+	sprintf(logMessage, "timestamp: %d, message: %s", (int)time(NULL), text);
+	logToFile(debugLog, logMessage);
 }

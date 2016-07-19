@@ -4,7 +4,7 @@
 
 
 void logToFile(char* filename, char* text){
-    return;
+    //return;
     /* Open file to append, create if not existent*/
     //printf("filename: %s\n", filename);
     FILE *f = fopen(filename, "a");
