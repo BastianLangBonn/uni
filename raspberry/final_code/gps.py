@@ -4,32 +4,7 @@ import sys
 import time
 import socket
 
-def listenForConnection(path):
-    # Create a TCP/IP socket
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # Bind the socket to the port
-    server_address = ('localhost', 2300)
-    print >>sys.stderr, 'starting up on %s port %s' % server_address
-    sock.bind(server_address)
-    # Listen for incoming connections
-    sock.listen(1)
-
-    while True:
-        # Wait for a connection
-        print >>sys.stderr, 'waiting for a connection'
-        connection, client_address = sock.accept()
-        try:
-            print >>sys.stderr, 'connection from', client_address
-
-            # Receive the data and transmit it
-            while True:
-                submitSensoryData(path, connection)
-
-        finally:
-            # Clean up the connection
-            connection.close()
-
-def submitSensoryData(path, connection):
+def submitSensoryData(path):
     nChars = 0
     messageLength = 0
     quality = 0
@@ -53,7 +28,7 @@ def submitSensoryData(path, connection):
 
     print 'open file'
     # open output file
-    filename = '{}/gps_out_{}'.format(path,time.time());
+    filename = '{}/gps_out_{}'.format(path,int(round(time.time())));
     f = open(filename, 'w')
     print 'file open'
 
@@ -137,13 +112,7 @@ def submitSensoryData(path, connection):
 	    		    # checksum auslesen
                     checksum = dataList[14]
 
-	    		    # Ausgabe
-                    print >>sys.stderr, 'sending data...'
-                    print >>sys.stderr, 'time={};latitude={};longitude={};height={}\n'.format(dataTime, latitude, longitude, height)
-
-                    #connection.sendall('{}\n'.format(input))
-                    connection.sendall('time={};latitude={};longitude={};height={}\n'.format(dataTime, latitude, longitude, height))
-                    #time.sleep(1)
+	    		    
 
                     f.write('{}: {}\n'.format(int(round(time.time())),input));
                     nLines += 1;
@@ -161,5 +130,5 @@ print "-------------------------------------------"
 
 path = "/home/pi/AMT/out"
 # path = "."
-# submitSensoryData(path)
-listenForConnection(path);
+submitSensoryData(path)
+# listenForConnection(path);
