@@ -1,2 +1,2 @@
-void logToFile(char* text, char filename[256]);
+void logToFile(char* text);
 void logToConsole(char* text);

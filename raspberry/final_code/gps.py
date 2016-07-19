@@ -74,7 +74,7 @@ def submitSensoryData(path, connection):
 
         if nLines > 1000000:
             f.close();
-            filename = '{}/gps_out_{}_{}'.format(path, nFiles, time.time());
+            filename = '{}/gps_out_{}_{}'.format(path, nFiles, int(round(time.time())));
             f = open(filename, 'w');
             nLines = 0;
             nFiles += 1;
@@ -145,7 +145,7 @@ def submitSensoryData(path, connection):
                     connection.sendall('time={};latitude={};longitude={};height={}\n'.format(dataTime, latitude, longitude, height))
                     #time.sleep(1)
 
-                    f.write('{}\n'.format(input));
+                    f.write('{}: {}\n'.format(int(round(time.time())),input));
                     nLines += 1;
                     print input
                     print ""

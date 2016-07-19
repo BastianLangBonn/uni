@@ -9,12 +9,13 @@
 #include "logger.h"
 #include "constants.h"
 #include "motor.h"
+#include "socket.c"
 
 char logMessage[256];
-extern double currentVelocity;
-extern double currentPower;
-extern double currentTorque;
-extern int withinLimit; 
+double currentVelocity;
+double currentPower;
+double currentTorque;
+int isWithinLimit; 
 char *ptr;
 int lastPeak;
 
@@ -35,16 +36,14 @@ void handleRpmMessage(char buffer[256]){
     sprintf(logMessage, "rpm: %d", rpm);
     logToConsole(logMessage);
     currentVelocity = rpm * WHEEL_LENGTH * 0.06;    
-    sprintf(logMessage, "velocity: %.2lf", currentVelocity);
+    sprintf(logMessage, "timestamp: %d, velocity: %.2lf",(int)time(NULL), currentVelocity);
     logToConsole(logMessage);
-    //pthread_mutex_lock(&limitMutex);
-    if(currentVelocity > MAX_TEMPO && withinLimit == 1){
-        withinLimit = 0;
-        //pthread_mutex_unlock(&limitMutex);
+    logToFile(speedLog, logMessage);
+    if(currentVelocity > MAX_TEMPO && isWithinLimit == 1){
+        isWithinLimit = 0;
         notifyLimitReached();
-    } else if(currentVelocity < MAX_TEMPO && withinLimit == 0){
-        withinLimit = 1;
-        //pthread_mutex_unlock(&limitMutex);
+    } else if(currentVelocity < MAX_TEMPO && isWithinLimit == 0){
+        isWithinLimit = 1;
         notifyLimitLeft();
     }
 }
@@ -86,30 +85,31 @@ void handleSensorDrop(char buffer[256]){
     if(strstr(buffer, "type='Speed'")){
         logToConsole("Speed Dropped");
         currentVelocity = 0.0;
-    } else if(strstr(buffer, "type='Power'")){
+    } /*else if(strstr(buffer, "type='Power'")){
         logToConsole("Power Dropped");
         currentTorque = 0.0;
         currentPower = 0.0;
-    } else{
-        logToConsole("Dont know what");
+    } */else{
+        logToConsole("Not important sensor dropped");
     }
 }
 
 void *hallThreadPtr(void *arg){
-    logToConsole("Hall Thread started"); 
+    logToConsole("ANT Thread started"); 
 	int sockfd, n;   
     char buffer[256];
     int t=0, rpm;
     int currentPeak;
+    lastPeak = millis();
+    currentVelocity = 0.0;
+    isWithinLimit = 1;
     sockfd = createSockFd(2301);
 	memset(buffer, 0, 256);
     while(1){
         currentPeak = millis();
         if(currentPeak - lastPeak > 2000){
             logToConsole("Speed Timed Out");
-            pthread_mutex_lock(&antMutex);
             currentVelocity = 0.0;
-            pthread_mutex_unlock(&antMutex);
         }
         memset(buffer,0,256);
         ptr = NULL;
@@ -119,27 +119,24 @@ void *hallThreadPtr(void *arg){
         if(n>0){
             sprintf(logMessage, "Received ANT+ message: %s",buffer);
             logToConsole(logMessage);
-            pthread_mutex_lock(&antMutex);
 			if(strstr(buffer, "<Speed")){
 			    logToConsole("Speed message received");
 			    handleRpmMessage(buffer);
-			} else if(strstr(buffer, "<Torque")){
+			} /*else if(strstr(buffer, "<Torque")){
 			    logToConsole("Torque message received");
 			    handleTorqueMessage(buffer);
 			} else if(strstr(buffer, "<Power")){ 
 			    logToConsole("Power message received");
 			    handlePowerMessage(buffer);
-			} else if(strstr(buffer, "<SensorDrop")){
+			} */else if(strstr(buffer, "<SensorDrop")){
 			    logToConsole("Sensor dropped");
 			    handleSensorDrop(buffer);
 			} else{
 			    logToConsole("String did not contain any relevant information");
 			}
-			pthread_mutex_unlock(&antMutex);
         }
 		delay(SPEED_UPDATE); //Verhindert busy-waiting
-    }
-    	
+    }    	
     logToConsole("ANT+ Thread Ended"); 
 }
 

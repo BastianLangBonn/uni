@@ -26,21 +26,4 @@
 /* MISC */
 #define BUFMAX          100
 
-int currentBrakeActivation;
-int currentPwmSignal;
-int withinLimit;
-double currentVelocity;
-double currentLatitude;
-double currentLongitude;
-double currentAltitude;
-double currentTorque;
-double currentPower;
-
-/* Mutexes */
-//pthread_mutex_t brakeMutex;
-//pthread_mutex_t pwmMutex;
-//pthread_mutex_t limitMutex;
-//pthread_mutex_t gpsMutex;
-pthread_mutex_t antMutex;
-
-char filename[256];
+char sensorLog[256], pwmLog[256], debugLog[256], speedLog[256];

@@ -4,31 +4,24 @@
 #include <pthread.h>
 #include "constants.h"
 #include "logger.h"
-#include "brakes.c"
-#include "button.c"
+#include "sensors.c"
 #include "hall.c"
-#include "gps.c"
 
-extern char filename[256];
-extern int currentPwmSignal;
-extern int currentBrakeActivation;
+extern char debugLog[256], pwmLog[256], sensorLog[256];
 
 int setup(){
+    char logMessage[256];
     logToConsole("SETUP STARTED");
+    int currentTime = (int)time(NULL);
+    sprintf(pwmLog, "/home/pi/AMT/log/%d_pwm.txt", currentTime);
+    sprintf(debugLog, "/home/pi/AMT/log/%d_debug.txt", currentTime);
+    sprintf(sensorLog, "/home/pi/AMT/log/%d_sensor.txt", currentTime);
+    sprintf(speedLog, "/home/pi/AMT/log/%d_speed.txt", currentTime);
     
-    
-
-    //pthread_mutex_init(&brakeMutex, NULL);
-    //pthread_mutex_init(&pwmMutex, NULL);
-    //pthread_mutex_init(&limitMutex, NULL);
-    //pthread_mutex_init(&gpsMutex, NULL);
-    pthread_mutex_init(&antMutex, NULL);
-    
-    
-    sprintf(filename, "/home/pi/AMT/log/log_%d.txt", (int)time(NULL));
-    currentPwmSignal = PWM_MINIMUM;
-    currentBrakeActivation = 0;
-    
+    // Write Headers
+    sprintf(logMessage, "timestamp, velocity");
+    logToFile(speedLog, logMessage);
+        
     // Setting up wiringPi
     if(wiringPiSetup() == -1){
         logToConsole("Error setting up wiringPi\n");
@@ -46,28 +39,25 @@ int setup(){
     #ifdef BRAKE2
         pinMode(GPIO_BRAKE2, INPUT);
     #endif
+    
+    initializeMotor();
+    
     return createThreads();
 }
 
 int createThreads(){
-    pthread_t brakeThread, buttonThread, hallThread, gpsThread;
+    pthread_t sensorThread, buttonThread, hallThread; 
     int res = 0;
 
-	// Create Brake Thread
-	res = pthread_create(&brakeThread, NULL, brakeThreadPtr, NULL);
+	// Create Sensor Thread
+	res = pthread_create(&sensorThread, NULL, sensorThreadPtr, NULL);
 	if(res != 0){
-	    logToConsole("Brake Thread Create Error");
+	    logToConsole("Sensor Thread Create Error");
 		return res;
 	}
-	logToConsole("Brake Thread Created");
+	logToConsole("Sensor Thread Created");
 	
-	// Create Button Thread
-	res = pthread_create(&buttonThread, NULL, buttonThreadPtr, NULL);
-	if(res != 0){
-	    logToConsole("Button Thread Create Error");
-		return res;
-	}
-	logToConsole("Button Thread Created");
+
 
     // Create Hall Thread
 	res = pthread_create(&hallThread, NULL, hallThreadPtr, NULL);
@@ -77,13 +67,6 @@ int createThreads(){
 	}
 	logToConsole("Hall Thread Created");
 
-	// Create GPS Thread
-	res = pthread_create(&gpsThread, NULL, gpsThreadPtr, NULL);
-	if(res != 0){
-	    logToConsole("GPS Thread Create Error");
-		return res;
-	}
-	logToConsole("GPS Thread Created");
     
 	return res;
 }

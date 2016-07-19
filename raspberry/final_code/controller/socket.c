@@ -5,7 +5,6 @@
 
 int createSockFd(int portno){
 	int sockfd;
-	currentVelocity = 0;
     struct sockaddr_in serv_addr;
     struct hostent *server;
     

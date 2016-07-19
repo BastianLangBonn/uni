@@ -3,24 +3,22 @@
 #include "logger.h"
 #include "motor.h"
 
-extern int currentBrakeActivation;
+int isBrakeActivated;
 
 void *brakeThreadPtr(void *arg){
     logToConsole("Brake Thread Started");
     int newBrakeActivation;
     while(1){
 	    newBrakeActivation = readBrakeSensors();
-	    //pthread_mutex_lock(&brakeMutex);
-	    if(newBrakeActivation != currentBrakeActivation){
+	    if(newBrakeActivation != isBrakeActivated){
 	        if(newBrakeActivation == 1){
                 notifyBrakeActivation();
             }else{
                 notifyBrakeDeactivation();
             }
-            currentBrakeActivation = newBrakeActivation;	
-	    }
-	    //pthread_mutex_unlock(&brakeMutex);
-	    
+            isBrakeActivated = newBrakeActivation;	
+	    }	    
+	    readButton();	
 	    delay(SENSOR_UPDATE); //no busy-waiting	
     } 
     logToConsole("Brake Thread Ended");
@@ -43,4 +41,11 @@ int readBrakeSensors(){
     #endif
     
     return 0;    
+}
+
+void readButton(){
+    if(digitalRead(GPIO_BUTTON) == 1){
+        notifyPwmSignalChange();
+        delay(200); //Delay needed for button press
+    }
 }
