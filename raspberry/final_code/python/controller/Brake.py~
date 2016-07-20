@@ -21,11 +21,11 @@ class Brake(threading.Thread):
                 if oldActivation == True:
                     oldActivation = False
                     print 'Brake Deactivated'
-                    self.parentThread.notifyBrakeDeactivation()
+                    self.parentThread.notifyBrakeDeactivated()
             else: 
                 if oldActivation == False:
                     oldActivation = True
                     print 'Brake Activated'
-                    self.parentThread.notifyBrakeActivation()
+                    self.parentThread.notifyBrakeActivated()
                     
             time.sleep(p.DELAY_SENSOR) 
