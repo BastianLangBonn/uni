@@ -4,6 +4,7 @@ from Button import Button
 from Brake import Brake
 from ant import Ant
 from Gps import Gps
+from Logger import Logger
 import parameters as p
 import time
 import RPi.GPIO as GPIO
@@ -25,7 +26,6 @@ class Controller:
         self.brakeLock = threading.Lock()
         self.antLock = threading.Lock()
         self.gpsLock = threading.Lock()
-        self.threads = []
         
         # initialize GPIO PINS
         GPIO.setmode(GPIO.BCM)
@@ -37,17 +37,15 @@ class Controller:
         self.brake = Brake("Brake", self)
         self.ant = Ant("Ant", self)
         self.gps = Gps("Gps", self)
+        self.logger = Logger("Logger", self)
         
         # declarate threads as daemons for keyboard interrupt
         self.button.setDaemon(True) 
         self.brake.setDaemon(True)
         self.ant.setDaemon(True)
         self.gps.setDaemon(True)
-        self.threads.append(self.button)
-        self.threads.append(self.brake)
-        self.threads.append(self.ant)
-        self.threads.append(self.gps)
-        
+        self.logger.setDaemon(True)
+
         
     def start(self):
         # start threads
@@ -55,6 +53,7 @@ class Controller:
         self.brake.start()
         self.ant.start()
         self.gps.start()
+        self.logger.start()
         
         # wait for threads to end
         while threading.active_count() > 0:
