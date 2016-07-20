@@ -17,8 +17,9 @@ for curRun=1:runs
         
     p.isTraining = false;
     for i=1:length(elite)
-        fitnessTraining(i) = evaluateOnTrackSet(elite(i), p);
-        fitnessTest(i) = elite(i).fitness;
+        fitnessTraining(i) = elite(i).fitness;
+        fitnessTest(i) = evaluateOnTrackSet(elite(i), p);
+        
     end
     
     save(strcat(experiment_folder, '/vars', num2str(curRun), '.mat'));
@@ -28,8 +29,8 @@ for curRun=1:runs
 % 
 %     csvwrite(strcat(experiment_folder,'/track',num2str(curRun),'.csv'),[1:length(p.track.distance);p.track.elevation]);
 %     csvwrite(strcat(experiment_folder,'/tour',num2str(curRun),'.csv'),tour);
-    csvwrite(strcat(experiment_folder,'/aMat',num2str(curRun),'.csv'),elite(end).pheno.wMat);
-    csvwrite(strcat(experiment_folder,'/wMat',num2str(curRun),'.csv'),elite(end).pheno.aMat);
+    csvwrite(strcat(experiment_folder,'/wMat',num2str(curRun),'.csv'),elite(end).pheno.wMat);
+    csvwrite(strcat(experiment_folder,'/aMat',num2str(curRun),'.csv'),elite(end).pheno.aMat);
     csvwrite(strcat(experiment_folder,'/fitness',num2str(curRun),'.csv'),[fitnessTraining; fitnessTest]);
 end
 

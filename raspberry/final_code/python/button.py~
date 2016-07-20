@@ -1,18 +1,38 @@
 import RPi.GPIO as GPIO
+import parameters as p
 import time
 
-GPIO.setmode(GPIO.BOARD)
-
-GPIO.setup(11, GPIO.IN)
-
-currentActivation = 0.0
-
-
-while 1:
-    if GPIO.input(11) == GPIO.HIGH:
-        currentActivation += 5.0
-        if currentActivation > 100.0:
-            currentActivation = 100.0
-            time.sleep(0.2)
+def start():
+    currentActivation = 0.0
+    previousState = 0
+    while True:
+        buttonState = GPIO.input(p.GPIO_BUTTON)
+        print 'Button State: {}'.format(buttonState)
+        if GPIO.input(p.GPIO_BUTTON) and previousState == 0:
+            currentActivation += p.PWM_STEP
+            if currentActivation > p.PWM_MAXIMUM:
+                print 'Activation bigger than maximum: {}, {}'.format(currentActivation, p.PWM_MAXIMUM)
+                currentActivation = p.PWM_MAXIMUM
+            print 'New activation: {}'.format(currentActivation)
+            print 'Button pressed'
+            time.sleep(p.DELAY_BUTTON)
+            print 'stop waiting'
             
-    time.sleep(0.01)
+        
+        '''    
+        if previousInput == 1 and buttonState == 0:
+            print 'Button pressed'
+            
+            currentActivation += p.PWM_STEP
+            if currentActivation > p.PWM_MAXIMUM:
+                print 'Activation bigger than maximum: {}, {}'.format(currentActivation, p.PWM_MAXIMUM)
+                currentActivation = p.PWM_MAXIMUM
+            print 'New activation: {}'.format(currentActivation)
+            time.sleep(p.DELAY_BUTTON)
+            '''
+        previousState = buttonState
+        time.sleep(p.DELAY_SENSOR)
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(p.GPIO_BUTTON, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+start()

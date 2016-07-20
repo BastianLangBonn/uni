@@ -1,19 +1,21 @@
 import RPi.GPIO as GPIO
 import time
+import parameters as p
 
-GPIO.setmode(GPIO.BOARD)
+GPIO.setmode(GPIO.BCM)
 
-GPIO.setup(12, GPIO.IN)
+GPIO.setup(p.GPIO_BRAKE, GPIO.IN)
 
 oldActivation = True
 
 while 1:
-    if GPIO.input(12) == GPIO.HIGH:
+    isBrakeActivated = (GPIO.input(p.GPIO_BRAKE) == GPIO.HIGH)
+    if isBrakeActivated:
         if oldActivation == True:
             oldActivation = False
             print 'Brake Deactivated'
             # Notify Motor
-    elif GPIO.input(12) == GPIO.LOW: 
+    else: 
         if oldActivation == False:
             oldActivation = True
             print 'Brake Activated'

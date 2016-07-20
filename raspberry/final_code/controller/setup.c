@@ -1,34 +1,34 @@
 /* Method that sets up all needed pins */
 #include <wiringPi.h>
 #include <softPwm.h>
-#include <pthread.h>
 #include "constants.h"
 #include "logger.h"
-#include "brakes.c"
-#include "button.c"
-#include "hall.c"
-#include "gps.c"
+#include "ant.h"
+#include "motor.h"
 
-extern char filename[256];
+
+extern char debugLog[256], dataLog[256];
 extern int currentPwmSignal;
-extern int currentBrakeActivation;
+extern double currentVelocity, currentPower, currentTorque;
 
 int setup(){
-    logToConsole("SETUP STARTED");
+    char logMessage[256];
+    //logToConsole("SETUP STARTED");
+    int currentTime = (int)time(NULL);
+    sprintf(dataLog, "/home/pi/AMT/log/%d_data.txt", currentTime);
+    sprintf(debugLog, "/home/pi/AMT/log/%d_debug.txt", currentTime);
+    sprintf(antLog, "/home/pi/AMT/log/%d_ant.txt", currentTime);
     
-    
-
-    //pthread_mutex_init(&brakeMutex, NULL);
-    //pthread_mutex_init(&pwmMutex, NULL);
-    //pthread_mutex_init(&limitMutex, NULL);
-    //pthread_mutex_init(&gpsMutex, NULL);
-    pthread_mutex_init(&antMutex, NULL);
-    
-    
-    sprintf(filename, "/home/pi/AMT/log/log_%d.txt", (int)time(NULL));
+    // Global Variable Initialization 
     currentPwmSignal = PWM_MINIMUM;
-    currentBrakeActivation = 0;
+    currentVelocity = 0.0;
+    currentPower = 0.0;
+    currentTorque = 0.0;
     
+    // Write Headers
+    sprintf(logMessage, "timestamp, brakes, pwmSignal, velocity, power, torque");
+    logToFile(dataLog, logMessage);
+        
     // Setting up wiringPi
     if(wiringPiSetup() == -1){
         logToConsole("Error setting up wiringPi\n");
@@ -46,44 +46,25 @@ int setup(){
     #ifdef BRAKE2
         pinMode(GPIO_BRAKE2, INPUT);
     #endif
+    
+    //initializeAntConnection();
+    initializeMotor();
+    
     return createThreads();
 }
 
 int createThreads(){
-    pthread_t brakeThread, buttonThread, hallThread, gpsThread;
+    pthread_t antThread; 
     int res = 0;
 
-	// Create Brake Thread
-	res = pthread_create(&brakeThread, NULL, brakeThreadPtr, NULL);
+    // Create ANT Thread
+	res = pthread_create(&antThread, NULL, antThreadPtr, NULL);
 	if(res != 0){
-	    logToConsole("Brake Thread Create Error");
+	    logToConsole("Ant Thread Create Error");
 		return res;
 	}
-	logToConsole("Brake Thread Created");
-	
-	// Create Button Thread
-	res = pthread_create(&buttonThread, NULL, buttonThreadPtr, NULL);
-	if(res != 0){
-	    logToConsole("Button Thread Create Error");
-		return res;
-	}
-	logToConsole("Button Thread Created");
+	logToConsole("Ant Thread Created");
 
-    // Create Hall Thread
-	res = pthread_create(&hallThread, NULL, hallThreadPtr, NULL);
-	if(res != 0){
-	    logToConsole("Hall Thread Create Error");
-		return res;
-	}
-	logToConsole("Hall Thread Created");
-
-	// Create GPS Thread
-	res = pthread_create(&gpsThread, NULL, gpsThreadPtr, NULL);
-	if(res != 0){
-	    logToConsole("GPS Thread Create Error");
-		return res;
-	}
-	logToConsole("GPS Thread Created");
     
 	return res;
 }

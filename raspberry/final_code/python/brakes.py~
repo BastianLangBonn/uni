@@ -1,11 +1,12 @@
 import RPi.GPIO as GPIO
 import time
+import parameters as p
 
-GPIO.setmode(GPIO.BOARD)
+GPIO.setmode(GPIO.BCM)
 
-GPIO.setup(12, GPIO.IN)
+GPIO.setup(p.GPIO_BRAKE, GPIO.IN)
 
-oldActivation = False
+oldActivation = True
 
 while 1:
     if GPIO.input(12) == GPIO.HIGH:

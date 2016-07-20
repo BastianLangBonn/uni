@@ -1,5 +1,3 @@
-void notifyBrakeActivation();
-void notifyBrakeDeactivation();
-void notifyLimitReached();
-void notifyLimitLeft();
-void notifyPwmSignalChange();
+void decelerate();
+void setSpeed(int pwmSignal);
+void initializeMotor();

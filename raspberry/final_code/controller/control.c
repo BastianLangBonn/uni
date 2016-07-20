@@ -3,32 +3,74 @@
 #include "setup.c"
 #include "logger.h"
 #include "constants.h"
+#include "button.c"
+#include "brakes.c"
+#include "ant.h"
+#include "motor.h"
+
+extern int currentPwmSignal;
 
 int main(){
-    char logMessage[256];    
+    char logMessage[256];
+    int isButtonPressed, isBrakeActivated;
+    int limitReached = 0;  
+    int useDeceleration = 0;  
 
     int result = setup();
     if(result != 0){
         sprintf(logMessage, "timestamp: %d, Error during setup: %d", micros(), result);
-        logToConsole("Error during setup");
-        logToFile(logMessage);
+        //printf(logMessage);
         logToConsole(logMessage);
         return result;
     }    
     
-    while(1){   
-        pthread_mutex_lock(&antMutex);
-        //pthread_mutex_lock(&brakeMutex);   
-        //pthread_mutex_lock(&pwmMutex);
-        //pthread_mutex_lock(&gpsMutex);
-        sprintf(logMessage, "timestamp: %d, brakes: %d, current pwm signal:%d, current velocity: %lf, current longitude: %.4lf, current latitude: %.4lf, current altitude: %.2lf, currentPower: %.2lf, currentTorque: %.2lf", (int)time(NULL), currentBrakeActivation, currentPwmSignal, currentVelocity, currentLongitude, currentLatitude, currentAltitude, currentPower, currentTorque);
-        //pthread_mutex_unlock(&gpsMutex);
-        //pthread_mutex_unlock(&pwmMutex);
-        //pthread_mutex_unlock(&brakeMutex);
-        pthread_mutex_unlock(&antMutex);
+    while(1){ 
+        useDeceleration = 0;
+        // Read Button
+        logToConsole("Reading Button");
+        isButtonPressed = readButton();
+               
+        // Read Brakes
+        logToConsole("Reading Brakes");
+        isBrakeActivated = readBrakeSensors();
         
-        logToFile(logMessage);
-        //logToConsole(logMessage);
+        // Read Ant Sensor
+        logToConsole("Reading Ant Message");
+        //receiveAntMessage();
+        
+        // Update PWM Signal
+        if(isButtonPressed && !isBrakeActivated){
+            if(currentPwmSignal < PWM_MAXIMUM){
+                currentPwmSignal++;
+            }
+        }
+        
+        if(isBrakeActivated){
+            if(currentPwmSignal > PWM_MINIMUM){
+                useDeceleration = 1;
+                currentPwmSignal = PWM_MINIMUM;
+            }
+        }
+        
+        logToConsole("Sending motor command");
+        if(currentVelocity > MAX_TEMPO && !limitReached){
+            limitReached = 1;
+            useDeceleration = 1;
+        } else if (currentVelocity <= MAX_TEMPO && limitReached){
+            limitReached = 0;
+        } 
+        
+        if(useDeceleration){
+            decelerate();
+        } else{
+            setSpeed(currentPwmSignal);
+        }
+        
+        logToConsole("Logging Data");
+        // Log Data timestamp, brakes, pwmSignal, velocity, power, torque
+        sprintf(logMessage, "%d, %d, %d, %.2lf, %.2lf, %.2lf", (int)time(NULL), isBrakeActivated, currentPwmSignal, currentVelocity, currentPower, currentTorque);
+        logToFile(dataLog, logMessage);
+        
         delay(LOGGING_UPDATE);
     }    
 }
