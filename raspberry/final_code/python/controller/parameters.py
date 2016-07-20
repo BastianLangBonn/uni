@@ -10,3 +10,7 @@ PWM_FREQUENCY = 10.0 # Hz
 
 DELAY_BUTTON = 0.2 
 DELAY_SENSOR = 0.01
+
+#VEHICLE CONSTANTS
+WHEEL_LENGTH = 1.445 # in m
+MAX_TEMPO = 25 # Maximum velocity in km/h

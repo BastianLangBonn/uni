@@ -2,6 +2,7 @@
 import threading
 from Button import Button
 from Brake import Brake
+from ant import Ant
 import parameters as p
 import time
 import RPi.GPIO as GPIO
@@ -12,8 +13,12 @@ class Controller:
         # initialize variables
         self.currentActivation = p.PWM_MINIMUM
         self.isBrakeActivated = False
+        self.currentPower = 0.0
+        self.currentSpeed = 0.0
+        self.currentTorque = 0.0
         self.activationLock = threading.Lock()
         self.brakeLock = threading.Lock()
+        self.antLock = threading.Lock()
         self.threads = []
         
         # initialize GPIO PINS
@@ -24,19 +29,22 @@ class Controller:
         # initialize threads
         self.button = Button("Button", self)
         self.brake = Brake("Brake", self)
+        self.ant = Ant("Ant", self)
         
         # declarate threads as daemons for keyboard interrupt
         self.button.setDaemon(True) 
         self.brake.setDaemon(True)
+        self.ant.setDaemon(True)
         self.threads.append(self.button)
         self.threads.append(self.brake)
-        
+        self.threads.append(self.ant)
         
         
     def start(self):
         # start threads
         self.button.start()
         self.brake.start()
+        self.ant.start()
         
         # wait for threads to end
         while threading.active_count() > 0:
@@ -54,15 +62,37 @@ class Controller:
         
     def notifyBrakeDeactivation(self):
         if self.isBrakeActivated:
-            brakeLock.acquire(1)
+            self.brakeLock.acquire(1)
             self.isBrakeActivated = False
-            brakeLock.release()
+            self.brakeLock.release()
         
     def notifyBrakeActivation(self):
         if not self.isBrakeActivated:
-            brakeLock.acquire(1)
+            self.brakeLock.acquire(1)
             self.isBrakeActivated = True
-            brakeLock.release()
+            self.brakeLock.release()
+            
+    def notifySpeedUpdate(self, rpm):
+        print 'Speed Value Received'
+        self.antLock.acquire(1)
+        self.currentSpeed = rpm * p.WHEEL_LENGTH * 0.06
+        print "Speed set to {}".format(self.speed)
+        self.antLock.release()
+        
+    
+    def notifyPowerUpdate(self, power):
+        self.antLock.acquire(1)
+        self.currentPower = power
+        print "Power set to {}".format(self.power)
+        self.antLock.release()
+        
+    
+    def notifyTorqueUpdate(self, torque):
+        print 'Speed Value Received'
+        self.antLock.acquire(1)
+        self.currentTorque = torque
+        print "Torque set to {}".format(self.torque)
+        self.antLock.release()
         
         
     
