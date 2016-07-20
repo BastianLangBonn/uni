@@ -9,22 +9,23 @@
 #include "motor.h"
 
 extern int currentPwmSignal;
-extern double currentVelocity;
 
 int main(){
     char logMessage[256];
     int isButtonPressed, isBrakeActivated;
-    int limitReached = 0;    
+    int limitReached = 0;  
+    int useDeceleration = 0;  
 
     int result = setup();
     if(result != 0){
         sprintf(logMessage, "timestamp: %d, Error during setup: %d", micros(), result);
-        printf(logMessage);
+        //printf(logMessage);
         logToConsole(logMessage);
         return result;
     }    
     
     while(1){ 
+        useDeceleration = 0;
         // Read Button
         logToConsole("Reading Button");
         isButtonPressed = readButton();
@@ -46,7 +47,7 @@ int main(){
         
         if(isBrakeActivated){
             if(currentPwmSignal > PWM_MINIMUM){
-                decelerate();
+                useDeceleration = 1;
                 currentPwmSignal = PWM_MINIMUM;
             }
         }
@@ -54,11 +55,14 @@ int main(){
         logToConsole("Sending motor command");
         if(currentVelocity > MAX_TEMPO && !limitReached){
             limitReached = 1;
-            decelerate();
+            useDeceleration = 1;
         } else if (currentVelocity <= MAX_TEMPO && limitReached){
             limitReached = 0;
-            setSpeed(currentPwmSignal);
-        } else if(!limitReached){
+        } 
+        
+        if(useDeceleration){
+            decelerate();
+        } else{
             setSpeed(currentPwmSignal);
         }
         
@@ -67,6 +71,6 @@ int main(){
         sprintf(logMessage, "%d, %d, %d, %.2lf, %.2lf, %.2lf", (int)time(NULL), isBrakeActivated, currentPwmSignal, currentVelocity, currentPower, currentTorque);
         logToFile(dataLog, logMessage);
         
-        delay(SENSOR_UPDATE);
+        delay(LOGGING_UPDATE);
     }    
 }

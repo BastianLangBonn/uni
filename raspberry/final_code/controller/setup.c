@@ -17,6 +17,7 @@ int setup(){
     int currentTime = (int)time(NULL);
     sprintf(dataLog, "/home/pi/AMT/log/%d_data.txt", currentTime);
     sprintf(debugLog, "/home/pi/AMT/log/%d_debug.txt", currentTime);
+    sprintf(antLog, "/home/pi/AMT/log/%d_ant.txt", currentTime);
     
     // Global Variable Initialization 
     currentPwmSignal = PWM_MINIMUM;
@@ -46,8 +47,24 @@ int setup(){
         pinMode(GPIO_BRAKE2, INPUT);
     #endif
     
-    initializeAntConnection();
+    //initializeAntConnection();
     initializeMotor();
     
-    return 0;
+    return createThreads();
+}
+
+int createThreads(){
+    pthread_t antThread; 
+    int res = 0;
+
+    // Create ANT Thread
+	res = pthread_create(&antThread, NULL, antThreadPtr, NULL);
+	if(res != 0){
+	    logToConsole("Ant Thread Create Error");
+		return res;
+	}
+	logToConsole("Ant Thread Created");
+
+    
+	return res;
 }

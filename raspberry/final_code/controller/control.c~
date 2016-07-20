@@ -9,17 +9,17 @@
 #include "motor.h"
 
 extern int currentPwmSignal;
-extern double currentVelocity;
 
 int main(){
     char logMessage[256];
     int isButtonPressed, isBrakeActivated;
-    int limitReached = 0;    
+    int limitReached = 0;  
+    int useDeceleration = 0;  
 
     int result = setup();
     if(result != 0){
         sprintf(logMessage, "timestamp: %d, Error during setup: %d", micros(), result);
-        printf(logMessage);
+        //printf(logMessage);
         logToConsole(logMessage);
         return result;
     }    
@@ -35,7 +35,7 @@ int main(){
         
         // Read Ant Sensor
         logToConsole("Reading Ant Message");
-        receiveAntMessage();
+        //receiveAntMessage();
         
         // Update PWM Signal
         if(isButtonPressed && !isBrakeActivated){
@@ -67,6 +67,6 @@ int main(){
         sprintf(logMessage, "%d, %d, %d, %.2lf, %.2lf, %.2lf", (int)time(NULL), isBrakeActivated, currentPwmSignal, currentVelocity, currentPower, currentTorque);
         logToFile(dataLog, logMessage);
         
-        delay(SENSOR_UPDATE);
+        delay(LOGGING_UPDATE);
     }    
 }

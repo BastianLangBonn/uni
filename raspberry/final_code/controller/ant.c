@@ -11,7 +11,6 @@
 #include "constants.h"
 #include "motor.h"
 #include "socket.c"
-#include "ant.h"
 
 char logMessage[256];
 extern double currentVelocity;
@@ -19,7 +18,7 @@ extern double currentPower;
 extern double currentTorque;
 int isWithinLimit; 
 char *ptr;
-int lastPeak, sockfd;
+int lastPeak;
 
 void handleRpmMessage(char buffer[256]){
     int rpm, t;
@@ -36,14 +35,14 @@ void handleRpmMessage(char buffer[256]){
     rpm = atoi(tmp);
     // Compute speed out of rpm and wheel length in km/h
     sprintf(logMessage, "rpm: %d", rpm);
-    logToConsole(logMessage);
+    //logToConsole(logMessage);
     currentVelocity = rpm * WHEEL_LENGTH * 0.06;    
     sprintf(logMessage, "timestamp: %d, velocity: %.2lf",(int)time(NULL), currentVelocity);
-    logToConsole(logMessage);
+    logToFile(antLog, logMessage);
 }
 
 void handleTorqueMessage(char buffer[256]){
-    logToConsole("Handling Torque Message");
+    //logToConsole("Handling Torque Message");
     int rpm, t;
     char tmp[256];
     memset(tmp,0,sizeof(buffer));
@@ -55,8 +54,8 @@ void handleTorqueMessage(char buffer[256]){
     strncpy(tmp, ptr, t); 
     // Char to Integer        
     currentTorque = atof(tmp);
-    sprintf(logMessage, "torque: %.2lfNm", currentTorque);
-    logToConsole(logMessage);
+    sprintf(logMessage, "timestamp: %d, torque: %.2lfNm", (int)time(NULL), currentTorque);
+    logToFile(antLog, logMessage);
 }
 
 void handlePowerMessage(char buffer[256]){
@@ -71,59 +70,64 @@ void handlePowerMessage(char buffer[256]){
     strncpy(tmp, ptr, t); 
     // Char to Integer        
     currentPower = atof(tmp);
-    sprintf(logMessage, "power: %.2lfwatts", currentPower);
-    logToConsole(logMessage);
+    sprintf(logMessage, "timestamp: %d, power: %.2lfwatts", (int)time(NULL), currentPower);
+    logToFile(antLog, logMessage);
 }
 
 void handleSensorDrop(char buffer[256]){
     if(strstr(buffer, "type='Speed'")){
-        logToConsole("Speed Dropped");
+        //logToConsole("Speed Dropped");
         currentVelocity = 0.0;
     } else if(strstr(buffer, "type='Power'")){
-        logToConsole("Power Dropped");
+        //logToConsole("Power Dropped");
         currentTorque = 0.0;
         currentPower = 0.0;
     } else{
-        logToConsole("Not important sensor dropped");
+        //logToConsole("Not important sensor dropped");
     }
 }
 
-void initializeAntConnection(){
-    sockfd = createSockFd(2301);
-    lastPeak = millis();
-}
-
-void receiveAntMessage(){
+void *antThreadPtr(void *arg){
+    //logToConsole("ANT Thread started"); 
+	int sockfd, n;   
     char buffer[256];
-    int n;
-    int currentPeak = millis();
-    if(currentPeak - lastPeak > 2000){
-        logToConsole("Speed Timed Out");
-        currentVelocity = 0.0;
-    }
-    lastPeak = currentPeak;
-    memset(buffer,0,256);
-    ptr = NULL;
-    n = read(sockfd,buffer,255);
-    if (n < 0) 
-        logToConsole("ERROR reading from ANT socket");
-    if(n>0){
-        sprintf(logMessage, "Received ANT+ message: %s",buffer);
-        logToConsole(logMessage);
-		if(strstr(buffer, "<Speed")){
-		    logToConsole("Speed message received");
-		    handleRpmMessage(buffer);
-		} else if(strstr(buffer, "<Torque")){
-		    logToConsole("Torque message received");
-		    handleTorqueMessage(buffer);
-		} else if(strstr(buffer, "<Power")){ 
-		    logToConsole("Power message received");
-		    handlePowerMessage(buffer);
-		} else if(strstr(buffer, "<SensorDrop")){
-		    logToConsole("Sensor dropped");
-		    handleSensorDrop(buffer);
-		} else{
-		    logToConsole("String did not contain any relevant information");
-		}
-	}
+    int t=0, rpm;
+    int currentPeak;
+    lastPeak = millis();
+    sockfd = createSockFd(2301);
+	memset(buffer, 0, 256);
+    while(1){
+        currentPeak = millis();
+        if(currentPeak - lastPeak > 2000){
+            //logToConsole("Speed Timed Out");
+            currentVelocity = 0.0;
+        }
+        memset(buffer,0,256);
+        ptr = NULL;
+        n = read(sockfd,buffer,255);
+        if (n < 0) 
+            //logToConsole("ERROR reading from ANT socket");
+        if(n>0){
+            sprintf(logMessage, "Received ANT+ message: %s",buffer);
+            //logToConsole(logMessage);
+			if(strstr(buffer, "<Speed")){
+			    //logToConsole("Speed message received");
+			    handleRpmMessage(buffer);
+			} else if(strstr(buffer, "<Torque")){
+			    //logToConsole("Torque message received");
+			    handleTorqueMessage(buffer);
+			} else if(strstr(buffer, "<Power")){ 
+			    //logToConsole("Power message received");
+			    handlePowerMessage(buffer);
+			} else if(strstr(buffer, "<SensorDrop")){
+			    //logToConsole("Sensor dropped");
+			    handleSensorDrop(buffer);
+			} else{
+			    //logToConsole("String did not contain any relevant information");
+			}
+        }
+		delay(SPEED_UPDATE); //Verhindert busy-waiting
+    }    	
+    //logToConsole("ANT+ Thread Ended"); 
 }
+

@@ -19,7 +19,7 @@
 #define MAX_TEMPO       25 // Maximum velocity in km/h
 
 /* DELAY VALUES */
-#define SENSOR_UPDATE   20
+#define SENSOR_UPDATE   100
 #define SPEED_UPDATE    20
 #define LOGGING_UPDATE  100
 
