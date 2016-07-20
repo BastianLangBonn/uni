@@ -16,7 +16,6 @@ class Logger(threading.Thread):
     def run(self):
         print "Starting " + self.name
         while 1:
-            print "Logging Data"
             self.parentThread.antLock.acquire(1)
             self.parentThread.gpsLock.acquire(1)
             self.parentThread.brakeLock.acquire(1)

@@ -14,7 +14,9 @@ class Controller:
         
         # initialize variables
         self.currentActivation = p.PWM_MINIMUM
+        self.previousActivation = p.PWM_MAXIMUM # to ensure initial sending of signal
         self.isBrakeActivated = False
+        self.isWithinLimit = True
         self.currentPower = 0.0
         self.currentSpeed = 0.0
         self.currentTorque = 0.0
@@ -31,6 +33,9 @@ class Controller:
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(p.GPIO_BUTTON, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
         GPIO.setup(p.GPIO_BRAKE, GPIO.IN)
+        GPIO.setup(p.GPIO_PWM,GPIO.OUT)
+        self.pin = GPIO.PWM(p.GPIO_PWM,50)
+        self.pin.start(self.currentActivation)
         
         # initialize threads
         self.button = Button("Button", self)
@@ -56,18 +61,43 @@ class Controller:
         self.logger.start()
         
         # wait for threads to end
-        while threading.active_count() > 0:
+        try:
+            while threading.active_count() > 0:
+                self.setMotorSpeed();
+                time.sleep(p.DELAY_MOTOR)
+        except KeyboardInterrupt:
+            self.pin.ChangeDutyCycle(4)
             time.sleep(0.1)
+            self.pin.ChangeDutyCycle(3)
+            time.sleep(0.1)
+            self.pin.stop()  
+            time.sleep(0.1)  
+            GPIO.cleanup()
+            print 'Interrupted'
+        except:
+            self.pin.ChangeDutyCycle(4)
+            time.sleep(0.1)
+            self.pin.ChangeDutyCycle(3)
+            time.sleep(0.1)
+            self.pin.stop()  
+            time.sleep(0.1)  
+            GPIO.cleanup()
+            print 'Unknown exception'
+            raise
+            
         print "Exiting Main Thread"
         
     def notifyButtonPress(self):
         print "Button has been pressed"
-        self.activationLock.acquire(1)
-        self.currentActivation += p.PWM_STEP
-        if self.currentActivation > p.PWM_MAXIMUM:
-            self.currentActivation = p.PWM_MAXIMUM
-        print "Activation set to {}".format(self.currentActivation)
-        self.activationLock.release()
+        self.brakeLock.acquire(1)
+        if not self.isBrakeActivated:
+            self.activationLock.acquire(1)
+            self.currentActivation += p.PWM_STEP
+            if self.currentActivation > p.PWM_MAXIMUM:
+                self.currentActivation = p.PWM_MAXIMUM
+            print "Activation set to {}".format(self.currentActivation)
+            self.activationLock.release()            
+        self.brakeLock.release()
         
     def notifyBrakeDeactivation(self):
         if self.isBrakeActivated:
@@ -78,12 +108,19 @@ class Controller:
     def notifyBrakeActivation(self):
         if not self.isBrakeActivated:
             self.brakeLock.acquire(1)
+            self.activationLock.acquire(1)
             self.isBrakeActivated = True
+            self.currentActivation = p.PWM_MINIMUM
             self.brakeLock.release()
+            self.activationLock.release()
             
     def notifySpeedUpdate(self, rpm):
         self.antLock.acquire(1)
         self.currentSpeed = rpm * p.WHEEL_LENGTH * 0.06
+        if self.isWithinLimit and self.currentSpeed > p.MAX_TEMPO:
+            self.isWithinLimit = False
+        elif not self.isWithinLimit and self.currentSpeed <= p.MAX_TEMPO:
+            self.isWithinLimit = True
         print "Speed set to {}".format(self.currentSpeed)
         self.antLock.release()
         
@@ -106,9 +143,32 @@ class Controller:
         self.currentLatitude = latitude
         self.currentLongitude = longitude
         self.currentAltitude = altitude
-        print "Set gps data to {},{},{}".format(self.currentLatitude, self.currentLongitude, self.currentAltitude)
         self.gpsLock.release()
         
+    def setMotorSpeed(self):
+        self.activationLock.acquire(1)
+        self.antLock.acquire(1)
+        
+        
+        if self.previousActivation != self.currentActivation:
+            if self.currentActivation == p.PWM_MINIMUM:
+                self.pin.ChangeDutyCycle(p.PWM_MINIMUM+1)
+                time.sleep(0.1)
+                self.pin.ChangeDutyCycle(p.PWM_MINIMUM)
+                self.previousActivation = p.PWM_MINIMUM
+            elif self.isWithinLimit:
+                self.pin.ChangeDutyCycle(self.currentActivation)
+                self.previousActivation = self.currentActivation
+            elif not self.isWithinLimit and self.previousActivation != p.PWM_MINIMUM:
+                self.pin.ChangeDutyCycle(p.PWM_MINIMUM+1)
+                time.sleep(0.1)
+                self.pin.ChangeDutyCycle(p.PWM_MINIMUM)
+                self.previousActivation = p.PWM_MINIMUM
+            
+        
+        
+        self.activationLock.release()
+        self.antLock.release()
     
 controller = Controller()
 controller.start()

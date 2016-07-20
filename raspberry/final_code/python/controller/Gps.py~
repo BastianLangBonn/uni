@@ -80,7 +80,6 @@ class Gps(threading.Thread):
 
                     # Check if GGA Protokoll is being sent
                     if input == "GPGG":
-                        print "Received GPGG data"
                         # read until new line
                         while nChars != "\n":
                             nChars = 0
