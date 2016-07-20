@@ -44,14 +44,6 @@ class Gps(threading.Thread):
         nLines = 0;
         nFiles = 1;
 
-        # Initial Message
-        print ""
-        print "+---------------------------------------------------------------------+"
-        print "| Dieses Programm empfaengt Daten einer Holux GPS-Maus,               |"
-        print "| die mittels GAA-Protokoll uebertragen wurden.                       |"
-        print "| Der empfangene Datensatz wird zerlegt und in der Konsole angezeigt. |"
-        print "+---------------------------------------------------------------------+"
-        print ""
 
         while True:
 

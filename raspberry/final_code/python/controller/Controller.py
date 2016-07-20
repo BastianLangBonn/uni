@@ -14,7 +14,7 @@ class Controller:
         
         # initialize variables
         self.currentActivation = p.PWM_MINIMUM
-        self.previousActivation = p.PWM_MAXIMUM # to ensure initial sending of signal
+        self.previousActivation = p.PWM_ACTIVE_MINIMUM # to ensure initial sending of signal
         self.isBrakeActivated = False
         self.isWithinLimit = True
         self.currentPower = 0.0
@@ -95,6 +95,8 @@ class Controller:
             self.currentActivation += p.PWM_STEP
             if self.currentActivation > p.PWM_MAXIMUM:
                 self.currentActivation = p.PWM_MAXIMUM
+            elif self.currentActivation < p.PWM_ACTIVE_MINIMUM:
+                self.currentActivation = p.PWM_ACTIVE_MINIMUM + p.PWM_STEP
             print "Activation set to {}".format(self.currentActivation)
             self.activationLock.release()            
         self.brakeLock.release()
@@ -110,7 +112,7 @@ class Controller:
             self.brakeLock.acquire(1)
             self.activationLock.acquire(1)
             self.isBrakeActivated = True
-            self.currentActivation = p.PWM_MINIMUM
+            self.currentActivation = p.PWM_ACTIVE_MINIMUM
             self.brakeLock.release()
             self.activationLock.release()
             
@@ -151,19 +153,19 @@ class Controller:
         
         
         if self.previousActivation != self.currentActivation:
-            if self.currentActivation == p.PWM_MINIMUM:
-                self.pin.ChangeDutyCycle(p.PWM_MINIMUM+1)
+            if self.currentActivation == p.PWM_ACTIVE_MINIMUM:
+                self.pin.ChangeDutyCycle(p.PWM_ACTIVE_MINIMUM+1)
                 time.sleep(0.1)
-                self.pin.ChangeDutyCycle(p.PWM_MINIMUM)
-                self.previousActivation = p.PWM_MINIMUM
+                self.pin.ChangeDutyCycle(p.PWM_ACTIVE_MINIMUM)
+                self.previousActivation = p.PWM_ACTIVE_MINIMUM
             elif self.isWithinLimit:
                 self.pin.ChangeDutyCycle(self.currentActivation)
                 self.previousActivation = self.currentActivation
-            elif not self.isWithinLimit and self.previousActivation != p.PWM_MINIMUM:
-                self.pin.ChangeDutyCycle(p.PWM_MINIMUM+1)
+            elif not self.isWithinLimit and self.previousActivation != p.PWM_ACTIVE_MINIMUM:
+                self.pin.ChangeDutyCycle(p.PWM_ACTIVE_MINIMUM+1)
                 time.sleep(0.1)
-                self.pin.ChangeDutyCycle(p.PWM_MINIMUM)
-                self.previousActivation = p.PWM_MINIMUM
+                self.pin.ChangeDutyCycle(p.PWM_ACTIVE_MINIMUM)
+                self.previousActivation = p.PWM_ACTIVE_MINIMUM
             
         
         

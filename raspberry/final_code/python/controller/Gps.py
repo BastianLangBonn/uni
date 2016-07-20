@@ -36,7 +36,7 @@ class Gps(threading.Thread):
 
         print 'open file'
         # open output file
-        filename = '/home/pi/AMT/out/gps_out_{}'.format(int(round(time.time())));
+        filename = '/home/pi/control/out/gps_out_{}'.format(int(round(time.time())));
         f = open(filename, 'w')
         print 'file open'
 
@@ -49,7 +49,7 @@ class Gps(threading.Thread):
 
             if nLines > 1000000:
                 f.close();
-                filename = '/home/pi/AMT/out/gps_out_{}_{}'.format(nFiles, int(round(time.time())));
+                filename = '/home/pi/control/out/gps_out_{}_{}'.format(nFiles, int(round(time.time())));
                 f = open(filename, 'w');
                 nLines = 0;
                 nFiles += 1;
