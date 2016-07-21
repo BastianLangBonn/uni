@@ -137,7 +137,7 @@ Bonn-Rhein-Sieg University of Applied Science \\ % Your institution for the titl
 
 \begin{frame}
 	\frametitle{NEAT with Simple Model}
-	\framesubtitle{NEAT}
+	\framesubtitle{Setup}
 	\begin{block}{Parameters}
 		\begin{itemize}
 			\item Population size: 60
@@ -162,7 +162,6 @@ Bonn-Rhein-Sieg University of Applied Science \\ % Your institution for the titl
 			\item Weighted Sum of Single Track Fitnesses
 		\end{itemize}
 	\end{block}
-	\pause
 	\begin{block}{On Single Track}
 		\begin{itemize}		
 			\item Fitness: Saved Energy - Time Penalty
@@ -175,48 +174,37 @@ Bonn-Rhein-Sieg University of Applied Science \\ % Your institution for the titl
 			\right. \]			
 		\end{itemize}
 	\end{block}	
-\end{frame}
-
-\begin{frame}
-	\frametitle{NEAT with Simple Model}
-	\framesubtitle{Some Tracks}
-	\begin{figure}
-    \centering
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{images/t6.jpg}
-        \caption{Track 6}
-        \label{fig:gull}
-    \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{images/t8.jpg}
-        \caption{Track 8}
-        \label{fig:tiger}
-    \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-    %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{images/t31.jpg}
-        \caption{Track 31}
-        \label{fig:mouse}
-    \end{subfigure}
-    \caption{Some Example Tracks}\label{fig:animals}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-	\frametitle{NEAT with the Simple Model}
-	\framesubtitle{Results}
+	\begin{block}{Results}
 	\begin{itemize}
-		\item Average Best Fitness
-		\item Average Nr Generations
+		\item Total runs (so far): 218
+		\item Average Best Fitness: 7.4569e+04
+		\item Best Fitness: 10.3410e+04
 	\end{itemize}
+	\end{block}
+	
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{NEAT with the Simple Model}
+	\framesubtitle{Simulations I}
+	\begin{figure}[hb]
+  		\centering
+  		\includegraphics[width=3.5in]{images/result8.jpg}
+  		\caption[Simulation of Evolved Controller]
+   		{Simulation of Evolved Controller}
+		\end{figure}
 \end{frame}
 
 \begin{frame}
 	\frametitle{NEAT with the Simple Model}
-	\framesubtitle{Simulations}
+	\framesubtitle{Simulations II}
+	\begin{figure}[hb]
+  		\centering
+  		\includegraphics[width=3.5in]{images/result7.jpg}
+  		\caption[Simulation of Evolved Controller]
+   		{Simulation of Evolved Controller}
+		\end{figure}
 \end{frame}
 
 
@@ -226,7 +214,6 @@ Bonn-Rhein-Sieg University of Applied Science \\ % Your institution for the titl
 	\tableofcontents[currentsection, hideothersubsections]
 \end{frame}
 
-\subsection{Given Hardware/Software}
 \begin{frame}
 	\frametitle{Control Program}
 	\framesubtitle{Given}
@@ -254,16 +241,15 @@ Bonn-Rhein-Sieg University of Applied Science \\ % Your institution for the titl
 	\end{block}		
 \end{frame}
 
-\subsection{Problems}
 \begin{frame}
 	\frametitle{Problems}
 	\framesubtitle{Reading Hall Sensor}
-	\begin{block}{Why a Problem?}
+	\begin{block}{Problems}
 	\begin{itemize}
+		\item Communication with hall sensor not working
 		\item Needed for velocity data
 		\item Python-code to read sensor
 		\item C-code to control motor
-		\item Not implemented
 	\end{itemize}		
 	\end{block}
 	\pause
@@ -279,16 +265,17 @@ Bonn-Rhein-Sieg University of Applied Science \\ % Your institution for the titl
 \begin{frame}
 	\frametitle{Problems}
 	\framesubtitle{Speed Adaptation}
-	\begin{block}{Why a Problem?}
+	\begin{block}{Problems}
 		\begin{itemize}
+			\item No mechanism to adjust speed
 			\item Needed for collecting data
-			\item Not implemented
 		\end{itemize}
 	\end{block}
+	\pause
 	\begin{block}{Solution}
-		\begin{itemize}
+		\begin{itemize}[<+->]
 			\item Increase speed on button click
-			\item Shut motor off on brake activation only
+			\item Shut motor off on brake activation
 		\end{itemize}
 	\end{block}	
 \end{frame}
@@ -296,13 +283,16 @@ Bonn-Rhein-Sieg University of Applied Science \\ % Your institution for the titl
 \begin{frame}
 	\frametitle{Problems}
 	\framesubtitle{No Motor Reaction}
-	\begin{block}{Why a Problem?}
+	\begin{block}{Problems}
 		\begin{itemize}
-			\item Cannot drive vehicle
+			\item No reaction to signal
+			\item No signal measured
+			\item Vehicle does not move
 		\end{itemize}
 	\end{block}
+	\pause
 	\begin{block}{Solution}
-		\begin{itemize}
+		\begin{itemize}[<+->]
 			\item (Hardware-)Debug with working initial code
 			\item Only send signal on change
 			\item Range [7,19] instead of [0,100]
@@ -312,8 +302,27 @@ Bonn-Rhein-Sieg University of Applied Science \\ % Your institution for the titl
 
 \begin{frame}
 	\frametitle{Problems}
+	\framesubtitle{5 Seconds to Brake}
+	\begin{block}{Problems}
+		\begin{itemize}
+			\item Setting motor to 0 takes 5 seconds
+			\item Motor waits for timeout
+			\item Safety
+		\end{itemize}
+	\end{block}
+	\pause
+	\begin{block}{Solution}
+		\begin{itemize}[<+->]
+			\item Set signal to small value first
+			\item Use hardware emergency off switch
+		\end{itemize}
+	\end{block}	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Problems}
 	\framesubtitle{Huge Numbers in Log}
-	\begin{block}{Why a Problem?}
+	\begin{block}{Problems}
 		\begin{itemize}
 			\item Obviously wrong data gets logged
 			\item No synchronization during data access
@@ -334,14 +343,6 @@ Bonn-Rhein-Sieg University of Applied Science \\ % Your institution for the titl
 		\end{itemize}
 	\end{block}
 \end{frame}
-
-\subsection{Control Program(s)}
-\begin{frame}
-	\frametitle{Software Architecture}
-	TODO: Diagram
-\end{frame}
-
-
 
 \section{Open Tasks}
 \begin{frame}
