@@ -1,8 +1,9 @@
 \beamer@endinputifotherversion {3.24pt}
 \beamer@sectionintoc {1}{Project Description}{3}{0}{1}
-\beamer@sectionintoc {2}{The Simple Model}{24}{0}{2}
-\beamer@sectionintoc {3}{NEAT with the Simple Model}{27}{0}{3}
-\beamer@sectionintoc {4}{Control Program for Velomobile}{31}{0}{4}
-\beamer@subsectionintoc {4}{1}{Control Program(s)}{33}{0}{4}
-\beamer@subsectionintoc {4}{2}{Problems}{34}{0}{4}
-\beamer@sectionintoc {5}{Open Tasks}{35}{0}{5}
+\beamer@sectionintoc {2}{The Simple Model}{16}{0}{2}
+\beamer@sectionintoc {3}{NEAT with Simple Model}{19}{0}{3}
+\beamer@sectionintoc {4}{Control Program for Velomobile}{25}{0}{4}
+\beamer@subsectionintoc {4}{1}{Given Hardware/Software}{26}{0}{4}
+\beamer@subsectionintoc {4}{2}{Problems}{28}{0}{4}
+\beamer@subsectionintoc {4}{3}{Control Program(s)}{40}{0}{4}
+\beamer@sectionintoc {5}{Open Tasks}{41}{0}{5}

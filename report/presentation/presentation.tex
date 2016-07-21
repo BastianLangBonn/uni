@@ -20,14 +20,14 @@
 \setcounter{figure}{0}
 
 \title[Energy Efficient Vehicle Control]{Real World Optimization of Energy Efficient Vehicle Control}
-\subtitle[Current State]{Current State}
+\subtitle[Current State]{}
 \author{Bastian Lang} % Your name
 \institute[BRSU] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
 {
 Bonn-Rhein-Sieg University of Applied Science \\ % Your institution for the title page
 }
 \date{\today} 
-\titlegraphic{\includegraphics[width=6cm]{images/stella}}
+%\titlegraphic{\includegraphics[width=6cm]{images/stella}}
 \begin{document}
 
 \listoffigures
@@ -36,12 +36,6 @@ Bonn-Rhein-Sieg University of Applied Science \\ % Your institution for the titl
 	\titlepage
 \end{frame}
 
-\AtBeginSection[]{
-	\begin{frame}
-		\frametitle{Content}
-		\tableofcontents[currentsection, hideothersubsections]
-	\end{frame}
-}
 \begin{frame}
 	\frametitle{Content}
 	\tableofcontents[hideallsubsections]
@@ -52,27 +46,22 @@ Bonn-Rhein-Sieg University of Applied Science \\ % Your institution for the titl
 	\frametitle{Project Description}
 	\framesubtitle{Project Description}
 	\begin{block}{What is the project about?}
-		\pause
 		Creating Energy Efficient Vehicle Controller  
 	\end{block}	
 	\pause	
 	\begin{block}{What ML technologies are being used?}
-		\pause
 		ANNs evolved using NEAT
 	\end{block}
 	\pause
-	\begin{block}{What is the project based on?}
-		\pause		
-		Paper showing ANNs can compete with state-of-the-art approaches (cite paper)
+	\begin{block}{What is the project based on?}	
+		Paper showing ANNs can compete with state-of-the-art approaches (\cite{gaier2014evolving})
 	\end{block}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Project Description}
 	\framesubtitle{Task Overview}
-	\pause
 	\begin{block}{Minimum}
-	\pause
 	\begin{itemize}[<+->]
 		\item Evolve Energy Efficient Controller with Simple Model
 		\item Evaluate in Reality 
@@ -82,7 +71,6 @@ Bonn-Rhein-Sieg University of Applied Science \\ % Your institution for the titl
 	\pause
 	
 	\begin{block}{Expected}
-	\pause
 	\begin{itemize}[<+->]
 		\item Create Data Driven Model 
 		\item Evolve Energy Efficient Controller with DD Model
@@ -93,7 +81,6 @@ Bonn-Rhein-Sieg University of Applied Science \\ % Your institution for the titl
 	\pause
 	
 	\begin{block}{Maximum}
-	\pause
 	\begin{itemize}[<+->]
 		\item Use Multi-Objective Approach (i.e. Surrogate Modelling)
 	\end{itemize}
@@ -101,7 +88,13 @@ Bonn-Rhein-Sieg University of Applied Science \\ % Your institution for the titl
 	
 \end{frame}
 
+
+
 \section{The Simple Model}
+\begin{frame}
+	\frametitle{Content}
+	\tableofcontents[currentsection, hideothersubsections]
+\end{frame}
 \begin{frame}
 	\frametitle{Simple Vehicle Model}
 	\begin{block}{Time Based Model}	
@@ -135,30 +128,53 @@ Bonn-Rhein-Sieg University of Applied Science \\ % Your institution for the titl
 
 \begin{frame}
 	\frametitle{Simple Vehicle Model}
-	Visualizations of Simulations
+	TODO: Visualizations of Simulations
 \end{frame}
 
-\section{NEAT with the Simple Model}
+
+\section{NEAT with Simple Model}
 \begin{frame}
-	\frametitle{NEAT with the Simple Model}
-	\framesubtitle{Data}
-	\begin{block}{Tracks Used}
+	\frametitle{Content}
+	\tableofcontents[currentsection, hideothersubsections]
+\end{frame}
+
+\begin{frame}
+	\frametitle{NEAT with Simple Model}
+	\framesubtitle{NEAT}
+	\begin{block}{Parameters}
 		\begin{itemize}
-			\item 35
-			\item cross validation
+			\item Population size: 60
+			\item Maximum Generations: 40
+			\item Speciation algorithm: k-means
+			\item Number of Species: 3
+			\item Drop-off rate: 25
+			\item Dataset of 30/5 tracks (Training/Test)
 		\end{itemize}
 	\end{block}
-	\begin{block}{NEAT Parameters}
+	TODO: Plots of some tracks
+\end{frame}
+
+\begin{frame}
+	\frametitle{NEAT with Simple Model}
+	\framesubtitle{Evaluating Fitness}
+	\begin{block}{On Set of Tracks}
 		\begin{itemize}
-		
-		
-			\item population
-			\item speciation kmeans
-			\item maximum generations
-			\item nr of runs
-			\item topology
+			\item Weighted Sum of Single Track Fitnesses
 		\end{itemize}
 	\end{block}
+	\pause
+	\begin{block}{On Single Track}
+		\begin{itemize}		
+			\item Fitness: Saved Energy - Time Penalty
+			\item Saved Energy: Maximum Energy Consumption - Actual Energy Consumption
+			\item Time Penalty: \[\left\{ 
+				\begin{array}{ll}
+					0  & \mbox{if } neededTime \leq desiredTime \\
+					(neededTime - desiredTime)^2 & \mbox{else } 
+				\end{array}			
+			\right. \]			
+		\end{itemize}
+	\end{block}	
 \end{frame}
 
 \begin{frame}
@@ -175,24 +191,155 @@ Bonn-Rhein-Sieg University of Applied Science \\ % Your institution for the titl
 	\framesubtitle{Simulations}
 \end{frame}
 
+
 \section{Control Program for Velomobile}
 \begin{frame}
+	\frametitle{Content}
+	\tableofcontents[currentsection, hideothersubsections]
+\end{frame}
+
+\subsection{Given Hardware/Software}
+\begin{frame}
 	\frametitle{Control Program}
-	TODO: diagram multi-threading
+	\framesubtitle{Given}
+	\begin{block}{Hardware}
+		\begin{itemize}
+			\item Velomobile
+			\item Electric Motor (Vivax-Assist)
+			\item Speed Controller (MasterSPIN 75 Pro OPTO)
+			\item Brake Sensor
+			\item Hall Sensor
+			\item Power Sensor
+			\item Simple Button
+		\end{itemize}
+	\end{block}	
+	\pause
+	\begin{block}{Software}
+		\begin{itemize}
+			\item Run motor on constant speed
+			\item Read brake sensor
+			\item Read hall sensor
+			\item Shuts off above 25km/h
+			\item Shuts off on brake activation
+			\item Shuts off on button press
+		\end{itemize}
+	\end{block}		
+\end{frame}
+
+\subsection{Problems}
+\begin{frame}
+	\frametitle{Problems}
+	\framesubtitle{Reading Hall Sensor}
+	\begin{block}{Why a Problem?}
+	\begin{itemize}
+		\item Needed for velocity data
+		\item Python-code to read sensor
+		\item C-code to control motor
+		\item Not implemented
+	\end{itemize}		
+	\end{block}
+	\pause
+	\begin{block}{Solution}
+		\begin{itemize}[<+->]
+			\item Write/read file in python/C $\rightarrow$ Synchronization
+			\item Write/Read output stream $\rightarrow$ Python script needs to call C script and resets state
+			\item Use socket communication
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Problems}
+	\framesubtitle{Speed Adaptation}
+	\begin{block}{Why a Problem?}
+		\begin{itemize}
+			\item Needed for collecting data
+			\item Not implemented
+		\end{itemize}
+	\end{block}
+	\begin{block}{Solution}
+		\begin{itemize}
+			\item Increase speed on button click
+			\item Shut motor off on brake activation only
+		\end{itemize}
+	\end{block}	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Problems}
+	\framesubtitle{No Motor Reaction}
+	\begin{block}{Why a Problem?}
+		\begin{itemize}
+			\item Cannot drive vehicle
+		\end{itemize}
+	\end{block}
+	\begin{block}{Solution}
+		\begin{itemize}
+			\item (Hardware-)Debug with working initial code
+			\item Only send signal on change
+			\item Range [7,19] instead of [0,100]
+		\end{itemize}
+	\end{block}	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Problems}
+	\framesubtitle{Huge Numbers in Log}
+	\begin{block}{Why a Problem?}
+		\begin{itemize}
+			\item Obviously wrong data gets logged
+			\item No synchronization during data access
+		\end{itemize}
+	\end{block}
+	\pause
+	\begin{block}{Solution}
+		\begin{itemize}[<+->]
+			\item Synchronize using mutexes $\rightarrow$ Still huge values
+			\item Remove all possible multi-threading $\rightarrow$ Hall Sensor
+			\item Rewrite in Python $\rightarrow$ Files empty, occasional restarts
+		\end{itemize}
+	\end{block}	
+	\pause
+	\begin{block}{Open Approaches}
+		\begin{itemize}
+			\item Use C-code with wiringPi synchronization mechanism
+		\end{itemize}
+	\end{block}
 \end{frame}
 
 \subsection{Control Program(s)}
 \begin{frame}
-	\frametitle{The Task}
+	\frametitle{Software Architecture}
+	TODO: Diagram
 \end{frame}
-\subsection{Problems}
-\begin{frame}
-	\frametitle{The Task}
-\end{frame}
+
+
 
 \section{Open Tasks}
 \begin{frame}
-	\frametitle{The Task}
+	\frametitle{Content}
+	\tableofcontents[currentsection, hideothersubsections]
+\end{frame}
+
+\begin{frame}
+	\frametitle{Open Tasks}
+	\begin{block}{}
+		\begin{itemize}
+			\item Fix Logging
+			\item Evaluate Solutions Simple Model
+			\item Collect Data
+			\item Learn Model
+			\item NEAT on DD Model
+			\item Evaluate Solutions DD Model
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+\frametitle{Sources}
+\bibliographystyle{apalike}
+\bibliography{Biblio-Database}
+
 \end{frame}
 
 
