@@ -1,0 +1,108 @@
+% This file was created with JabRef 2.10b2.
+% Encoding: UTF-8
+
+
+@Article{barkenbus2010eco,
+  Title                    = {Eco-driving: An overlooked climate change initiative},
+  Author                   = {Barkenbus, Jack N},
+  Journal                  = {Energy Policy},
+  Year                     = {2010},
+  Number                   = {2},
+  Pages                    = {762--769},
+  Volume                   = {38},
+
+  Publisher                = {Elsevier}
+}
+
+@Article{froberg2006explicit,
+  Title                    = {Explicit fuel optimal speed profiles for heavy trucks on a set of topograhic road profiles},
+  Author                   = {Fr{\"o}berg, Anders and Hellstr{\"o}m, Erik and Nielsen, Lars},
+  Year                     = {2006}
+}
+
+@InProceedings{gaier2014evolving,
+  Title                    = {Evolving look ahead controllers for energy optimal driving and path planning},
+  Author                   = {Gaier, Adam and Asteroth, Alexander},
+  Booktitle                = {Innovations in Intelligent Systems and Applications (INISTA) Proceedings, 2014 IEEE International Symposium on},
+  Year                     = {2014},
+  Organization             = {IEEE},
+  Pages                    = {138--145}
+}
+
+@InProceedings{grossoleil2012practical,
+  Title                    = {Practical design of minimal energy controls for an electric bicycle},
+  Author                   = {Grossoleil, David and Meizel, Dominique and others},
+  Booktitle                = {9th International Conference on Modeling, Optimization \& SIMulation},
+  Year                     = {2012}
+}
+
+@InProceedings{kirschbaum2002determination,
+  Title                    = {Determination of the fuel-optimal trajectory for a vehicle along a known route},
+  Author                   = {Kirschbaum, Frank and Back, Michael and Hart, Martin},
+  Booktitle                = {World Congress},
+  Year                     = {2002},
+  Number                   = {1},
+  Pages                    = {1505--1505},
+  Volume                   = {15}
+}
+
+@Article{koos2013transferability,
+  Title                    = {The transferability approach: Crossing the reality gap in evolutionary robotics},
+  Author                   = {Koos, Sylvain and Mouret, Jean-Baptiste and Doncieux, St{\'e}phane},
+  Journal                  = {Evolutionary Computation, IEEE Transactions on},
+  Year                     = {2013},
+  Number                   = {1},
+  Pages                    = {122--145},
+  Volume                   = {17},
+
+  Publisher                = {IEEE}
+}
+
+@Article{poursamad2008design,
+  Title                    = {Design of genetic-fuzzy control strategy for parallel hybrid electric vehicles},
+  Author                   = {Poursamad, Amir and Montazeri, Morteza},
+  Journal                  = {Control Engineering Practice},
+  Year                     = {2008},
+  Number                   = {7},
+  Pages                    = {861--873},
+  Volume                   = {16},
+
+  Publisher                = {Elsevier}
+}
+
+@Article{stanley2002evolving,
+  Title                    = {Evolving neural networks through augmenting topologies},
+  Author                   = {Stanley, Kenneth O and Miikkulainen, Risto},
+  Journal                  = {Evolutionary computation},
+  Year                     = {2002},
+  Number                   = {2},
+  Pages                    = {99--127},
+  Volume                   = {10},
+
+  Publisher                = {MIT Press}
+}
+
+@Article{sundstrom2010implementation,
+  Title                    = {On implementation of dynamic programming for optimal control problems with final state constraints},
+  Author                   = {Sundstr{\"o}m, O and Amb{\"u}hl, D and Guzzella, L},
+  Journal                  = {Oil \& Gas Science and Technology--Revue de l’Institut Fran{\c{c}}ais du P{\'e}trole},
+  Year                     = {2010},
+  Number                   = {1},
+  Pages                    = {91--102},
+  Volume                   = {65},
+
+  Publisher                = {IFP}
+}
+
+@Article{zarkadoula2007training,
+  Title                    = {Training urban bus drivers to promote smart driving: A note on a Greek eco-driving pilot program},
+  Author                   = {Zarkadoula, Maria and Zoidis, Grigoris and Tritopoulou, Efthymia},
+  Journal                  = {Transportation Research Part D: Transport and Environment},
+  Year                     = {2007},
+  Number                   = {6},
+  Pages                    = {449--451},
+  Volume                   = {12},
+
+  Publisher                = {Elsevier}
+}
+
