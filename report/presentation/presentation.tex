@@ -10,6 +10,8 @@
 \usepackage{tabularx}  % for 'tabularx' environment and 'X' column type
 \usepackage{ragged2e}  % for '\RaggedRight' macro (allows hyphenation)
 \usepackage{grffile}
+\usepackage{caption}
+\usepackage{subcaption}
 \newcolumntype{Y}{>{\RaggedRight\arraybackslash}X} 
 
 \usepackage{amsfonts}
@@ -126,11 +128,6 @@ Bonn-Rhein-Sieg University of Applied Science \\ % Your institution for the titl
 
 \end{frame}
 
-\begin{frame}
-	\frametitle{Simple Vehicle Model}
-	TODO: Visualizations of Simulations
-\end{frame}
-
 
 \section{NEAT with Simple Model}
 \begin{frame}
@@ -178,6 +175,34 @@ Bonn-Rhein-Sieg University of Applied Science \\ % Your institution for the titl
 			\right. \]			
 		\end{itemize}
 	\end{block}	
+\end{frame}
+
+\begin{frame}
+	\frametitle{NEAT with Simple Model}
+	\framesubtitle{Some Tracks}
+	\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{images/t6.jpg}
+        \caption{Track 6}
+        \label{fig:gull}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{images/t8.jpg}
+        \caption{Track 8}
+        \label{fig:tiger}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{images/t31.jpg}
+        \caption{Track 31}
+        \label{fig:mouse}
+    \end{subfigure}
+    \caption{Some Example Tracks}\label{fig:animals}
+\end{figure}
 \end{frame}
 
 \begin{frame}
