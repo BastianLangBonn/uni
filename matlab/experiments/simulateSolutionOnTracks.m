@@ -30,5 +30,7 @@ for i=1:length(p.tracks)
     xlabel('Distance in m');
     ylabel('Elevation in m');
     axis([0 p.track.distance(end) 0 70]);
+    
+    saveas(figure(i), ['./figures/track',p.track.name,'.jpg']);
 
 end

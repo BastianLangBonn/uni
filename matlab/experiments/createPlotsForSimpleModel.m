@@ -14,5 +14,7 @@ for i=1:length(tracks)
    ylabel('Elevation in m');
    axis([0 tracks(i).distance(end) 20 70])
    saveas(figure(i),['./figures/track',track.name,'.jpg']);
+   
+   
 end
 close all
