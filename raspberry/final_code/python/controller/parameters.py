@@ -5,7 +5,7 @@ GPIO_PWM = 2 # Board Pin 3
 
 PWM_STEP = 0.1 # percent
 PWM_MINIMUM = 4.0 # -> first movement starts at 4.8
-PWM_ACTIVE_MINIMUM = 4.7
+PWM_ACTIVE_MINIMUM = 4.0
 PWM_MAXIMUM = 8.4
 PWM_FREQUENCY = 10.0 # Hz
 
