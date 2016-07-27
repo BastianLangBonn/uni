@@ -30,7 +30,8 @@ class Controller:
         self.gpsLock = threading.Lock()
         
         # initialize GPIO PINS
-        GPIO.setmode(GPIO.BCM)
+        GPIO.setmode(GPIO.BOARD)
+        #GPIO.setup(p.GPIO_BUTTON, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
         GPIO.setup(p.GPIO_BUTTON, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
         GPIO.setup(p.GPIO_BRAKE, GPIO.IN)
         GPIO.setup(p.GPIO_PWM,GPIO.OUT)
@@ -62,7 +63,7 @@ class Controller:
         
         # wait for threads to end
         try:
-            while threading.active_count() > 0:
+            while threading.active_count() > 0:                
                 self.setMotorSpeed();
                 time.sleep(p.DELAY_MOTOR)
         except KeyboardInterrupt:
@@ -123,21 +124,21 @@ class Controller:
             self.isWithinLimit = False
         elif not self.isWithinLimit and self.currentSpeed <= p.MAX_TEMPO:
             self.isWithinLimit = True
-        print "Speed set to {}".format(self.currentSpeed)
+        #print "Speed set to {}".format(self.currentSpeed)
         self.antLock.release()
         
     
     def notifyPowerUpdate(self, power):
         self.antLock.acquire(1)
         self.currentPower = power
-        print "Power set to {}".format(self.currentPower)
+        #print "Power set to {}".format(self.currentPower)
         self.antLock.release()
         
     
     def notifyTorqueUpdate(self, torque):
         self.antLock.acquire(1)
         self.currentTorque = torque
-        print "Torque set to {}".format(self.currentTorque)
+        #print "Torque set to {}".format(self.currentTorque)
         self.antLock.release()
         
     def notifyGpsUpdate(self, latitude, longitude, altitude):

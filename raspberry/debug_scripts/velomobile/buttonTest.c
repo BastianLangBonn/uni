@@ -13,7 +13,7 @@ int main(){
     pinMode(GPIO_BUTTON, INPUT);
     
     while(1){
-        if(digitalRead(GPIO_BUTTON) == 1){
+        if(digitalRead(GPIO_BUTTON) == 0){
             printf("Button Pressed\n");
             delay(200);
         }

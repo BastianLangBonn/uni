@@ -47,7 +47,7 @@ int setup(){
         pinMode(GPIO_BRAKE2, INPUT);
     #endif
     
-    initializeAntConnection();
+    //initializeAntConnection();
     initializeMotor();
     
     return createThreads();

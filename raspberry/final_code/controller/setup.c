@@ -42,6 +42,7 @@ int setup(){
     }
     
     pinMode(GPIO_BUTTON, INPUT);
+    pullUpDnControl(GPIO_BUTTON, PUD_UP);
     pinMode(GPIO_BRAKE1, INPUT);
     #ifdef BRAKE2
         pinMode(GPIO_BRAKE2, INPUT);

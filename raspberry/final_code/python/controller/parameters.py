@@ -1,7 +1,7 @@
 # GPIO PINs
-GPIO_BRAKE = 18 # Board Pin 12
-GPIO_BUTTON = 17 # Board Pin 11
-GPIO_PWM = 2 # Board Pin 3
+GPIO_BRAKE = 12 #18 # Board Pin 12
+GPIO_BUTTON = 11# 17 # Board Pin 11
+GPIO_PWM = 3# 2 # Board Pin 3
 
 PWM_STEP = 0.1 # percent
 PWM_MINIMUM = 4.0 # -> first movement starts at 4.8
