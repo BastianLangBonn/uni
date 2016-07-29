@@ -1,6 +1,6 @@
 clear;
 
-files = dir('./logs/1469449613/data*');
+files = dir('./processedLogs/1469449613/data*');
 for i=1:length(files)
    names{length(files)-i+1} = files(i).name; 
 end
