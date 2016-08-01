@@ -2,11 +2,10 @@
 #include "constants.h"
 #include "logger.h"
 
+extern char filename[256];
 
-void logToFile(char* filename, char* text){
-    //return;
+void logToFile(char* text){
     /* Open file to append, create if not existent*/
-    //printf("filename: %s\n", filename);
     FILE *f = fopen(filename, "a");
     if (f == NULL){
         FILE *f = fopen(filename, "w");
@@ -16,20 +15,14 @@ void logToFile(char* filename, char* text){
         }
     }
 
-    
-    
-    if(f != NULL){
-        /* print text */
-        fprintf(f, "%s\n", text);
-        fclose(f);
-    }
+    /* print text */
+    fprintf(f, "%s\n", text);
+
+    fclose(f);
 }
 
 void logToConsole(char* text){
     #ifdef DEBUG
 	    printf("%s\n", text);
 	#endif
-	char logMessage[256];
-	sprintf(logMessage, "timestamp: %d, message: %s", (int)time(NULL), text);
-	logToFile(debugLog, logMessage);
 }

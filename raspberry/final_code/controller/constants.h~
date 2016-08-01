@@ -26,6 +26,6 @@
 /* MISC */
 #define BUFMAX          100
 
-char dataLog[256], debugLog[256];
+char dataLog[256], debugLog[256], antLog[256];
 int currentPwmSignal;
 double currentVelocity, currentPower, currentTorque;

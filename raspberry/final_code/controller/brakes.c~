@@ -21,5 +21,3 @@ int readBrakeSensors(){
     //logToConsole("Brake Loose");    
     return 0;    
 }
-
-}

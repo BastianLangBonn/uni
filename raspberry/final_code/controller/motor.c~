@@ -14,8 +14,6 @@ void initializeMotor(){
     currentPwmSignal = PWM_MINIMUM;
     softPwmWrite(GPIO_PWM, currentPwmSignal);
     logToConsole("Initialized Motor");
-    sprintf(logMessage, "timestamp: %d, current pwm signal:%d", (int)time(NULL), currentPwmSignal);
-    logToFile(pwmLog, logMessage);
 }
 
 void decelerate(){
