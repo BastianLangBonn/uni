@@ -22,7 +22,7 @@ int setup(){
     //pthread_mutex_init(&pwmMutex, NULL);
     //pthread_mutex_init(&limitMutex, NULL);
     //pthread_mutex_init(&gpsMutex, NULL);
-    pthread_mutex_init(&antMutex, NULL);
+    //pthread_mutex_init(&antMutex, NULL);
     
     
     sprintf(filename, "/home/pi/AMT/log/log_%d.txt", (int)time(NULL));
@@ -69,6 +69,7 @@ int createThreads(){
 	}
 	logToConsole("Button Thread Created");
 
+    
     // Create Ant Thread
 	res = piThreadCreate(ant);
 	if(res != 0){
@@ -76,7 +77,7 @@ int createThreads(){
 		return res;
 	}
 	logToConsole("Ant Thread Created");
-
+    /*
 	// Create GPS Thread
 	res = piThreadCreate(gps);
 	if(res != 0){
@@ -84,6 +85,6 @@ int createThreads(){
 		return res;
 	}
 	logToConsole("GPS Thread Created");
-    
+    */
 	return res;
 }

@@ -1,2 +1,4 @@
 MODULES_MANAGER_V2
 HelloWorld|/home/bastian/study/ss16/rnd/repo/vehicle_control/HelloWorld.py
+controller.Logger|/home/bastian/study/ss16/rnd/repo/vehicle_control/controller/Logger.py
+controller.parameters|/home/bastian/study/ss16/rnd/repo/vehicle_control/controller/parameters.py

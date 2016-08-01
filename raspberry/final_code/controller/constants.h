@@ -21,7 +21,7 @@
 /* DELAY VALUES */
 #define SENSOR_UPDATE   20
 #define SPEED_UPDATE    20
-#define LOGGING_UPDATE  100
+#define LOGGING_UPDATE  1000
 
 /* MISC */
 #define BUFMAX          100
@@ -41,6 +41,6 @@ double currentPower;
 //pthread_mutex_t pwmMutex;
 //pthread_mutex_t limitMutex;
 //pthread_mutex_t gpsMutex;
-pthread_mutex_t antMutex;
+//pthread_mutex_t antMutex;
 
 char filename[256];

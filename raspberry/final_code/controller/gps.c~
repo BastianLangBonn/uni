@@ -16,7 +16,7 @@ extern double currentLongitude;
 extern double currentLatitude;
 extern double currentAltitude;
 
-void *gpsThreadPtr(void *arg){
+PI_THREAD (gps){
     logToConsole("GPS thread started"); 
         
     char logMessage[256];
@@ -25,7 +25,7 @@ void *gpsThreadPtr(void *arg){
     char buffer[256], tmp[256], *ptr;    
         
     memset(buffer, 0, 256);
-	sockfd = createSockFd(2300);
+	sockfd = createSockFd(4800);
     while(1){
         memset(buffer,0,256);
         memset(tmp,0,sizeof(buffer));

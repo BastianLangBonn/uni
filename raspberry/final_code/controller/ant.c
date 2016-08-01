@@ -19,9 +19,8 @@ char *ptr;
 int lastPeak;
 
 void handleRpmMessage(char buffer[256]){
-    int rpm, t;
+    int rpm, t, speed;
     char tmp[256];
-    lastPeak = millis();
     memset(tmp,0,sizeof(buffer));
     ptr = strstr(buffer, "RPM=");
     // Remove leading "RPM='"        
@@ -34,17 +33,18 @@ void handleRpmMessage(char buffer[256]){
     // Compute speed out of rpm and wheel length in km/h
     sprintf(logMessage, "rpm: %d", rpm);
     logToConsole(logMessage);
-    currentVelocity = rpm * WHEEL_LENGTH * 0.06;    
+    piLock(0);
+    currentVelocity = rpm * WHEEL_LENGTH * 0.06; 
+    speed = currentVelocity;
     sprintf(logMessage, "velocity: %.2lf", currentVelocity);
     logToConsole(logMessage);
-    //pthread_mutex_lock(&limitMutex);
-    if(currentVelocity > MAX_TEMPO && withinLimit == 1){
+    if(speed > MAX_TEMPO && withinLimit == 1){
         withinLimit = 0;
-        //pthread_mutex_unlock(&limitMutex);
+        piUnlock(0);
         notifyLimitReached();
-    } else if(currentVelocity < MAX_TEMPO && withinLimit == 0){
+    } else if(speed < MAX_TEMPO && withinLimit == 0){
         withinLimit = 1;
-        //pthread_mutex_unlock(&limitMutex);
+        piUnlock(0);
         notifyLimitLeft();
     }
 }
@@ -60,9 +60,11 @@ void handleTorqueMessage(char buffer[256]){
     t = strcspn(ptr, "'");
     // Remove trailing "'"    
     strncpy(tmp, ptr, t); 
-    // Char to Integer        
+    // Char to Integer      
+    piLock(0);  
     currentTorque = atof(tmp);
     sprintf(logMessage, "torque: %.2lfNm", currentTorque);
+    piUnlock(0);
     logToConsole(logMessage);
 }
 
@@ -76,9 +78,11 @@ void handlePowerMessage(char buffer[256]){
     t = strcspn(ptr, "'");
     // Remove trailing "'"    
     strncpy(tmp, ptr, t); 
-    // Char to Integer        
+    // Char to Integer      
+    piLock(0);  
     currentPower = atof(tmp);
     sprintf(logMessage, "power: %.2lfwatts", currentPower);
+    piUnlock(0);
     logToConsole(logMessage);
 }
 
@@ -96,20 +100,29 @@ void handleSensorDrop(char buffer[256]){
 }
 
 PI_THREAD (ant){
-    logToConsole("Hall Thread started"); 
+    logToConsole("Ant Thread started"); 
 	int sockfd, n;   
     char buffer[256];
     int t=0, rpm;
-    int currentPeak;
+    int currentPeak, timeSinceLastPeak;
+    int timedOut = 0;
     sockfd = createSockFd(2301);
 	memset(buffer, 0, 256);
     while(1){
         currentPeak = millis();
-        if(currentPeak - lastPeak > 2000){
-            logToConsole("Speed Timed Out");
-            pthread_mutex_lock(&antMutex);
+        timeSinceLastPeak = currentPeak - lastPeak;
+        sprintf(logMessage, "timeSinceLastPeak: %d",currentPeak - lastPeak);
+        logToConsole(logMessage);
+        if(!timedOut && timeSinceLastPeak > 2000){
+            timedOut = 1;
+            //logToConsole("Ant timed out");
+            sprintf(logMessage, "Ant timed out after %d milliseconds",currentPeak - lastPeak);
+            logToConsole(logMessage);
+            piLock(0);
             currentVelocity = 0.0;
-            pthread_mutex_unlock(&antMutex);
+            currentTorque = 0.0;
+            currentPower = 0.0;
+            piUnlock(0);
         }
         memset(buffer,0,256);
         ptr = NULL;
@@ -119,23 +132,27 @@ PI_THREAD (ant){
         if(n>0){
             sprintf(logMessage, "Received ANT+ message: %s",buffer);
             logToConsole(logMessage);
-            pthread_mutex_lock(&antMutex);
 			if(strstr(buffer, "<Speed")){
 			    logToConsole("Speed message received");
 			    handleRpmMessage(buffer);
+			    lastPeak = millis();
+			    timedOut = 0;
 			} else if(strstr(buffer, "<Torque")){
 			    logToConsole("Torque message received");
 			    handleTorqueMessage(buffer);
+			    lastPeak = millis();
+			    timedOut = 0;
 			} else if(strstr(buffer, "<Power")){ 
 			    logToConsole("Power message received");
 			    handlePowerMessage(buffer);
+			    lastPeak = millis();
+			    timedOut = 0;
 			} else if(strstr(buffer, "<SensorDrop")){
 			    logToConsole("Sensor dropped");
 			    handleSensorDrop(buffer);
 			} else{
 			    logToConsole("String did not contain any relevant information");
 			}
-			pthread_mutex_unlock(&antMutex);
         }
 		delay(SPEED_UPDATE); //Verhindert busy-waiting
     }
