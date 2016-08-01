@@ -95,7 +95,7 @@ void handleSensorDrop(char buffer[256]){
     }
 }
 
-void *hallThreadPtr(void *arg){
+PI_THREAD (ant){
     logToConsole("Hall Thread started"); 
 	int sockfd, n;   
     char buffer[256];

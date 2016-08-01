@@ -16,7 +16,7 @@ extern double currentLongitude;
 extern double currentLatitude;
 extern double currentAltitude;
 
-void *gpsThreadPtr(void *arg){
+PI_THREAD (gps){
     logToConsole("GPS thread started"); 
         
     char logMessage[256];

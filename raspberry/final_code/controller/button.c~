@@ -17,8 +17,7 @@ void readButton(){
         if(currentPwmSignal != pwmSignal){
             currentPwmSignal = pwmSignal;
             notifyPwmSignalChange();
-        }
-        
+        }        
         //pthread_mutex_unlock(&pwmMutex);
         
 	    delay(200); //Delay needed for button press

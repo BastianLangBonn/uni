@@ -6,7 +6,7 @@
 #include "logger.h"
 #include "brakes.c"
 #include "button.c"
-#include "hall.c"
+#include "ant.c"
 #include "gps.c"
 
 extern char filename[256];
@@ -54,7 +54,7 @@ int createThreads(){
     int res = 0;
 
 	// Create Brake Thread
-	res = pthread_create(&brakeThread, NULL, brakeThreadPtr, NULL);
+	res = piThreadCreate(brake);
 	if(res != 0){
 	    logToConsole("Brake Thread Create Error");
 		return res;

@@ -54,7 +54,7 @@ int createThreads(){
     int res = 0;
 
 	// Create Brake Thread
-	res = pthread_create(&brakeThread, NULL, brakeThreadPtr, NULL);
+	res = piThreadCreate(brake);
 	if(res != 0){
 	    logToConsole("Brake Thread Create Error");
 		return res;
@@ -62,23 +62,23 @@ int createThreads(){
 	logToConsole("Brake Thread Created");
 	
 	// Create Button Thread
-	res = pthread_create(&buttonThread, NULL, buttonThreadPtr, NULL);
+	res = piThreadCreate(button);
 	if(res != 0){
 	    logToConsole("Button Thread Create Error");
 		return res;
 	}
 	logToConsole("Button Thread Created");
 
-    // Create Hall Thread
-	res = pthread_create(&hallThread, NULL, hallThreadPtr, NULL);
+    // Create Ant Thread
+	res = piThreadCreate(ant);
 	if(res != 0){
-	    logToConsole("Hall Thread Create Error");
+	    logToConsole("Ant Thread Create Error");
 		return res;
 	}
-	logToConsole("Hall Thread Created");
+	logToConsole("Ant Thread Created");
 
 	// Create GPS Thread
-	res = pthread_create(&gpsThread, NULL, gpsThreadPtr, NULL);
+	res = piThreadCreate(gps);
 	if(res != 0){
 	    logToConsole("GPS Thread Create Error");
 		return res;

@@ -24,7 +24,7 @@ void readButton(){
 	}
 }
 
-void *buttonThreadPtr(void *arg){
+PI_THREAD (button){
     logToConsole("Button Thread Started");
     notifyPwmSignalChange();
     while(1){

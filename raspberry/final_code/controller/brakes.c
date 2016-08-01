@@ -5,7 +5,7 @@
 
 extern int currentBrakeActivation;
 
-void *brakeThreadPtr(void *arg){
+PI_THREAD (brake){
     logToConsole("Brake Thread Started");
     int newBrakeActivation;
     while(1){
