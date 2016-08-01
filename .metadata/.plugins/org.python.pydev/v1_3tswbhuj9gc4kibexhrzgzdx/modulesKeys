@@ -784,6 +784,9 @@ PyQt4.uic.properties|/usr/lib/python2.7/dist-packages/PyQt4/uic/properties.py
 PyQt4.uic.pyuic|/usr/lib/python2.7/dist-packages/PyQt4/uic/pyuic.py
 PyQt4.uic.uiparser|/usr/lib/python2.7/dist-packages/PyQt4/uic/uiparser.py
 Queue|/usr/lib/python2.7/Queue.py
+RPi.GPIO.__init__|/usr/local/lib/python2.7/dist-packages/RPi/GPIO/__init__.py
+RPi._GPIO|/usr/local/lib/python2.7/dist-packages/RPi/_GPIO.so
+RPi.__init__|/usr/local/lib/python2.7/dist-packages/RPi/__init__.py
 ScrolledText|/usr/lib/python2.7/lib-tk/ScrolledText.py
 SimpleDialog|/usr/lib/python2.7/lib-tk/SimpleDialog.py
 SimpleHTTPServer|/usr/lib/python2.7/SimpleHTTPServer.py
@@ -3118,8 +3121,6 @@ pickletools|/usr/lib/python2.7/pickletools.py
 pip.__init__|/usr/local/lib/python2.7/dist-packages/pip/__init__.py
 pip.__main__|/usr/local/lib/python2.7/dist-packages/pip/__main__.py
 pip._vendor.__init__|/usr/local/lib/python2.7/dist-packages/pip/_vendor/__init__.py
-pip._vendor._markerlib.__init__|/usr/local/lib/python2.7/dist-packages/pip/_vendor/_markerlib/__init__.py
-pip._vendor._markerlib.markers|/usr/local/lib/python2.7/dist-packages/pip/_vendor/_markerlib/markers.py
 pip._vendor.cachecontrol.__init__|/usr/local/lib/python2.7/dist-packages/pip/_vendor/cachecontrol/__init__.py
 pip._vendor.cachecontrol._cmd|/usr/local/lib/python2.7/dist-packages/pip/_vendor/cachecontrol/_cmd.py
 pip._vendor.cachecontrol.adapter|/usr/local/lib/python2.7/dist-packages/pip/_vendor/cachecontrol/adapter.py
@@ -3273,6 +3274,7 @@ pip._vendor.requests.packages.urllib3.contrib.__init__|/usr/local/lib/python2.7/
 pip._vendor.requests.packages.urllib3.contrib.appengine|/usr/local/lib/python2.7/dist-packages/pip/_vendor/requests/packages/urllib3/contrib/appengine.py
 pip._vendor.requests.packages.urllib3.contrib.ntlmpool|/usr/local/lib/python2.7/dist-packages/pip/_vendor/requests/packages/urllib3/contrib/ntlmpool.py
 pip._vendor.requests.packages.urllib3.contrib.pyopenssl|/usr/local/lib/python2.7/dist-packages/pip/_vendor/requests/packages/urllib3/contrib/pyopenssl.py
+pip._vendor.requests.packages.urllib3.contrib.socks|/usr/local/lib/python2.7/dist-packages/pip/_vendor/requests/packages/urllib3/contrib/socks.py
 pip._vendor.requests.packages.urllib3.exceptions|/usr/local/lib/python2.7/dist-packages/pip/_vendor/requests/packages/urllib3/exceptions.py
 pip._vendor.requests.packages.urllib3.fields|/usr/local/lib/python2.7/dist-packages/pip/_vendor/requests/packages/urllib3/fields.py
 pip._vendor.requests.packages.urllib3.filepost|/usr/local/lib/python2.7/dist-packages/pip/_vendor/requests/packages/urllib3/filepost.py

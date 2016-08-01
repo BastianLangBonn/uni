@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<section name="WorkbenchPreferenceDialogSettings">
+		<item value="322" key="DIALOG_X_ORIGIN"/>
+		<item value="13" key="DIALOG_Y_ORIGIN"/>
+	</section>
 	<section name="org.eclipse.ui.internal.QuickAccess">
-		<item value="-1" key="dialogWidth"/>
 		<item value="-1" key="dialogHeight"/>
+		<item value="-1" key="dialogWidth"/>
+		<list key="textEntries">
+		</list>
+		<list key="orderedElements">
+		</list>
 		<list key="orderedProviders">
 		</list>
 		<list key="textArray">
 		</list>
-		<list key="orderedElements">
-		</list>
-		<list key="textEntries">
+	</section>
+	<section name="NewWizardAction">
+		<item value="org.python.pydev.ui.wizards.project.PythonProjectWizard" key="NewWizardSelectionPage.STORE_SELECTED_ID"/>
+		<list key="NewWizardSelectionPage.STORE_EXPANDED_CATEGORIES_ID">
+			<item value="org.python.pydev.PythonCategory"/>
 		</list>
 	</section>
 	<section name="InstallationDialogSettings">
 		<item value="985" key="DIALOG_WIDTH"/>
-		<item value="15" key="DIALOG_Y_ORIGIN"/>
-		<item value="744" key="DIALOG_HEIGHT"/>
-		<item value="19" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
-	</section>
-	<section name="NewWizardAction">
+		<item value="744" key="DIALOG_HEIGHT"/>
+		<item value="-136" key="DIALOG_Y_ORIGIN"/>
+		<item value="19" key="DIALOG_X_ORIGIN"/>
 	</section>
 </section>
