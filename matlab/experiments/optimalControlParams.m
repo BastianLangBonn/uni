@@ -10,7 +10,7 @@ p.maxGen = p.startPlot-1;
 p.popSize= 60;
 
 %% Speciation
-p.specType   = 'kmeans';
+p.specType   = 'original';%'kmeans';
 p.excess     = 1.0;
 p.disjoint   = 1.0;
 p.weightDif  = 0.5;
