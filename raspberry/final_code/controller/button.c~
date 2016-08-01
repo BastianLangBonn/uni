@@ -2,16 +2,16 @@
 #include "constants.h"
 #include "motor.h"
 
-extern int currentPwmSignal;
+extern double currentPwmSignal;
 
 void readButton(){
     //pthread_mutex_lock(&pwmMutex);
-    int pwmSignal = currentPwmSignal;
+    double pwmSignal = currentPwmSignal;
     //pthread_mutex_unlock(&pwmMutex);
     if(digitalRead(GPIO_BUTTON) == 1){
-        pwmSignal++;
-        if(pwmSignal > PWM_MAXIMUM){ 
-            pwmSignal = PWM_MAXIMUM;
+        pwmSignal += STEP_SIZE;
+        if(pwmSignal > 1){ 
+            pwmSignal = 1;
         }
         //pthread_mutex_lock(&pwmMutex);
         if(currentPwmSignal != pwmSignal){
@@ -24,7 +24,7 @@ void readButton(){
 	}
 }
 
-void *buttonThreadPtr(void *arg){
+PI_THREAD (button){
     logToConsole("Button Thread Started");
     notifyPwmSignalChange();
     while(1){

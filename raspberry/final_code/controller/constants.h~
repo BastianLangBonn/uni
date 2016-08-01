@@ -25,9 +25,10 @@
 
 /* MISC */
 #define BUFMAX          100
+#define STEP_SIZE       0.1 // %
 
 int currentBrakeActivation;
-int currentPwmSignal;
+double currentPwmSignal;
 int withinLimit;
 double currentVelocity;
 double currentLatitude;
@@ -41,6 +42,6 @@ double currentPower;
 //pthread_mutex_t pwmMutex;
 //pthread_mutex_t limitMutex;
 //pthread_mutex_t gpsMutex;
-pthread_mutex_t antMutex;
+//pthread_mutex_t antMutex;
 
 char filename[256];

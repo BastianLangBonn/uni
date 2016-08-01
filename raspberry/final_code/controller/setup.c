@@ -77,7 +77,7 @@ int createThreads(){
 		return res;
 	}
 	logToConsole("Ant Thread Created");
-    /*
+    
 	// Create GPS Thread
 	res = piThreadCreate(gps);
 	if(res != 0){
@@ -85,6 +85,6 @@ int createThreads(){
 		return res;
 	}
 	logToConsole("GPS Thread Created");
-    */
+    
 	return res;
 }

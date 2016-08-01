@@ -18,7 +18,7 @@ int main(){
     
     while(1){   
         piLock(0);
-        sprintf(logMessage, "timestamp: %d, brakes: %d, current pwm signal:%d, current velocity: %lf, current longitude: %.4lf, current latitude: %.4lf, current altitude: %.2lf, currentPower: %.2lf, currentTorque: %.2lf", (int)time(NULL), currentBrakeActivation, currentPwmSignal, currentVelocity, currentLongitude, currentLatitude, currentAltitude, currentPower, currentTorque);
+        sprintf(logMessage, "%d,%d,%d,%lf,%.4lf,%.4lf,%.2lf,%.2lf,%.2lf", (int)time(NULL), currentBrakeActivation, currentPwmSignal, currentVelocity, currentLongitude, currentLatitude, currentAltitude, currentPower, currentTorque);
         piUnlock(0);
         
         logToFile(logMessage);
