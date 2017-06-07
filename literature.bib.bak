@@ -1,0 +1,136 @@
+% This file was created with JabRef 2.10b2.
+% Encoding: Cp1252
+
+
+@Article{boissonnat1984geometric,
+  Title                    = {Geometric structures for three-dimensional shape representation},
+  Author                   = {Boissonnat, Jean-Daniel},
+  Journal                  = {ACM Transactions on Graphics (TOG)},
+  Year                     = {1984},
+  Number                   = {4},
+  Pages                    = {266--286},
+  Volume                   = {3},
+
+  File                     = {:boissonnat.pdf:PDF},
+  Publisher                = {ACM}
+}
+
+@Article{campbell2001survey,
+  Title                    = {A survey of free-form object representation and recognition techniques},
+  Author                   = {Campbell, Richard J and Flynn, Patrick J},
+  Journal                  = {Computer Vision and Image Understanding},
+  Year                     = {2001},
+  Number                   = {2},
+  Pages                    = {166--210},
+  Volume                   = {81},
+
+  File                     = {:Campbell CVIU01.pdf:PDF},
+  Publisher                = {Elsevier}
+}
+
+@InProceedings{carr2001reconstruction,
+  Title                    = {Reconstruction and representation of 3D objects with radial basis functions},
+  Author                   = {Carr, Jonathan C and Beatson, Richard K and Cherrie, Jon B and Mitchell, Tim J and Fright, W Richard and McCallum, Bruce C and Evans, Tim R},
+  Booktitle                = {Proceedings of the 28th annual conference on Computer graphics and interactive techniques},
+  Year                     = {2001},
+  Organization             = {ACM},
+  Pages                    = {67--76},
+
+  File                     = {:Carr-sg2001.pdf:PDF}
+}
+
+@Article{chen1996modeling,
+  Title                    = {Modeling of land surface evaporation by four schemes and comparison with FIFE observations},
+  Author                   = {Chen, Fei and Mitchell, Kenneth and Schaake, John and Xue, Yongkang and Pan, Hua-Lu and Koren, Victor and Duan, Qing Yun and Ek, Michael and Betts, Alan},
+  Journal                  = {Journal of Geophysical Research: Atmospheres},
+  Year                     = {1996},
+  Number                   = {D3},
+  Pages                    = {7251--7268},
+  Volume                   = {101},
+
+  File                     = {:eScholarship UC item 9565r30v.pdf:PDF},
+  Publisher                = {Wiley Online Library}
+}
+
+@Article{hansen2001completely,
+  Title                    = {Completely derandomized self-adaptation in evolution strategies},
+  Author                   = {Hansen, Nikolaus and Ostermeier, Andreas},
+  Journal                  = {Evolutionary computation},
+  Year                     = {2001},
+  Number                   = {2},
+  Pages                    = {159--195},
+  Volume                   = {9},
+
+  Publisher                = {MIT Press}
+}
+
+@Article{loncaric1998survey,
+  Title                    = {A survey of shape analysis techniques},
+  Author                   = {Loncaric, Sven},
+  Journal                  = {Pattern recognition},
+  Year                     = {1998},
+  Number                   = {8},
+  Pages                    = {983--1001},
+  Volume                   = {31},
+
+  File                     = {:loncaric98survey.pdf:PDF},
+  Publisher                = {Elsevier}
+}
+
+@Article{mokhtarian1992theory,
+  Title                    = {A theory of multiscale, curvature-based shape representation for planar curves},
+  Author                   = {Mokhtarian, Farzin and Mackworth, Alan K},
+  Journal                  = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  Year                     = {1992},
+  Number                   = {8},
+  Pages                    = {789--805},
+  Volume                   = {14},
+
+  File                     = {:IEEE-PAMI92.pdf:PDF}
+}
+
+@InProceedings{sorkine2007rigid,
+  Title                    = {As-rigid-as-possible surface modeling},
+  Author                   = {Sorkine, Olga and Alexa, Marc},
+  Booktitle                = {Symposium on Geometry processing},
+  Year                     = {2007},
+  Volume                   = {4},
+
+  File                     = {:sorkine_asrigid.pdf:PDF}
+}
+
+@Book{sturm1998simulation,
+  Title                    = {Simulation einer Geb{\"a}udeheizung},
+  Author                   = {Sturm, Michael},
+  Publisher                = {Inst. f{\"u}r Informatik},
+  Year                     = {1998},
+
+  File                     = {:fki-227-98.pdf:PDF}
+}
+
+@InProceedings{welch1992variational,
+  Title                    = {Variational surface modeling},
+  Author                   = {Welch, William and Witkin, Andrew},
+  Booktitle                = {ACM SIGGRAPH computer graphics},
+  Year                     = {1992},
+  Number                   = {2},
+  Organization             = {ACM},
+  Pages                    = {157--166},
+  Volume                   = {26},
+
+  File                     = {:variational.pdf:PDF}
+}
+
+@Article{Zhang2004,
+  Title                    = {Review of shape representation and description techniques},
+  Author                   = {Zhang, Dengsheng and Lu, Guojun},
+  Journal                  = {Pattern recognition},
+  Year                     = {2004},
+  Number                   = {1},
+  Pages                    = {1--19},
+  Volume                   = {37},
+
+  File                     = {:shapeReview.pdf:PDF},
+  Publisher                = {Elsevier}
+}
+

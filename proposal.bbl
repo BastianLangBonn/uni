@@ -1,0 +1,74 @@
+\begin{thebibliography}{10}
+
+\bibitem{boissonnat1984geometric}
+J.-D. Boissonnat.
+\newblock Geometric structures for three-dimensional shape representation.
+\newblock {\em ACM Transactions on Graphics (TOG)}, 3(4):266--286, 1984.
+
+\bibitem{campbell2001survey}
+R.~J. Campbell and P.~J. Flynn.
+\newblock A survey of free-form object representation and recognition
+  techniques.
+\newblock {\em Computer Vision and Image Understanding}, 81(2):166--210, 2001.
+
+\bibitem{carr2001reconstruction}
+J.~C. Carr, R.~K. Beatson, J.~B. Cherrie, T.~J. Mitchell, W.~R. Fright, B.~C.
+  McCallum, and T.~R. Evans.
+\newblock Reconstruction and representation of 3d objects with radial basis
+  functions.
+\newblock In {\em Proceedings of the 28th annual conference on Computer
+  graphics and interactive techniques}, pages 67--76. ACM, 2001.
+
+\bibitem{chen1996modeling}
+F.~Chen, K.~Mitchell, J.~Schaake, Y.~Xue, H.-L. Pan, V.~Koren, Q.~Y. Duan,
+  M.~Ek, and A.~Betts.
+\newblock Modeling of land surface evaporation by four schemes and comparison
+  with fife observations.
+\newblock {\em Journal of Geophysical Research: Atmospheres},
+  101(D3):7251--7268, 1996.
+
+\bibitem{deb2002fast}
+K.~Deb, A.~Pratap, S.~Agarwal, and T.~Meyarivan.
+\newblock A fast and elitist multiobjective genetic algorithm: Nsga-ii.
+\newblock {\em IEEE transactions on evolutionary computation}, 6(2):182--197,
+  2002.
+
+\bibitem{hansen2001completely}
+N.~Hansen and A.~Ostermeier.
+\newblock Completely derandomized self-adaptation in evolution strategies.
+\newblock {\em Evolutionary computation}, 9(2):159--195, 2001.
+
+\bibitem{loncaric1998survey}
+S.~Loncaric.
+\newblock A survey of shape analysis techniques.
+\newblock {\em Pattern recognition}, 31(8):983--1001, 1998.
+
+\bibitem{mokhtarian1992theory}
+F.~Mokhtarian and A.~K. Mackworth.
+\newblock A theory of multiscale, curvature-based shape representation for
+  planar curves.
+\newblock {\em IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  14(8):789--805, 1992.
+
+\bibitem{sorkine2007rigid}
+O.~Sorkine and M.~Alexa.
+\newblock As-rigid-as-possible surface modeling.
+\newblock In {\em Symposium on Geometry processing}, volume~4, 2007.
+
+\bibitem{sturm1998simulation}
+M.~Sturm.
+\newblock {\em Simulation einer Geb{\"a}udeheizung}.
+\newblock Inst. f{\"u}r Informatik, 1998.
+
+\bibitem{welch1992variational}
+W.~Welch and A.~Witkin.
+\newblock Variational surface modeling.
+\newblock In {\em ACM SIGGRAPH computer graphics}, volume~26, pages 157--166.
+  ACM, 1992.
+
+\bibitem{Zhang2004}
+D.~Zhang and G.~Lu.
+\newblock Review of shape representation and description techniques.
+\newblock {\em Pattern recognition}, 37(1):1--19, 2004.
+
+\end{thebibliography}
